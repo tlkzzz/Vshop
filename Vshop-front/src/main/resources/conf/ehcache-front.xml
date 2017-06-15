@@ -1,0 +1,7 @@
+<ehcache>
+	<!-- <diskStore path="c:\\temp" /> -->
+	<diskStore path="/Users/linjianmao/shop/trunk/filebase" />
+	<defaultCache maxElementsInMemory="25600" eternal="false" overflowToDisk="true" />
+    <cache name="goodsClassTreeCache" maxElementsInMemory="1000" timeToLiveSeconds="100" timeToIdleSeconds="100" eternal="false" overflowToDisk="true"/>
+    <cache name="articlesCache" maxElementsInMemory="1000" timeToLiveSeconds="60" timeToIdleSeconds="60" eternal="false" overflowToDisk="true"/>
+</ehcache>

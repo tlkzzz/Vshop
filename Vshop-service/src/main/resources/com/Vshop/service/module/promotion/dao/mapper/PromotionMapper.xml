@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.Vshop.service.module.promotion.dao.mapper.PromotionMapper">
+	<resultMap id="BaseResultMap" type="com.Vshop.core.entity.base.Promotion">
+		<id column="p_id" property="id" jdbcType="INTEGER" />
+		<result column="p_name" property="name" jdbcType="VARCHAR" />
+		<result column="p_sort" property="sort" jdbcType="INTEGER" />	
+		<result column="p_start_value" property="startValue" jdbcType="DOUBLE" />	
+		<result column="p_promote_value" property="promoteValue" jdbcType="DOUBLE" />
+		<result column="pc_id" property="pcId" jdbcType="INTEGER" />
+		<result column="p_status" property="status" jdbcType="INTEGER" />
+	</resultMap>
+	
+	<sql id="Base_Column_List">
+		p_id, p_name, p_sort, p_start_value, p_promote_value, pc_id, p_status
+	</sql>
+	
+	<select id="findById" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+		select <include refid="Base_Column_List" /> from shop_promotion where p_id=#{pId}
+	</select>
+	
+	<select id="findList" resultMap="BaseResultMap" parameterType="com.Vshop.service.utils.page.Pager">
+		select <include refid="Base_Column_List" /> from shop_promotion
+	</select>
+	
+	<select id="findCount" resultType="int" parameterType="com.Vshop.core.entity.base.Promotion">
+		select count(1) from shop_promotion
+	</select>
+	
+	<update id="update" parameterType="com.Vshop.core.entity.base.Promotion">
+		update shop_promotion
+        <set>
+            <if test="name != null and name != ''">
+                p_name = #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null">
+                p_status = #{status,jdbcType=INTEGER},
+            </if>
+            <if test="sort != null">
+                p_sort = #{sort,jdbcType=INTEGER},
+            </if>
+            <if test="startValue != null">
+                p_start_value = #{startValue},
+            </if>
+            <if test="promoteValue != null">
+                p_promote_value = #{promoteValue},
+            </if>
+            <if test="pcId != null">
+                pc_id = #{pcId}
+            </if>
+        </set>
+        where p_id = #{id,jdbcType=INTEGER}
+	</update>
+	
+	<insert id="save" parameterType="com.Vshop.core.entity.base.Promotion" useGeneratedKeys="true" keyProperty="id">
+		insert into shop_promotion (p_name, p_sort, p_start_value, p_promote_value, pc_id, p_status )
+		values(#{name,jdbcType=VARCHAR}, #{sort,jdbcType=INTEGER}, #{startValue}, #{promoteValue},#{pcId}, #{status} );
+	</insert>
+	
+	<delete id="delete" parameterType="java.lang.Integer">
+		delete from shop_promotion where p_id = #{id,jdbcType=INTEGER}
+	</delete>
+	
+	<select id="fingBypcId" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+		select * from shop_promotion where pc_id= #{pcId}
+	</select>
+</mapper>

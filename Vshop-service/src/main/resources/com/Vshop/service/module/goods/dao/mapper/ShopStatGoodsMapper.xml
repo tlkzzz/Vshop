@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.Vshop.service.module.goods.dao.mapper.ShopStatGoodsMapper">
+    <resultMap id="BaseResultMap" type="com.Vshop.core.entity.base.ShopStatGoods" >
+        <id column="s_id" property="sId" jdbcType="INTEGER" />
+        <result column="goods_name" property="goodsName" jdbcType="VARCHAR" />
+        <result column="goods_id" property="goodsId" jdbcType="INTEGER" />
+        <result column="member_name" property="memberName" jdbcType="VARCHAR" />
+        <result column="member_id" property="memberId" jdbcType="INTEGER" />
+        <result column="login_ip" property="loginIp" jdbcType="VARCHAR" />
+        <result column="login_time" property="loginTime" jdbcType="BIGINT" />
+        <result column="store_id" property="storeId" jdbcType="INTEGER" />
+        <result column="province" property="province" jdbcType="VARCHAR" />
+        <result column="city" property="city" jdbcType="VARCHAR" />
+        <result column="area" property="area" jdbcType="VARCHAR" />
+    </resultMap>
+
+
+    <sql id="Base_Column_List" >
+        s_id, goods_name, goods_id, member_name, member_id, login_ip, login_time,store_id,province,city,area
+    </sql>
+    
+    <!-- 保存商品浏览记录 -->
+    <insert id="save" parameterType="com.Vshop.core.entity.base.ShopStatGoods" useGeneratedKeys="true" keyProperty="s_id">
+        INSERT INTO shop_stat_goods(goods_name,goods_id,member_name,member_id,login_ip,login_time,store_id,province,city,area)
+        VALUES(#{goodsName},#{goodsId},#{memberName},#{memberId},#{loginIp},#{loginTime},#{storeId},#{province},#{city},#{area});
+    </insert>
+    
+     <sql id="whereStatement">
+		<where>
+			1 = 1
+	    <if test="condition.storeId != null and condition.storeId!=0" >
+            and store_id = #{condition.storeId}
+        </if>
+        <if test="condition.goodsName !=null and condition.goodsName !='' ">
+            AND goods_name like CONCAT('%','${condition.goodsName}','%' )
+        </if>
+        <if test="condition.goodsId != null">
+            AND goods_id = #{condition.goodsId}
+        </if>
+        <if test="condition.memberName != null and condition.memberName!=''">
+            AND member_name = like CONCAT('%','${condition.memberName}','%' )
+        </if>
+        <if test="condition.memberId!= null">
+            AND member_id != #{condition.memberId}
+        </if>
+        <if test="condition.loginIp != null and condition.loginIp!=''">
+            AND login_ip = #{condition.loginIp}
+        </if>
+        <if test="condition.storeId!= null">
+            AND store_id != #{condition.storeId}
+        </if>
+		</where>
+	</sql>
+    
+    <!-- 删除商品  -->
+    <delete id="delete" parameterType="java.lang.Integer">
+        delete from shop_stat_goods where s_id=#{sId}
+    </delete>
+    
+    
+    
+    <!-- 更新 -->
+    <update id="update" parameterType="com.Vshop.core.entity.base.Brand">
+         
+    </update>
+    
+    
+    <!--查询条数-->
+    <select id="findCount" parameterType="com.Vshop.service.utils.page.Pager" resultType="int">
+        SELECT
+        count(*)
+        FROM shop_stat_goods
+        <include refid="whereStatement" />
+    </select>
+
+    <!--查询分页列表-->
+    <select id="findPageList" parameterType="com.Vshop.service.utils.page.Pager" resultMap="BaseResultMap">
+        SELECT a.* FROM(
+        SELECT
+         <include refid="Base_Column_List" />
+        FROM shop_stat_goods
+         <include refid="whereStatement" />
+        order by s_id) a limit #{start}, #{pageSize}
+    </select>
+    
+    <!-- 获取全部数据 -->
+    <select id="findList" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM shop_stat_goods
+    </select>
+
+    <!-- 根据分类id获取 -->
+    <select id="findbyIds" resultMap="BaseResultMap" parameterType="com.Vshop.core.entity.base.ShopStatGoods">
+        select
+        <include refid="Base_Column_List" />
+        from shop_stat_goods where 1=1
+        <if test="sId != null and sId!=0">
+			and s_id = #{sId}
+		</if>
+		<if test="goodsId != null">
+			and goods_id = #{goodsId}
+		</if>
+		<if test="memberId != null">
+			and member_id = #{memberId}
+		</if>
+    </select>
+    
+</mapper>

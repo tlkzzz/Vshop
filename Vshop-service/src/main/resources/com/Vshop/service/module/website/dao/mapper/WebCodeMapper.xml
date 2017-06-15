@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.Vshop.service.module.website.dao.mapper.WebCodeMapper" >
+    <resultMap id="BaseResultMap" type="com.Vshop.core.entity.base.WebCode" >
+        <id column="code_id" property="codeId" jdbcType="INTEGER" />
+        <result column="web_id" property="webId" jdbcType="INTEGER" />
+        <result column="code_type" property="codeType" jdbcType="VARCHAR" />
+        <result column="var_name" property="varName" jdbcType="VARCHAR" />
+        <result column="show_name" property="showName" jdbcType="VARCHAR" />
+        <result column="code_info" property="codeInfo" jdbcType="VARCHAR" />
+        <result column="is_show" property="isShow" jdbcType="TINYINT" />
+        <result column="sort" property="sort" jdbcType="INTEGER" />
+        <result column="is_del" property="isDel" jdbcType="TINYINT" />
+        <result column="create_time" property="createTime" jdbcType="BIGINT" />
+        <result column="update_time" property="updateTime" jdbcType="BIGINT" />
+    </resultMap>
+
+    <sql id="Base_Column_List" >
+        code_id, web_id, code_type, var_name, show_name, code_info,is_show,sort
+    </sql>
+
+    <insert id="save" parameterType="com.Vshop.core.entity.base.WebCode" useGeneratedKeys="true">
+        insert into shop_web_code (web_id, code_type,
+        var_name, show_name, code_info,sort,is_show,create_time,is_del)
+        values (#{webId,jdbcType=INTEGER}, #{codeType,jdbcType=VARCHAR},
+        #{varName,jdbcType=VARCHAR}, #{showName,jdbcType=VARCHAR}, #{codeInfo,jdbcType=LONGVARCHAR},#{sort},#{isShow},#{createTime},0
+        )
+    </insert>
+
+    <select id="queryAll" resultMap="BaseResultMap">
+        SELECT <include refid="Base_Column_List"/>
+        FROM  shop_web_code
+        where  is_del = 0 order by sort
+    </select>
+
+    <select id="queryById" resultMap="BaseResultMap" parameterType="int">
+        SELECT <include refid="Base_Column_List"/>
+        FROM  shop_web_code
+        where  is_del = 0 and code_id = #{codeId}
+    </select>
+
+    <update id="update" parameterType="com.Vshop.core.entity.base.WebCode">
+        update shop_web_code
+        set show_name = #{showName},is_show = #{isShow},sort = #{sort},code_info = #{codeInfo},update_time=#{updateTime}
+        where code_id = #{codeId}
+    </update>
+
+    <update id="delete" parameterType="int">
+        update shop_web_code
+        set is_del = 1
+        where code_id = #{id}
+    </update>
+    
+    <select id="queryAllByType" resultMap="BaseResultMap" parameterType="string">
+        SELECT <include refid="Base_Column_List"/>
+        FROM  shop_web_code
+        where var_name = #{type} and is_del = 0 and is_show = 1 order by sort
+    </select>
+
+    <select id="queryNewByType" resultMap="BaseResultMap" parameterType="string">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM shop_web_code
+        where var_name = #{type} and is_del = 0 and
+        code_id = (select max(code_id) from shop_web_code where var_name = #{type} and is_del = 0)
+    </select>
+</mapper>

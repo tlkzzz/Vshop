@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.Vshop.service.module.goods.dao.mapper.ConsumerCodeLogMapper">
+
+	<resultMap id="BaseResultMap" type="com.Vshop.core.entity.base.ConsumerCodeLog" >
+		<id column="log_id" property="logId" jdbcType="INTEGER" />
+		<result column="log_result" property="logResult" jdbcType="VARCHAR" />
+		<result column="log_user" property="logUser" jdbcType="INTEGER" />
+		<result column="log_time" property="logTime" jdbcType="BIGINT" />
+		<result column="log_flag" property="logFlag" jdbcType="INTEGER" />
+		<result column="consumer_code_bunch" property="consumerCodeBunch" jdbcType="VARCHAR" />
+		<result column="code_status" property="codeStatus" jdbcType="INTEGER" />
+		<result column="log_ip" property="logIp" jdbcType="VARCHAR" />
+	</resultMap>
+	
+	<insert id="save" parameterType="com.Vshop.core.entity.base.ConsumerCodeLog" >
+		INSERT INTO shop_consumer_codelog (log_result,log_user,log_time,log_flag,consumer_code_bunch,code_status,log_ip)
+	 	 VALUES (#{logResult},#{logUser},#{logTime},#{logFlag},#{consumerCodeBunch},#{codeStatus},#{logIp});
+	</insert>
+
+</mapper>

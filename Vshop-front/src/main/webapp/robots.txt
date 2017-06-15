@@ -1,0 +1,6 @@
+User-agent: *　
+Allow: /.jpg$　
+Disallow: /res/
+Disallow: /uniopayprokey/
+Disallow: /uniopaykey/
+Disallow: /weChat/

@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.Vshop.service.module.goods.dao.mapper.GoodsSpecMapper">
+
+    <resultMap id="BaseResultMap" type="com.Vshop.core.entity.GoodsSpec" >
+        <id column="goods_spec_id" property="goodsSpecId"/>
+        <result column="goods_id" property="goodsId"/>
+        <result column="spec_name" property="specName"/>
+        <result column="spec_goods_price" property="specGoodsPrice"/>
+        <result column="spec_goods_storage" property="specGoodsStorage"/>
+        <result column="spec_salenum" property="specSalenum"/>
+        <result column="spec_goods_color" property="specGoodsColor"/>
+        <result column="spec_goods_serial" property="specGoodsSerial"/>
+        <result column="spec_goods_spec" property="specGoodsSpec"/>
+    </resultMap>
+    
+    <sql id="Base_Column_List" >
+        goods_spec_id, goods_id, spec_name, spec_goods_price, spec_goods_storage,
+        spec_salenum, spec_goods_color, spec_goods_serial, spec_goods_spec
+    </sql>
+    
+    <sql id="BaseWhereSql">
+    	<where>
+    		1=1
+    		<if test="condition.goodsSpecId != null">
+    			and goods_spec_id=#{condition.goodsSpecId}
+    		</if>
+    		<if test="condition.goodsId != null">
+    			and goods_id=#{condition.goodsId}
+    		</if>
+    		<if test="condition.specName != null">
+    			and spec_name like CONCAT('%',#{condition.specName},'%')
+    		</if>
+    		<if test="condition.specGoodsPrice != null">
+    			and spec_goods_price&lt;=#{condition.specGoodsPrice}
+    		</if>
+    		<if test="condition.specGoodsStorage != null">
+    			and spec_goods_storage&gt;=#{condition.specGoodsStorage}
+    		</if>
+    		<if test="condition.specSalenum != null">
+    			and spec_salenum&gt;=#{condition.specSalenum}
+    		</if>
+    		<if test="condition.specGoodsColor != null">
+    			and spec_goods_color like CONCAT('%',#{condition.specGoodsColor},'%')
+    		</if>
+    		<if test="condition.specGoodsSerial != null">
+    			and spec_goods_serial like CONCAT('%',#{condition.specGoodsSerial},'%')
+    		</if>
+    		<if test="condition.specGoodsSpec != null">
+    			and spec_goods_spec like CONCAT('%',#{condition.specGoodsSpec},'%')
+    		</if>
+    	</where>
+    </sql>
+    
+    <!-- 保存goodsspec -->
+    <insert id="saveGoodsSpec" parameterType="com.Vshop.core.entity.GoodsSpec" useGeneratedKeys="true" keyProperty="goodsSpecId">
+    	insert into shop_goods_spec
+    	<trim prefix="(" suffix=")" suffixOverrides="," >
+	      <if test="goodsId != null" >
+	        goods_id,
+	      </if>
+	      <if test="specName != null" >
+	        spec_name,
+	      </if>
+	      <if test="specGoodsPrice != null" >
+	        spec_goods_price,
+	      </if>
+	      <if test="specGoodsStorage != null" >
+	        spec_goods_storage,
+	      </if>
+	      <if test="specSalenum != null" >
+	        spec_salenum,
+	      </if>
+	      <if test="specGoodsColor != null" >
+	        spec_goods_color,
+	      </if>
+	      <if test="specGoodsSerial != null" >
+	        spec_goods_serial,
+	      </if>
+	      <if test="specGoodsSpec != null" >
+	        spec_goods_spec,
+	      </if>
+	    </trim>
+	    <trim prefix="values (" suffix=")" suffixOverrides="," >
+	      <if test="goodsId != null" >
+	        #{goodsId},
+	      </if>
+	      <if test="specName != null" >
+	        #{specName},
+	      </if>
+	      <if test="specGoodsPrice != null" >
+	        #{specGoodsPrice},
+	      </if>
+	      <if test="specGoodsStorage != null" >
+	        #{specGoodsStorage},
+	      </if>
+	      <if test="specSalenum != null" >
+	        #{specSalenum},
+	      </if>
+	      <if test="specGoodsColor != null" >
+	        #{specGoodsColor},
+	      </if>
+	      <if test="specGoodsSerial != null" >
+	        #{specGoodsSerial},
+	      </if>
+	      <if test="specGoodsSpec != null" >
+	        #{specGoodsSpec},
+	      </if>
+	    </trim>
+    </insert>
+    
+    <!-- 根据goodsid批量删除 -->
+    <delete id="deleteGoodsSpecByGoodsId" parameterType="java.lang.Integer">
+    	delete from shop_goods_spec where goods_id=#{goodsId}
+    </delete>
+    
+    <!-- 通过goodsId查找 -->
+    <select id="findListByGoodsId" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List" />
+        from shop_goods_spec where goods_id=#{goodsId}
+    </select>
+	
+	<!-- 通过主键查找 -->
+    <select id="findByGoodsSpecId" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List" />
+        from shop_goods_spec where goods_spec_id=#{goodsSpecId}
+    </select>
+    
+	<!-- 查找所有的 -->
+    <select id="findAllList"  resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM shop_goods_spec
+    </select>
+    
+    <!-- 分页并且条件查询 -->
+    <select id="findPageList" resultMap="BaseResultMap" parameterType="com.Vshop.service.utils.page.Pager">
+        select a.* from(
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM shop_goods_spec
+        <include refid="BaseWhereSql" />
+        ) a limit #{start}, #{pageSize}
+    </select>
+    
+    <!-- 查询条数 -->
+    <select id="findPageListCount" resultType="java.lang.Integer" parameterType="com.Vshop.service.utils.page.Pager">
+        select count(1) from shop_goods_spec <include refid="BaseWhereSql" /> 
+    </select>
+    
+    <!-- 修改goodssepc表的库存和销售情况 -->
+	<update id="updateGoodsSpecStorage" parameterType="com.Vshop.core.entity.GoodsSpec" useGeneratedKeys="true" keyProperty="goodsId">
+		update shop_goods_spec
+		    <set>
+		        spec_goods_storage = spec_goods_storage - #{specSalenum},
+		        spec_salenum = spec_salenum + #{specSalenum}
+		    </set>
+    	where goods_spec_id = #{goodsSpecId}
+	</update>
+    
+</mapper>

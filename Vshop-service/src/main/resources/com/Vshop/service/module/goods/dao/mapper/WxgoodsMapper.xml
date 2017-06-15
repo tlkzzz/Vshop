@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.Vshop.service.module.goods.dao.mapper.WxgoodsMapper">
+    <resultMap id="BaseResultMap" type="com.Vshop.core.entity.base.Wxgoods" >
+        <id column="id" property="id" jdbcType="VARCHAR" />
+        <result column="spbh" property="spbh" jdbcType="VARCHAR" />
+        <result column="name" property="name" jdbcType="VARCHAR" />
+        <result column="xsqy" property="xsqy" jdbcType="VARCHAR" />
+        <result column="scs" property="scs" jdbcType="VARCHAR" />
+        <result column="smr" property="smr" jdbcType="VARCHAR" />
+        <result column="smsj" property="smsj" jdbcType="VARCHAR" />
+        <result column="state" property="state" jdbcType="VARCHAR" />
+        <result column="nb" property="nb" jdbcType="INTEGER" />
+        <result column="scsj" property="scsj" jdbcType="VARCHAR" />
+        <result column="je" property="je" jdbcType="VARCHAR" />
+        <result column="hdmc" property="hdmc" jdbcType="VARCHAR" />
+        <result column="bz" property="bz" jdbcType="VARCHAR" />
+        <result column="cjsj" property="cjsj" jdbcType="VARCHAR" />
+         <result column="sjzfc" property="sjzfc" jdbcType="VARCHAR" />
+         <result column="fszmc" property="fszmc" jdbcType="VARCHAR" />
+         <result column="tgfmc" property="tgfmc" jdbcType="VARCHAR" />
+         <result column="hbzfy" property="hbzfy" jdbcType="VARCHAR" />
+         <result column="url" property="url" jdbcType="VARCHAR" />
+    </resultMap>
+
+
+    <sql id="Base_Column_List" >
+        id,spbh,sjzfc, name,xsqy,scs,smsj,smr,nb,scsj,je,hdmc,bz,cjsj,state ,fszmc,tgfmc,hbzfy,url
+    </sql>
+    <!-- 保存品牌 -->
+    <insert id="save" parameterType="com.Vshop.core.entity.base.Wxgoods" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO shop_wxgoods(
+        id,spbh,name,sjzfc,xsqy,scs,smsj,smr,nb,scsj,je,hdmc,bz,cjsj,state,fszmc,tgfmc,hbzfy,url)
+        VALUES(#{id},#{spbh},#{name},#{sjzfc},#{xsqy},#{scs},#{smsj},#{smr},#{nb},#{scsj},#{je},#{hdmc},#{bz},#{cjsj},#{state},#{fszmc},#{tgfmc},#{hbzfy},#{url});
+    </insert>
+    
+     <sql id="whereStatement">
+		<where>
+			1 = 1 and state !=2
+	    <if test="condition.name != null and condition.name!=''" >
+            and name = #{condition.name}
+        </if>
+        <if test="condition.state != null and condition.state!=''" >
+            and state = #{condition.state}
+        </if>
+        <if test="condition.je !=null and condition.je!=''" >
+            and je = #{condition.je}
+        </if>
+         <if test="condition.spbh != null and condition.spbh!=''" >
+            and spbh = #{condition.spbh}
+        </if>
+		</where>
+	</sql>
+	
+	
+    
+    <!-- 删除品牌 -->
+    <delete id="delete" parameterType="java.lang.String">
+         update shop_wxgoods set state = 2 where id=#{id} 
+    </delete>
+     <!-- 无效 -->
+    <delete id="updelete" parameterType="java.lang.String">
+         update shop_wxgoods set state = 1 where id=#{id} 
+    </delete>
+    
+    
+    
+    <!-- 更新品牌 -->
+    <update id="update" parameterType="com.Vshop.core.entity.base.Wxgoods">
+        update shop_wxgoods
+        <set>
+            <if test="name != '' and name != null ">
+                name = #{name},
+            </if>
+            <if test="spbh != '' and spbh != null ">
+                spbh = #{spbh},
+            </if>
+            <if test="xsqy != '' and xsqy != null">
+                xsqy = #{xsqy},
+            </if>
+             <if test="state != '' and state != null">
+                state = #{state},
+            </if>
+             <if test="nb != ''">
+                nb = #{nb},
+            </if>
+              <if test="smr != '' and smr != null ">
+                smr = #{smr},
+            </if>
+            <if test="smsj != '' and smsj != null">
+                smsj = #{smsj},
+            </if>
+            <if test="scs != '' and scs != null">
+                scs = #{scs},
+            </if>
+            <if test="je != '' and je != null">
+                je = #{je},
+            </if>
+            <if test="hdmc != null and hdmc !=''">
+                hdmc = #{hdmc},
+            </if>
+            <if test="bz != null and bz !=''">
+                bz = #{bz},
+            </if>
+             <if test="tgfmc != null and tgfmc !=''">
+                tgfmc = #{tgfmc},
+            </if>
+            <if test="fszmc != null and fszmc !=''">
+                fszmc = #{fszmc},
+            </if>
+             <if test="hbzfy != null and hbzfy !=''">
+                hbzfy = #{hbzfy},
+            </if>
+           
+        </set>
+        where id=#{id}
+    </update>
+    
+    <!--查询分页列表-->
+    <select id="findPageList" parameterType="com.Vshop.service.utils.page.Pager" resultMap="BaseResultMap">
+       SELECT a.* FROM(
+        SELECT
+         <include refid="Base_Column_List" />
+        FROM shop_wxgoods
+         <include refid="whereStatement" />
+        order by id desc) a 
+    </select>
+ 
+     <sql id="whereStatement2">
+		<where>
+			1 = 1 and state !=2
+		    <if test="name != null and name !=''" >
+	            and name = #{name}
+	        </if>
+	        <if test="state !=null and state !=''">
+	            AND  state = #{state}
+	        </if>
+	        <if test="je != null and je != ''">
+	            AND je = #{je}
+	        </if>
+	        <if test="spbh != null and spbh != ''">
+	            AND spbh = #{spbh}
+	        </if>
+	       
+		</where>
+	</sql>
+      <!-- 获取全部数据 -->
+    <select id="findList" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM shop_wxgoods 
+        <include refid="whereStatement2"></include>
+        order by id desc
+    </select>
+  
+
+	<!-- 根据id获取品牌 -->
+    <select id="findById" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select
+        <include refid="Base_Column_List" />
+        from shop_wxgoods where id=#{id}
+    </select>
+
+	
+    
+    <!-- 根据获取总数 -->
+    <select id="countBrand" resultType="Integer" parameterType="com.Vshop.core.entity.base.Wxgoods">
+        SELECT count(1) from shop_wxgoods
+    </select>
+   
+   
+</mapper>

@@ -1,0 +1,45 @@
+﻿#mycartcontent{ width:100%; border:solid 1px #D4D4C9; margin:0px auto 0px auto;}
+#mycartcontent .title{ height:20px; background:url(../pic/comparetitle.jpg) no-repeat 15px 18px; overflow:hidden; padding:20px 15px 20px  40px; border-bottom:solid 1px #E5E5E5;}
+#mycartcontent .title .strong{ float:left; display:block; font-size:14px;}
+#mycartcontent .title .strong b{ color:#DC0306; font-size:14px;}
+#mycartcontent .title .r{ float:right;}
+#mycartcontent .title .r li{ padding:0px 2px; line-height:19px; float:left; height:19px; font-size:14px;}
+#mycartcontent .title .r li label{ font-weight:bold; color:White; font-size:14px; font-family:Arial; margin:-1px 5px 0px 0px; vertical-align:middle; display:inline-block; background:url(../pic/mycart_num2.jpg) no-repeat 0px 0px; text-align:center; line-height:19px; width:19px;}
+#mycartcontent .title .r .current{ color:#DC0306;}
+#mycartcontent .title .r .current label{ color:White;background:url(../pic/mycart_num1.jpg) no-repeat 0px 0px;}
+#mycartcontent .list{ _display:inline-block; overflow:hidden;}
+#mycartcontent .list .li{ border:0px; padding:0px 15px; height:36px; line-height:36px; overflow:hidden; background:url(../pic/mycart_title_bg.jpg) repeat-x 0px 0px;}
+#mycartcontent .list .lis{ border-top:solid 1px #DDD;}
+#mycartcontent .list .li span{ height:36px;}
+#mycartcontent .list .li .strong{ font-size:14px;}
+#mycartcontent .list .li .s1 .checkbox{ margin:-2px 4px 0px 0px;}
+#mycartcontent .list .li .s1{ _position:relative; _top:10px;}
+#mycartcontent .list .li .s3{ padding-top:0px; padding-bottom:0px;  line-height:36px; color:#484848; font-size:12px; }
+#mycartcontent .list .li .s2{ padding:0px 0px 0px 90px; width:38%; text-align:center;}
+#mycartcontent .list .li .s4{ padding-top:0px; padding-bottom:0px;}
+
+#mycartcontent .list .li .s5{ padding-top:0px; padding-bottom:0px;}
+#mycartcontent .list{ overflow:hidden;}
+#mycartcontent .list li span{ display:block; float:left;}
+#mycartcontent .list li{ height:100px; padding:15px; border-top:dotted 1px #C1C1C1; margin:-1px 0px 0px 0px;}
+#mycartcontent .list .img{ float:left; width:73px; padding:0px 15px 0px 0px; height:60px;}
+#mycartcontent .list .img img{ width:71px; border:solid 1px #DDD; height:58px;}
+#mycartcontent .list li .s1{ width:60px; float:left;}
+#mycartcontent .list li .checkbox{ vertical-align:middle;}
+#mycartcontent .list dl{ float:left; width:46%;}
+#mycartcontent .list dt{ height:22px; line-height:22px; overflow:hidden;}
+#mycartcontent .list dt a{ font-size:14px; font-weight:bold;}
+#mycartcontent .list dd{ line-height:20px; overflow:hidden; color:#9A9999;}
+#mycartcontent .list li .s3{ font-family:Arial; padding:20px 0px 0px 0px; line-height:25px; color:#DC0306; font-size:16px; text-align:left; width:15%;}
+#mycartcontent .list li .s33{ font-weight:bold; font-size:14px; font-family:Arial; padding:20px 0px 0px 0px; line-height:25px; color:#DC0306; font-size:16px; text-align:center; width:200px;}
+#mycartcontent .list li .s33 label{  color:#484848; font-size:14px;}
+#mycartcontent .list li .s4{ text-align:left; width:15%; padding:20px 0px 0px 0px;}
+#mycartcontent .list li .s5{ float:right; width:15%; text-align:left; padding:20px 0px 0px 0px;}
+#mycartcontent .list .text{ margin:0px 5px; vertical-align:middle; width:34px; height:20px; border:solid 1px #A5A5A5; padding:0px; text-align:center; line-height:20px; vertical-align:middle;}
+#mycartcontent .list .txtbtn1{ cursor:pointer; display:inline-block; vertical-align:middle; width:22px; border:0px; height:19px; vertical-align:middle; background:url(../pic/txtbtn1.jpg) no-repeat 0px 0px; cursor:pointer;}
+#mycartcontent .list .txtbtn2{ cursor:pointer; display:inline-block; border:0px; width:25px; vertical-align:middle; height:19px; vertical-align:middle; background:url(../pic/txtbtn2.jpg) no-repeat 0px 0px; cursor:pointer;}
+#mycartcontent .list .delbtn{ width:42px; height:21px; border:0px; background:url(../pic/del_btn1.jpg) no-repeat 0px 0px; cursor:pointer;}
+#mycartcontent .totals{ border-top:solid 1px #DDDDDD; padding:15px; line-height:31px;}
+#mycartcontent .checkoutbtn{ width:108px; height:31px; border:0px; background:url(../pic/checkout.jpg) no-repeat 0px 0px; float:right; cursor:pointer;}
+#mycartcontent .totals label{ padding:0px 10px 0px 10px; background:url(../pic/mobile_li.jpg) no-repeat 0px 12px;}
+#mycartcontent .totals span{ color:#DC0306; font-weight:bold; padding:0px 5px; font-family:Arial;}

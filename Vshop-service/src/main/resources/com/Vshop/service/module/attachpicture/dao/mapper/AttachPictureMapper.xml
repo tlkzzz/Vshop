@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.Vshop.service.module.attachpicture.dao.mapper.AttachPictureMapper">
+	<resultMap id="BaseResultMap" type="com.Vshop.core.entity.base.AttachPicture">
+		<id column="id" property="id" jdbcType="INTEGER" />
+		<result column="realName" property="realName" jdbcType="VARCHAR" />
+		<result column="localName" property="localName" jdbcType="VARCHAR" />
+		<result column="thumbnailPath" property="thumbnailPath" jdbcType="VARCHAR" />
+		<result column="localPath" property="localPath" jdbcType="VARCHAR" />
+		<result column="createDate" property="createDate" jdbcType="BIGINT" />
+		<result column="storeid" property="storeid" jdbcType="INTEGER" />
+	</resultMap>
+	
+	<sql id="Base_Column_List" >
+		id,realName,localName,thumbnailPath,localPath,createDate,storeid
+	</sql>
+	
+	<sql id="whereStatement">
+		<where> 
+			1=1
+			<if test="condition.realName != null and condition.realName != '' ">
+				and a.realName like CONCAT('%','${condition.realName}','%' )
+			</if>
+			<if test="condition.localName != null and condition.localName != '' ">
+				and a.localName like CONCAT('%','${condition.localName}','%' )
+			</if>
+			<if test="condition.storeid != null ">
+				and a.storeid = #{condition.storeid}
+			</if>
+		</where>
+	</sql>
+	
+	<!-- 保存图片库图片属性 -->
+	<insert id="save" parameterType="com.Vshop.core.entity.base.AttachPicture" useGeneratedKeys="true" keyProperty="id">
+		insert into shop_attach_picture(realName,localName,thumbnailPath,localPath,createDate,storeid)
+		values(#{realName},#{localName},#{thumbnailPath},#{localPath},#{createDate},#{storeid});
+	</insert>
+	
+	<!-- 修改图片库图片属性 -->
+	<update id="update" parameterType="com.Vshop.core.entity.base.AttachPicture">
+		update shop_attach_picture
+		<set>
+			<if test="realName != '' and realName != null ">
+				realName = #{realName},
+			</if>
+			<if test="localName != '' and localName != null ">
+				localName = #{localName},
+			</if>
+			<if test="thumbnailPath != '' and thumbnailPath != null ">
+				thumbnailPath = #{thumbnailPath},
+			</if>
+			<if test="localPath != '' and localPath != null ">
+				localPath = #{localPath},
+			</if>
+			<if test="storeid != null ">
+				storeid = #{storeid}
+			</if>
+		</set>
+		where id=#{id}
+	</update>
+	
+	<!-- 根据id删除图片空间中图片数据 -->
+	<delete id="delete" parameterType="java.lang.Integer">
+		delete from shop_attach_picture where id = #{id}
+	</delete>
+	
+	<!-- 查询分页条数(包括查询条件) -->
+	<select id="findCount" resultType="int" parameterType="com.Vshop.service.utils.page.Pager">
+		select count(*) from shop_attach_picture a
+		<include refid="whereStatement" />
+	</select>
+	
+	<!-- 分页查询 -->
+	<select id="findPageList" resultMap="BaseResultMap" parameterType="com.Vshop.service.utils.page.Pager">
+		select <include refid="Base_Column_List" /> from shop_attach_picture a
+		<include refid="whereStatement" />
+		ORDER BY id asc LIMIT #{start},#{pageSize}
+	</select>
+	
+	<!-- 查询所有不含分页 -->
+	<select id="findList" resultMap="BaseResultMap" parameterType="int">
+		select <include refid="Base_Column_List" /> from shop_attach_picture
+	</select>
+	
+	<!-- 根据店铺id查询 -->
+	<select id="findListByStoreID" resultMap="BaseResultMap">
+		select <include refid="Base_Column_List" /> from shop_attach_picture where storeid = #{storeid}
+	</select>
+	
+	<!-- 根据id查询 -->
+	<select id="findById" resultType="com.Vshop.core.entity.base.AttachPicture" parameterType="int">
+		select <include refid="Base_Column_List" /> from shop_attach_picture where id=#{id}
+	</select>
+</mapper>

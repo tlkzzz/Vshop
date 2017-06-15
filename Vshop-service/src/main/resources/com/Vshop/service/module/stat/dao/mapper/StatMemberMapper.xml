@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.Vshop.service.module.stat.dao.mapper.StatMemberMapper">
+    <resultMap id="BaseResultMap" type="com.Vshop.core.entity.base.Member">
+        <result column="member_id" property="memberId" jdbcType="INTEGER" />
+        <result column="member_name" property="memberName" jdbcType="VARCHAR" />
+        <result column="member_time" property="memberTime" jdbcType="DATE" />
+        <result column="count" property="count" />
+    </resultMap>
+
+	<!--  按日查询List -->
+    <select id="queryStatMemberList" resultMap="BaseResultMap" parameterType="com.Vshop.core.entity.base.Member">
+    select 
+    	member_time,
+    	count(member_time) as count 
+    	from (
+    		select FROM_UNIXTIME(member_time,'%Y%m%d%H')as member_time from shop_member m  
+    			where 1=1 
+    			and member_time &gt;= UNIX_BIGINT(#{starttime}) 
+    			and member_time &lt;= UNIX_BIGINT(#{endtime})
+    	)A group by member_time
+    </select>
+    
+	<!--  按月查询List -->
+    <select id="queryStatMemberMonthList" resultMap="BaseResultMap" parameterType="com.Vshop.core.entity.base.Member">
+    	select member_time, count(member_time) as count 
+    		from ( 
+    			select DATE_FORMAT(member_time,'%Y%m%d')as member_time 
+    				from shop_member m 
+    			WHERE 1 = 1 
+    			and member_time &gt;= #{starttime} 
+    			and member_time &lt;= #{endtime} 
+    		)A group by member_time 
+    </select>
+
+</mapper>

@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.Vshop.service.module.trade.dao.mapper.PredepositLogMapper">
+	<resultMap id="BaseResultMap" type="com.Vshop.core.entity.base.PredepositLog">
+		<id column="lg_id" property="lgId" jdbcType="INTEGER" />
+		<result column="lg_member_id" property="lgMemberId" jdbcType="INTEGER" />
+		<result column="lg_member_name" property="lgMemberName" jdbcType="VARCHAR" />
+		<result column="lg_admin_name" property="lgAdminName" jdbcType="VARCHAR" />
+		<result column="lg_type" property="lgType" jdbcType="VARCHAR" />
+		<result column="lg_av_amount" property="lgAvAmount" jdbcType="DECIMAL" />
+		<result column="lg_freeze_amount" property="lgFreezeAmount" jdbcType="DECIMAL" />
+		<result column="create_time" property="createTime" jdbcType="BIGINT" />
+		<result column="lg_desc" property="lgDesc" jdbcType="VARCHAR" />
+	</resultMap>
+	
+	<!-- 全部查询字段 -->
+	<sql id="Base_Column_List">
+		lg_id, lg_member_id, lg_member_name, lg_admin_name, lg_type, lg_av_amount, lg_freeze_amount,
+		create_time, lg_desc
+	</sql>
+	
+	<!-- 保存预存款变更日志表 -->
+	<insert id="savePdl" parameterType="com.Vshop.core.entity.base.PredepositLog" useGeneratedKeys="true" keyProperty="lgId">
+		insert into shop_pd_log 
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			lg_member_id, lg_member_name, lg_type, lg_av_amount, lg_freeze_amount, create_time,
+			<if test="lgAdminName != null and lgAdminName != '' ">
+				lg_admin_name,
+			</if>
+			<if test="lgDesc != null and lgDesc != '' ">
+				lg_desc,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			#{lgMemberId}, #{lgMemberName}, #{lgType}, #{lgAvAmount}, #{lgFreezeAmount}, #{createTime},
+			<if test="lgAdminName != null and lgAdminName != '' ">
+				#{lgAdminName},
+			</if>
+			<if test="lgDesc != null and lgDesc != '' ">
+				#{lgDesc},
+			</if>
+		</trim>
+	</insert>
+	
+	<!-- 修改预存款变更日志表 -->
+	<update id="updatePdl" parameterType="com.Vshop.core.entity.base.PredepositLog">
+		update shop_pd_log
+		<set>
+			<if test="lgMemberId != null">
+				lg_member_id = #{lgMemberId},
+			</if>
+			<if test="lgMemberName != null and lgMemberName != ''">
+				lg_member_name = #{lgMemberName},
+			</if>
+			<if test="lgAdminName != null and lgAdminName!= '' ">
+				lg_admin_name = #{lgAdminName},
+			</if>
+			<if test="lgType != null and lgType != '' ">
+				lg_type = #{lgType},
+			</if>
+			<if test="lgAvAmount != null">
+				lg_av_amount = #{lgAvAmount},
+			</if>
+			<if test="lgFreezeAmount != null">
+				lg_freeze_amount = #{lgFreezeAmount},
+			</if>
+			<if test="createTime != null">
+				create_time = #{createTime},
+			</if>
+			<if test="lgDesc != null and lgDesc != '' ">
+				lg_desc = #{lgDesc},
+			</if>
+		</set>
+		where lg_id = #{lgId}
+	</update>
+	
+	<!-- 通过id删除预存款变更日志表 -->
+	<delete id="deletePdl" parameterType="int">
+		delete from shop_pd_log where lg_id = #{lgId}
+	</delete>
+	
+	<!-- 通过id查找预存款变更日志表 -->
+	<select id="findPdlById" parameterType="int" resultMap="BaseResultMap">
+		select <include refid="Base_Column_List"/> from shop_pd_log where lg_id = #{lgId}
+	</select>
+	
+	<!-- 根据用户id查询预存款变更日志表 -->
+	<select id="findByMemberId" parameterType="int" resultMap="BaseResultMap">
+		select <include refid="Base_Column_List"/> from shop_pd_log where lg_member_id = #{lgMemberName}
+	</select>
+</mapper>

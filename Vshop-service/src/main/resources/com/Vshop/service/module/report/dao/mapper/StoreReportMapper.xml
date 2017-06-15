@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.Vshop.service.module.report.dao.mapper.StoreReportMapper">
+
+	<sql id="timeWhereSql">
+		<where>
+			1=1
+			<if test="startTime != null">
+				and TO_DAYS(so.finnshed_time) &gt;= TO_DAYS(#{startTime})
+			</if>
+			<if test="endTime != null">
+				and TO_DAYS(so.finnshed_time) &lt;= TO_DAYS(#{endTime})
+			</if>
+		</where>
+	</sql>
+
+	<sql id="timeWhereSql2">
+		<where>
+			1=1
+			<if test="startTime != null">
+				and TO_DAYS(so.login_time) &gt;= TO_DAYS(#{startTime})
+			</if>
+			<if test="endTime != null">
+				and TO_DAYS(so.login_time) &lt;= TO_DAYS(#{endTime})
+			</if>
+		</where>
+	</sql>
+		
+	<sql id="GroupBySql">
+		<if test="condition == 'week'">
+			DAYOFWEEK(b.finnshed_time)
+		</if>
+		<if test="condition == 'month'">
+			DAYOFMONTH(b.finnshed_time)
+		</if>
+		<if test="condition == 'year'">
+			MONTH(b.finnshed_time)
+		</if>
+		<if test="condition == 'today'">
+			DATE(b.finnshed_time)
+		</if>
+		<if test="condition == 'assign'">
+			DATE(b.finnshed_time)
+		</if>
+	</sql>
+
+	<!-- 商品的访问量 -->
+	<resultMap id="goodsClickMapper" type="com.Vshop.core.entity.base.GoodsClick">
+		<result column="goodsId" property="goodsId" jdbcType="INTEGER" />
+		<result column="goodsName" property="goodsName" jdbcType="VARCHAR" />
+		<result column="goodsClick" property="goodsClick" jdbcType="INTEGER" />
+		<result column="loginTime" property="loginTime" />
+	</resultMap>
+	
+	<!-- 商品的店铺访问量 -->
+	<select id="getGoodsClick" resultMap="goodsClickMapper" parameterType="com.Vshop.core.entity.base.GoodsClick">
+		select 
+		a.goods_id goodsId, a.goods_name goodsName, count(a.goods_id) goodsClick, <include refid="GroupBySql"/> loginTime
+		from 
+			(select sg.goods_id, sg.goods_name, sg.salenum from shop_goods sg where sg.store_id=#{storeId}) a
+		join 
+			(select so.goods_id, so.login_time finnshed_time from shop_stat_goods so <include refid="timeWhereSql2"/>) b
+		on a.goods_id=b.goods_id
+		group by <include refid="GroupBySql"/>,a.goods_id
+		order by goodsClick desc limit 10
+	</select>
+	
+	<!-- 所有商品的店铺访问量 -->
+	<select id="getAllGoodsClick" resultMap="goodsClickMapper" parameterType="com.Vshop.core.entity.base.GoodsClick">
+		select 
+		a.goods_id goodsId, a.goods_name goodsName, count(a.goods_id) goodsClick, <include refid="GroupBySql"/> loginTime
+		from 
+			(select sg.goods_id, sg.goods_name, sg.salenum from shop_goods sg) a
+		join 
+			(select so.goods_id, so.login_time finnshed_time from shop_stat_goods so <include refid="timeWhereSql2"/>) b
+		on a.goods_id=b.goods_id
+		group by <include refid="GroupBySql"/>,a.goods_id
+		order by goodsClick desc limit 10
+	</select>
+
+	
+	<!-- 店铺下各商品的总销量 -->
+	<resultMap id="StoreSellCountMapper" type="com.Vshop.core.entity.base.StoreSellCount">
+		<result column="goodsId" property="goodsId" jdbcType="INTEGER" />
+		<result column="goodsName" property="goodsName" jdbcType="INTEGER" />
+		<result column="goodsNum" property="goodsNum" jdbcType="VARCHAR" />
+		<result column="finnshedTime" property="finnshedTime"/>
+	</resultMap>
+
+	<!-- 店铺下各商品的总销量 -->
+	<select id="getStoreSellCount"  resultMap="StoreSellCountMapper" parameterType="com.Vshop.core.entity.base.StoreSellCount">
+	select 
+		a.goods_id goodsId, a.goods_name goodsName, sum(a.goods_num) goodsNum, DATE(b.finnshed_time) finnshedTime
+	from 
+	(select sog.order_id, sog.goods_id, sog.goods_name, sog.goods_num from shop_order_goods sog where sog.stores_id=#{storeId}) a
+	join 
+	(select so.order_id, so.finnshed_time from shop_order so 
+		<include refid="timeWhereSql"/>
+		and so.order_state=40 
+	) b
+	on a.order_id=b.order_id
+	group by TO_DAYS(b.finnshed_time),a.goods_id 
+	</select>
+	
+	<!-- 店铺总销量 -->
+	<resultMap id="StoreTotalCountMapper" type="com.Vshop.core.entity.base.StoreTotalCount">
+		<result column="storeName" property="storeName" jdbcType="VARCHAR" />
+		<result column="goodsNum" property="goodsNum" jdbcType="INTEGER" />
+		<result column="finnshedTime" property="finnshedTime" jdbcType="VARCHAR" />
+	</resultMap>
+
+	<!-- 店铺总销量 -->
+	<select id="getStoreTotalCount"  resultMap="StoreTotalCountMapper" parameterType="com.Vshop.core.entity.base.StoreTotalCount">
+	select 
+		sum(a.goods_num) goodsNum, b.store_name storeName, <include refid="GroupBySql"/> finnshedTime
+	from 
+			(select sog.goods_num, sog.order_id from shop_order_goods sog where sog.stores_id=#{storeId}) a
+		join 
+			(select so.order_id, so.finnshed_time, so.store_name from shop_order so 
+			<include refid="timeWhereSql"/>
+			and so.order_state=40) b
+		on
+			a.order_id=b.order_id
+	group by <include refid="GroupBySql"/>
+	</select>
+	
+
+	<!-- 购买率 -->
+	<resultMap id="StorePurchaseRateMapper" type="com.Vshop.core.entity.base.StorePurchaseRate">
+		<result column="goodsId" property="goodsId" jdbcType="INTEGER" />
+		<result column="goodsName" property="goodsName" jdbcType="VARCHAR" />
+		<result column="click" property="click"/>
+		<result column="saleCount" property="saleCount"/>
+	</resultMap>
+
+	<!-- 购买率 -->
+	<select id="getStorePurchaseRate"  resultMap="StorePurchaseRateMapper" parameterType="com.Vshop.core.entity.base.StorePurchaseRate">
+	select 
+		a.goods_id goodsId, c.goods_name goodsName,
+		cast(c.goods_click as decimal(15, 2)) click,
+		cast(count(b.order_id) as decimal(15, 2)) saleCount
+	from
+			(select sog.order_id, sog.goods_id from shop_order_goods sog where sog.stores_id=#{storeId}) a
+		join
+			(select so.order_id from shop_order so where so.order_state=40) b
+		on a.order_id=b.order_id
+		join
+			(select sg.goods_id, sg.goods_name, sg.goods_click from shop_goods sg) c
+		on a.goods_id=c.goods_id
+	group by a.goods_id
+	</select>
+	
+	
+	
+</mapper>

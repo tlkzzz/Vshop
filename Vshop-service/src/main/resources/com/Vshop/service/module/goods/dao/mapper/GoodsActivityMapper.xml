@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper	namespace="com.Vshop.service.module.goods.dao.mapper.GoodsActivityMapper">
+
+	<resultMap id="BaseResultMap" type="com.Vshop.core.entity.base.GoodsActivity">
+		<id column="activity_id" property="activityId" jdbcType="INTEGER" />
+		<result column="activity_name" property="activityName" jdbcType="VARCHAR" />
+		<result column="activity_banner" property="activityBanner" jdbcType="VARCHAR" />
+		<result column="activity_banner2" property="activityBanner2" jdbcType="VARCHAR" />
+		<result column="activity_use" property="activityUse" jdbcType="TINYINT" />
+		<result column="create_time" property="createTime" jdbcType="BIGINT" />
+		<result column="last_update_time" property="lastUpdateTime" jdbcType="BIGINT" />
+	</resultMap>
+
+	<sql id="BaseWhereSql">
+		<where>
+			1=1
+			<if test="condition.activityId != null">
+				and activity_id=#{condition.activityId}
+			</if>
+			<if test="condition.createTime != null">
+				and create_time=#{condition.createTime}
+			</if>
+			<if test="condition.activityBanner != null">
+				and activity_banner=#{condition.activityBanner}
+			</if>
+			<if test="condition.lastUpdateTime != null">
+				and last_update_time=#{condition.lastUpdateTime}
+			</if>
+			<if test="condition.activityUse != null">
+				and activity_use=#{condition.activityUse}
+			</if>
+			<if test="condition.activityBanner2 != null">
+				and activity_banner2=#{condition.activityBanner2}
+			</if>
+			<if test="condition.activityName != null">
+				and activity_name=#{condition.activityName}
+			</if>
+		</where>
+	</sql>
+
+	<sql id="Base_Column_List">
+		activity_id,create_time,activity_banner,last_update_time,activity_use,activity_banner2,activity_name
+	</sql>
+
+	<insert id="save" parameterType="com.Vshop.core.entity.base.GoodsActivity">
+		INSERT INTO shop_goods_activity
+		(create_time,activity_banner,activity_use,activity_banner2,activity_name)
+		VALUES
+		(#{createTime},#{activityBanner},#{activityUse},#{activityBanner2},#{activityName});
+	</insert>
+
+	<select id="findPageList" resultMap="BaseResultMap"
+		parameterType="com.Vshop.service.utils.page.Pager">
+		select a.* from (
+		SELECT
+		<include refid="Base_Column_List" />
+		FROM shop_goods_activity
+		<include refid="BaseWhereSql" />
+		order by activity_id desc
+		) a
+	</select>
+
+	<update id="update" parameterType="com.Vshop.core.entity.base.GoodsActivity">
+		update shop_goods_activity
+		<set>
+			<if test="activityBanner != null ">
+				activity_banner = #{activityBanner},
+			</if>
+			<if test="lastUpdateTime != null ">
+				last_update_time = #{lastUpdateTime},
+			</if>
+			<if test="activityUse != null ">
+				activity_use = #{activityUse},
+			</if>
+			<if test="activityBanner2 != null ">
+				activity_banner2 = #{activityBanner2},
+			</if>
+			<if test="activityName != null ">
+				activity_name = #{activityName},
+			</if>
+		</set>
+		where activity_id = #{activityId}
+	</update>
+
+	<delete id="deleteById" parameterType="java.lang.Integer">
+		delete from shop_goods_activity where activity_id=#{activityId}
+	</delete>
+
+	<select id="findById" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		from shop_goods_activity where activity_id=#{activityId}
+	</select>
+
+</mapper>

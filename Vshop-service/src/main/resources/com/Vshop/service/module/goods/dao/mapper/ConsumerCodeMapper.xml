@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.Vshop.service.module.goods.dao.mapper.ConsumerCodeMapper">
+
+    <resultMap id="BaseResultMap" type="com.Vshop.core.entity.base.ConsumerCode" >
+        <id column="consumer_code_id" property="consumerCodeId" jdbcType="INTEGER" />
+        <result column="consumer_code_bunch" property="consumerCodeBunch" jdbcType="VARCHAR"/>
+        <result column="goods_id" property="goodsId" jdbcType="INTEGER" />
+        <result column="code_source" property="codeSource" jdbcType="INTEGER" />
+        <result column="member_id" property="memberId" jdbcType="INTEGER" />
+        <result column="code_create_time" property="codeCreateTime" jdbcType="BIGINT" />
+        <result column="code_status" property="codeStatus" jdbcType="INTEGER" />
+    </resultMap>
+    
+    <sql id="BaseWhereSql">
+    	<where>
+    		1=1
+    		<if test="condition.consumerCodeBunch != null">
+    			and consumer_code_bunch=#{condition.consumer_code_bunch}
+    		</if>
+    		<if test="condition.goodsId != null">
+    			and goods_id=#{condition.goodsId}
+    		</if>
+    		<if test="condition.memberId != null">
+    			and member_id=#{condition.memberId}
+    		</if>
+    		<if test="condition.codeSource != null">
+    			and code_source=#{condition.codeSource}
+    		</if>
+    		<if test="condition.codeStatus != null">
+    			and code_status=#{condition.codeStatus}
+    		</if>
+    	</where>
+    </sql>
+    
+    <sql id="Base_Column_List" >
+        consumer_code_id, consumer_code_bunch, goods_id, code_source, member_id, code_create_time, code_status
+    </sql>
+    
+    <select id="findPageList" resultMap="BaseResultMap" parameterType="com.Vshop.service.utils.page.Pager">
+        select a.* from (
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM shop_consumer_code
+        <include refid="BaseWhereSql" />
+        order by code_create_time desc, goods_id desc, member_id) a 
+        <!-- limit #{start}, #{pageSize} -->
+    </select>
+    
+    <select id="findPageListCount" resultType="int" parameterType="com.Vshop.service.utils.page.Pager">
+        select 
+        count(*) 
+        FROM shop_consumer_code
+        <include refid="BaseWhereSql" />
+    </select>
+    
+    <insert id="save" parameterType="com.Vshop.core.entity.base.ConsumerCode">
+        INSERT INTO shop_consumer_code(consumer_code_bunch, goods_id, code_source, member_id, code_create_time)
+        VALUES(#{consumerCodeBunch}, #{goodsId}, #{codeSource}, #{memberId}, #{codeCreateTime});
+    </insert>
+
+    <update id="update" parameterType="com.Vshop.core.entity.base.ConsumerCode">
+         update shop_consumer_code
+         <set>
+             <if test="codeStatus != '' and codeStatus != null">
+                 code_status = #{codeStatus},
+             </if>
+         </set>
+        where consumer_code_id=#{consumerCodeId}
+    </update>
+
+    <delete id="deleteById" parameterType="int">
+        delete from shop_consumer_code where consumer_code_id=#{consumerCodeId}
+    </delete>
+
+    <select id="findById" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List" />
+        from shop_consumer_code where consumer_code_id=#{consumerCodeId}
+    </select>
+	
+	<select id="findByBunch" resultType="int" parameterType="java.lang.String">
+        SELECT count(1) FROM shop_consumer_code where consumer_code_bunch = #{consumerCodeBunch}
+    </select>
+
+    <select id="findListByMemberId"  resultMap="BaseResultMap" parameterType="int">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM shop_consumer_code
+        where member_id = #{memberId}
+        order by code_create_time desc, goods_id desc
+    </select>
+
+</mapper>

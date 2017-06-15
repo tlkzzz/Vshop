@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper
+	namespace="com.Vshop.service.module.store.dao.mapper.StoreBindClassMapper">
+	<resultMap id="BaseResultMap" type="com.Vshop.core.entity.base.StoreBindClass" >
+        <id column="bid" property="bid" jdbcType="INTEGER" />
+        <result column="store_id" property="storeId" jdbcType="INTEGER" />
+        <result column="commis_rate" property="commisRate" jdbcType="DOUBLE" />
+        <result column="class_1" property="class1" jdbcType="INTEGER" />
+        <result column="class_2" property="class2" jdbcType="INTEGER" />
+        <result column="class_3" property="class3" jdbcType="INTEGER" />
+    </resultMap>
+	
+	<sql id="Base_Column_List" >
+        bid, store_id, commis_rate, class_1, class_2, class_3
+    </sql>
+	
+	<!-- 根据ID查询实体 -->
+    <select id="queryByStoreId" resultMap="BaseResultMap" parameterType="java.lang.Long">
+		select <include refid="Base_Column_List" />
+		from shop_store_bind_class where store_id = #{id,jdbcType=INTEGER} 
+	</select>
+	
+	<!-- 根据ID查询实体 -->
+    <select id="findById" resultMap="BaseResultMap" parameterType="java.lang.Long">
+		select <include refid="Base_Column_List" />
+		from shop_store_bind_class where bid = #{id,jdbcType=INTEGER} 
+	</select>
+
+</mapper>

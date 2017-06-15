@@ -1,0 +1,101 @@
+
+.wrap{
+	width:100%;
+	height:100%;
+	background:url(../img/1.jpg) no-repeat;
+	position: relative;
+}
+.cont_left{
+	width: 100%;
+	height: 100%;
+}
+.cont_left img{
+	width: 100%;
+	height: 100%;
+}
+.cont{
+	width:55%;
+	height: 90%;
+	background: url(../img/2.png) no-repeat;
+	background-size: 100%;
+	position: absolute;
+	top:10% ;
+	left:22.5%;
+}
+.cont1 img{
+	width: 100%;
+}
+.cont form{
+	position: absolute;
+	top: 20%;
+	left: 27%;
+}
+.cont form input{
+	width: 304px;
+	height: 44px;
+	border: 1px solid #0074b8;
+	margin-top: 20px;
+	padding-left: 50px;
+	background: url(../img/tu_03.jpg) no-repeat center left;
+}
+::-webkit-input-placeholder{
+	color: #ffffff;
+};
+.cont form img{
+	position: absolute;
+	top: 100px;
+}
+
+.cont form p{
+	font-size: 16px;
+	position: absolute;
+	top: 100px;
+	left: 270px;
+	color: #ffffff;
+	
+}
+.cont form h1{
+	font-size: 14px;
+	font-weight: normal;
+}
+.cont form span{
+	position: absolute;
+	top: 213px;
+	left: 20px;
+	color: #ffffff;
+}
+.cont form button{
+	width: 354px;
+	height: 50px;
+	background: #000000;
+	text-align: center;
+	line-height: 50px;
+	color: #ffffff;
+	position: absolute;
+	top: 240px;
+}
+footer{
+	position: absolute;
+	bottom: 10px;
+	right: 30%;
+	font-size: 14px;
+	color:silver;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

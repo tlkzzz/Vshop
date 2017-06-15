@@ -1,0 +1,200 @@
+*{
+	margin: 0;
+	padding: 0;
+}
+#wrap {
+	width: 100%;
+	height: 100%;
+	background: #fff;
+	display: -webkit-box;
+	-webkit-box-orient: vertical;
+	position: relative;
+	color: #666;
+	overflow: hidden;
+	position: relative;
+	overflow: scroll;
+}
+
+.swiper-pagination-bullet{
+	border: 1px solid #b5b6b6;
+	background: #b5b6b6;
+	opacity: 1;
+}
+.swiper-pagination-bullet-active{
+	border: 1px solid #F08200;
+	background: transparent;
+}
+.swiper-slide img{
+	width: 100%;
+}
+.in{
+	width: 90%;
+	height: 0.5rem;
+	position: fixed;
+	top: 0.1rem;
+	left: 5%;
+	-webkit-box-orient: horizontal;
+	display: -webkit-box;
+	z-index: 1;
+}
+.in input{
+	-webkit-box-flex: 4;
+	height: 0.48rem;
+	border: 0;
+	border: 1px solid #c91214;
+	border-top-left-radius: 5px;
+	border-bottom-left-radius: 5px;
+	padding-left: 0.15rem;
+	border-right: none;
+	background: url(../images/search.png) 15px 3px no-repeat #fff;
+	padding:0 30px;
+	background-size: 18px;
+	background-position:8px;
+	
+}
+.in button{
+	-webkit-box-flex: 1;
+	height: 0.5rem;
+	border: 0;
+	background: #c91214;
+	color: #fff;
+	border-top-right-radius: 5px;
+	border-bottom-right-radius: 5px;
+	width: 15%;
+}
+.nav_si{
+	width: 100%;
+	text-align: center;
+}
+.nav_si ul li{
+	width: 24.6%;
+	border-right: 1px solid #dfdfdf;
+	border-bottom: 1px solid #dfdfdf;
+	float: left;
+	height: 95px;
+}
+.nav_si ul li img{
+	width:23px;
+	height: 23px;
+	margin-left: 35%;
+	margin-top: 25%;
+}
+.nav_si ul li span{
+	font-size: 12px;
+}
+.toutiao{
+	width: 100%;
+	height: 44px;
+	background: #f4f4f4;
+	border-bottom: 1px solid #dfdfdf;
+}
+.toutiao img{
+	width: 45px;
+	height: 25px;
+	float: left;
+	margin-top: 9px;
+}
+.toutiao marquee{
+	float: left;
+	width: 80%;
+	font-size: 14px;
+	font-weight: normal;
+	line-height: 44px;
+	background: darkcyan;
+	background: url(../images/toutiao.jpg) no-repeat left center;
+	background-size: 1px;
+	margin-left: 10px;
+}
+.toutiao marquee span{
+	color: #c81313;
+}
+.guanggao img{
+	width: 100%;
+}
+.chan{
+	width: 100%;
+	margin-top: 10px;
+}
+.chan img{
+	width: 32%;
+	float: left;
+	margin-left: 1%;
+}
+.main{
+	width: 100%;
+	background: #f7f7f7;
+	display: -webkit-box;
+	-webkit-box-orient: vertical;
+	margin-top: 0.16rem;
+}
+.m-top{
+	width: 96%;
+	-webkit-box-pack: justify;
+	display: -webkit-box;
+	height: 0.7rem;
+	line-height: 0.6rem;
+	margin: 0 auto;
+}
+.m-top h3{
+	line-height: 0.6rem;
+	font-size: 0.28rem;
+	background: url(../images/line.png) no-repeat left 0.10rem;
+	padding-left: 0.2rem;
+	font-weight: normal;
+}
+.m-top a{
+	line-height: 0.6rem;
+	font-size: 0.2rem;
+	color: #ff6200;
+	margin-right: 15px;
+}
+.m-bot{
+	width: 96%;
+	-webkit-box-orient: horizontal;
+	display: -webkit-box;
+	
+}
+.m-bot dl{
+	-webkit-box-flex: 1;
+	margin-left: 0.2rem;
+	padding-bottom: 0.5rem;
+}
+
+.m-bot dl dt{
+	width: 100%;
+	margin-bottom: 0.3rem;
+}
+.m-bot dl dt img{
+	width: 100%;
+}
+
+.m-bot dl dd p{
+	font-size: 0.2rem;
+	line-height: 0.3rem;
+}
+.m-bot dl dd div{
+	-webkit-box-pack: justify;
+	display: -webkit-box;
+	margin-top: 0.13rem;
+}
+.m-bot dl dd h5{
+	font-size: 16px;
+	color: #ff6200;
+	font-size: normal;
+}
+.m-bot dl dd a{
+	font-size: 0.2rem;
+	color: #999999;
+	display: block;
+	padding: 3px 5px;
+	text-decoration:line-through;
+}
+.m-bot dl dd span img{
+	width: 11px;
+	height: 11px;
+	float: left;
+	margin-top: 3px;
+}
+.guanggaowei img{
+	width: 100%;
+}

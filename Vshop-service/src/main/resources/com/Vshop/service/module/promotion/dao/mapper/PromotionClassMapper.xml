@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.Vshop.service.module.promotion.dao.mapper.PromotionClassMapper">
+	<resultMap id="BaseResultMap" type="com.Vshop.core.entity.base.PromotionClass">
+		<id column="pc_id" property="pcId" jdbcType="INTEGER" />
+		<result column="pc_name" property="pcName" jdbcType="VARCHAR" />
+		<result column="pc_sort" property="pcSort" jdbcType="INTEGER" />	
+		<result column="pc_start_time" property="startTime" jdbcType="BIGINT" />	
+		<result column="pc_end_time" property="endTime" jdbcType="BIGINT" />
+		<result column="pc_status" property="pcStatus" jdbcType="INTEGER" />
+		<result column="create_time" property="createTime" jdbcType="BIGINT" />
+	</resultMap>
+	
+	<resultMap id="BaseResultMapVo" type="com.Vshop.core.entity.vo.PromotionClassVo">
+		<id column="pc_id" property="pcId" jdbcType="INTEGER" />
+		<result column="pc_name" property="pcName" jdbcType="VARCHAR" />
+		<result column="pc_sort" property="pcSort" jdbcType="INTEGER" />	
+		<result column="pc_start_time" property="startTime" jdbcType="BIGINT" />	
+		<result column="pc_end_time" property="endTime" jdbcType="BIGINT" />
+		<result column="pc_status" property="pcStatus" jdbcType="INTEGER" />
+		<result column="create_time" property="createTime" jdbcType="BIGINT" />
+		<collection property="promotionList" ofType="com.Vshop.core.entity.base.Promotion" column="pc_id" javaType="arraylist"
+                    select="com.Vshop.service.module.promotion.dao.mapper.PromotionMapper.fingBypcId">
+        </collection>
+	</resultMap>
+	
+	<sql id="Base_Column_List">
+		pc_id, pc_name, pc_sort, pc_start_time, pc_end_time, pc_status, create_time
+	</sql>
+	
+	<sql id="whereStatement">
+		<where>
+		 1=1 
+		 <if test="condition.pcName!=null and pcName!=''">
+		 	and pc_name like CONCAT('%','${condition.pcName}','%' ),
+		 </if>
+		<if test="condition.pcStatus != null">
+			and pc_atatus = ${condition.pcStatus}
+		</if>
+		</where>
+	</sql>
+	
+	<select id="findList" resultMap="BaseResultMap" parameterType="com.Vshop.service.utils.page.Pager">
+		select <include refid="Base_Column_List" /> from shop_promotion_class
+	</select>
+	
+	
+	<select id="findById" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+		select <include refid="Base_Column_List" /> from shop_promotion_class where pc_id=#{pcId}
+	</select>
+	
+	<select id="findCount" resultType="int" parameterType="com.Vshop.service.utils.page.Pager">
+		select count(1) from shop_promotion_class 
+	</select>
+	
+	<update id="update" parameterType="com.Vshop.core.entity.base.PromotionClass">
+		update shop_promotion_class
+        <set>
+            <if test="pcName != null and pcName != ''">
+                pc_name = #{pcName,jdbcType=VARCHAR},
+            </if>
+            <if test="pcSort != null">
+                pc_sort = #{pcSort,jdbcType=INTEGER},
+            </if>
+            <if test="startTime != null">
+                pc_start_time = #{startTime,jdbcType=BIGINT},
+            </if>
+            <if test="endTime != null">
+                pc_end_time = #{endTime,jdbcType=BIGINT},
+            </if>
+            <if test="pcStatus != null">
+                pc_status = #{pcStatus,jdbcType=INTEGER}
+            </if>
+        </set>
+        where pc_id = #{pcId,jdbcType=INTEGER}
+	</update>
+	
+	<insert id="save" parameterType="com.Vshop.core.entity.base.PromotionClass" useGeneratedKeys="true" keyProperty="id">
+		insert into shop_promotion_class (pc_name, pc_sort, pc_start_time, pc_end_time, pc_status, create_time)
+		values(#{pcName}, #{pcSort}, #{startTime}, #{endTime}, #{pcStatus}, #{createTime});
+	</insert>
+	
+	<delete id="delete" parameterType="java.lang.Integer">
+		delete from shop_promotion_class where pc_id = #{id,jdbcType=INTEGER}
+	</delete>
+	
+	<!-- 目前只能一个促销起作用 -->	
+	<select id="findVoByUse" resultMap="BaseResultMapVo" parameterType="com.Vshop.core.entity.base.PromotionClass">
+		select * from shop_promotion_class where pc_status = 0
+	</select>
+</mapper>

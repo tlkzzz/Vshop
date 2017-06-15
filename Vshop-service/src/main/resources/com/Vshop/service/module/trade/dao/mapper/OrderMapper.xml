@@ -1,0 +1,872 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.Vshop.service.module.trade.dao.mapper.OrderMapper">
+
+	<resultMap id="BaseResultMap" type="com.Vshop.core.entity.Order">
+		<id column="order_id" property="orderId" jdbcType="INTEGER" />
+		<result column="order_sn" property="orderSn" jdbcType="VARCHAR" />
+		<result column="store_id" property="storeId" jdbcType="INTEGER" />
+		<result column="store_name" property="storeName" jdbcType="VARCHAR" />
+		<result column="buyer_id" property="buyerId" jdbcType="INTEGER" />
+		<result column="buyer_name" property="buyerName" jdbcType="VARCHAR" />
+		<result column="buyer_email" property="buyerEmail" jdbcType="VARCHAR" />
+		<result column="create_time" property="createTime" jdbcType="BIGINT" />
+		<result column="order_type" property="orderType" jdbcType="BIT" />
+		<result column="payment_id" property="paymentId" jdbcType="INTEGER" />
+		<result column="payment_name" property="paymentName" jdbcType="VARCHAR" /> 
+		<result column="payment_code" property="paymentCode" jdbcType="VARCHAR" />
+		<result column="payment_direct" property="paymentDirect" jdbcType="VARCHAR" />
+		<result column="payment_time" property="paymentTime" jdbcType="BIGINT" />
+		<result column="payment_state" property="paymentState" jdbcType="INTEGER" />
+		<result column="out_sn" property="outSn" jdbcType="VARCHAR" />
+		<result column="out_payment_code" property="outPaymentCode" jdbcType="VARCHAR" />
+		<result column="pay_message" property="payMessage" jdbcType="VARCHAR" />
+		<result column="shipping_time" property="shippingTime" jdbcType="BIGINT" />
+		<result column="shipping_express_id" property="shippingExpressId" jdbcType="BIT"/>
+		<result column="shipping_code" property="shippingCode" jdbcType="VARCHAR" />
+		<result column="shipping_express_code" property="shippingExpressCode" jdbcType="VARCHAR" />
+		<result column="finnshed_time" property="finnshedTime" jdbcType="BIGINT" />
+		<result column="invoice" property="invoice" jdbcType="VARCHAR" />
+		<result column="goods_amount" property="goodsAmount" jdbcType="DECIMAL" />
+		<result column="discount" property="discount" jdbcType="DECIMAL" />
+		<result column="order_amount" property="orderAmount" jdbcType="DECIMAL" />
+		<result column="order_total_price" property="orderTotalPrice" jdbcType="DECIMAL" />
+		<result column="predeposit_amount" property="predepositAmount" jdbcType="DECIMAL" />
+		<result column="shipping_fee" property="shippingFee" jdbcType="DECIMAL" />
+		<result column="shipping_name" property="shippingName" jdbcType="VARCHAR" />
+		<result column="evaluation_status" property="evaluationStatus" jdbcType="INTEGER" />
+		<result column="evaluation_time" property="evaluationTime" jdbcType="BIGINT" />
+		<result column="evalseller_status" property="evalsellerStatus" jdbcType="INTEGER" />
+		<result column="evalseller_time" property="evalsellerTime" jdbcType="BIGINT" />
+		<result column="order_message" property="orderMessage" jdbcType="VARCHAR" />
+		<result column="order_state" property="orderState" jdbcType="INTEGER" />
+		<result column="order_pointscount" property="orderPointscount" jdbcType="INTEGER" />
+		<result column="voucher_id" property="voucherId" jdbcType="INTEGER" />
+		<result column="voucher_price" property="voucherPrice" jdbcType="DECIMAL" />
+		<result column="voucher_code" property="voucherCode" jdbcType="VARCHAR" />
+		<result column="refund_state" property="refundState" jdbcType="INTEGER" />
+		<result column="return_state" property="returnState" jdbcType="INTEGER" />
+		<result column="refund_amount" property="refundAmount" jdbcType="DECIMAL" />
+		<result column="return_num" property="returnNum" jdbcType="INTEGER" />
+		<result column="group_id" property="groupId" jdbcType="INTEGER" />
+		<result column="group_count" property="groupCount" jdbcType="INTEGER" />
+		<result column="xianshi_id" property="xianshiId" jdbcType="INTEGER" />
+		<result column="xianshi_explain" property="xianshiExplain" jdbcType="VARCHAR" />
+		<result column="mansong_id" property="mansongId" jdbcType="INTEGER" />
+		<result column="mansong_explain" property="mansongExplain" jdbcType="VARCHAR" />
+		<result column="bundling_id" property="bundlingId" jdbcType="INTEGER" />
+		<result column="bundling_explain" property="bundlingExplain" jdbcType="VARCHAR" />
+		<result column="order_from" property="orderFrom" jdbcType="VARCHAR" />
+		<result column="cancel_cause" property="cancelCause" jdbcType="VARCHAR" />
+		<result column="deliver_explain" property="deliverExplain" jdbcType="VARCHAR" />
+		<result column="daddress_id" property="daddressId" jdbcType="INTEGER" />
+		<result column="address_id" property="addressId" jdbcType="INTEGER" />
+		<result column="pay_id" property="payId" jdbcType="INTEGER" />
+		<result column="pay_sn" property="paySn" jdbcType="VARCHAR" />
+		<result column="balance_state" property="balanceState" jdbcType="INTEGER" />
+		<result column="balance_time" property="balanceTime" jdbcType="BIGINT" />
+	</resultMap>
+	
+	<!-- 继承订单map,查询订单项,订单日志 -->
+	<resultMap id="BaseResultMap1" type="com.Vshop.core.entity.Order" extends="BaseResultMap">
+		<collection property="orderGoodsList" ofType="com.Vshop.core.entity.base.OrderGoods"
+                    column="order_id" javaType="arraylist"
+                    select="com.Vshop.service.module.trade.dao.mapper.OrderGoodsMapper.findByOrderId">
+        </collection>
+        <collection property="orderLogList" ofType="com.Vshop.core.entity.base.OrderLog"
+                    column="order_id" javaType="arraylist"
+                    select="com.Vshop.service.module.trade.dao.mapper.OrderLogMapper.findByOrderId">
+        </collection>
+        <collection property="address" ofType="com.Vshop.core.entity.base.OrderAddress"
+                    column="address_id" javaType="com.Vshop.core.entity.base.OrderAddress"
+                    select="com.Vshop.service.module.trade.dao.mapper.OrderAddressMapper.findById">
+        </collection>
+        <collection property="refundLog" ofType="com.Vshop.core.entity.base.RefundLog"
+                    column="order_id" javaType="com.Vshop.core.entity.base.RefundLog"
+                    select="com.Vshop.service.module.trade.dao.mapper.RefundLogMapper.findRefundLogByOrderId">
+        </collection>
+        <collection property="returnOrder" ofType="com.Vshop.core.entity.base.ReturnOrder"
+                    column="order_id" javaType="com.Vshop.core.entity.base.ReturnOrder"
+                    select="com.Vshop.service.module.trade.dao.mapper.ReturnOrderMapper.findByOrderId">
+        </collection>
+	</resultMap>
+	
+	<!-- 继承订单map,查询订单项,订单日志 -->
+	<resultMap id="BaseResultMap2" type="com.Vshop.core.entity.Order" extends="BaseResultMap">
+		<collection property="orderGoodsList" ofType="com.Vshop.core.entity.base.OrderGoods"
+                    column="order_id" javaType="arraylist"
+                    select="com.Vshop.service.module.trade.dao.mapper.OrderGoodsMapper.findByOrderId2">
+        </collection>
+        <collection property="orderLogList" ofType="com.Vshop.core.entity.base.OrderLog"
+                    column="order_id" javaType="arraylist"
+                    select="com.Vshop.service.module.trade.dao.mapper.OrderLogMapper.findByOrderId">
+        </collection>
+        <collection property="address" ofType="com.Vshop.core.entity.base.OrderAddress"
+                    column="address_id" javaType="com.Vshop.core.entity.base.OrderAddress"
+                    select="com.Vshop.service.module.trade.dao.mapper.OrderAddressMapper.findById">
+        </collection>
+        <collection property="refundLog" ofType="com.Vshop.core.entity.base.RefundLog"
+                    column="order_id" javaType="com.Vshop.core.entity.base.RefundLog"
+                    select="com.Vshop.service.module.trade.dao.mapper.RefundLogMapper.findRefundLogByOrderId">
+        </collection>
+        <collection property="returnOrder" ofType="com.Vshop.core.entity.base.ReturnOrder"
+                    column="order_id" javaType="com.Vshop.core.entity.base.ReturnOrder"
+                    select="com.Vshop.service.module.trade.dao.mapper.ReturnOrderMapper.findByOrderId">
+        </collection>
+	</resultMap>
+	
+	<!-- 全部查询字段 -->
+	<sql id="Base_Column_List">
+		order_id, order_sn, store_id, store_name, buyer_id, buyer_name, buyer_email,
+		create_time, order_type, payment_id, payment_name, payment_code, payment_direct, payment_state,
+		out_sn, payment_time, pay_message, shipping_time, shipping_express_id, shipping_code,
+		out_payment_code, finnshed_time, invoice, goods_amount, discount, order_amount, order_total_price,
+		shipping_fee, shipping_name, evaluation_status, evaluation_time, evalseller_status,
+		evalseller_time, order_message, order_state, order_pointscount, voucher_id, voucher_price,
+		voucher_code, refund_state, return_state, refund_amount, return_num, group_id, group_count,
+		xianshi_id, xianshi_explain, mansong_id, mansong_explain, bundling_id, bundling_explain,
+		order_from, deliver_explain, daddress_id, address_id, pay_id, pay_sn, balance_state, balance_time,
+		shipping_express_code, predeposit_amount, cancel_cause
+	</sql>
+	
+	<!-- 查询条件 -->
+	<sql id="whereStatement">
+			<if test="condition.orderSn != null and condition.orderSn != '' ">
+	          	and order_sn like concat('%',#{condition.orderSn, jdbcType=VARCHAR},'%')
+	        </if>
+	        <if test="condition.storeName != null and condition.storeName != '' ">
+				and store_name like CONCAT('%',#{condition.storeName, jdbcType=VARCHAR},'%')
+			</if>
+	        <if test="condition.orderState != null ">
+	          	and order_state = #{condition.orderState, jdbcType=INTEGER} 
+	        </if>
+			<if test="condition.buyerName != null and condition.buyerName != ''">
+				and buyer_name like CONCAT('%',#{condition.buyerName,jdbcType=VARCHAR} ,'%')
+			</if>
+			<if test="condition.paymentCode != null and condition.paymentCode != ''">
+				and payment_code = #{condition.paymentCode,jdbcType=VARCHAR} 
+			</if>
+			<if test="condition.startTime != null and condition.startTime != '' ">
+				and create_time &gt;= #{condition.startTime}   
+			</if>
+			<if test="condition.endTime != null and condition.endTime != '' ">
+				and create_time &lt; #{condition.endTime} 
+			</if>
+			<if test="condition.storeId != null">
+				and store_id = #{condition.storeId}
+			</if>
+			<if test="condition.buyerId != null">
+				and buyer_id = #{condition.buyerId}
+			</if>
+			<if test="condition.balanceState != null">
+				and balance_state = #{condition.balanceState}
+			</if>
+			<if test="condition.evaluationStatus != null">
+				and evaluation_status = #{condition.evaluationStatus}
+			</if>
+			<if test="condition.orderStates != null">
+				and order_state in
+				 <foreach collection="condition.orderStates" item="state" index="index"
+		            open="(" close=")" separator=",">
+		            #{state}
+		        </foreach>
+			</if>
+			
+			<if test="condition.supplierId != null">
+				and  EXISTS 
+				(
+				select * from shop_order_goods sog 
+				where shop_order.order_id=sog.order_id
+				and EXISTS 
+				(select * from shop_goods sg where sog.goods_id = sg.goods_id
+				and sg.supplier_id = #{condition.supplierId})
+				)
+			</if>
+	</sql>
+	
+	<sql id="whereStatement1">
+		<if test="orderSn != null and orderSn != '' ">
+          	and order_sn like concat('%',#{orderSn, jdbcType=VARCHAR},'%')
+        </if>
+        <if test="storeName != null and storeName != '' ">
+			and store_name like CONCAT('%',#{storeName, jdbcType=VARCHAR},'%')
+		</if>
+        <if test="orderState != null">
+          	and order_state = #{orderState, jdbcType=INTEGER} 
+        </if>
+		<if test="buyerName != null and buyerName != ''">
+			and buyer_name like concat('%',#{buyerName,jdbcType=VARCHAR} ,'%')
+		</if>
+		<if test="paymentCode != null and paymentCode != ''">
+			and payment_code = #{paymentCode,jdbcType=VARCHAR} 
+		</if>
+		<if test="startTime != null and startTime != '' ">
+			and create_time &gt;= #{startTime}   
+		</if>
+		<if test="endTime != null and endTime != '' ">
+			and create_time &lt; #{endTime} 
+		</if>
+		<if test="storeId != null">
+			and store_id = #{storeId}
+		</if>
+		<if test="buyerId != null">
+			and buyer_id = #{buyerId}
+		</if>
+		<if test="balanceState != null">
+			and balance_state = #{balanceState}
+		</if>
+		<if test="evaluationStatus != null">
+			and evaluation_status = #{evaluationStatus}
+		</if>
+		<if test="orderStates != null and orderStates != '' ">
+			and order_state in
+			<foreach collection="orderStates" item="state" index="index"
+	            open="(" close=")" separator=",">
+	            #{state}
+	        </foreach>
+		</if>
+		
+		<if test="supplierId != null">
+			and  EXISTS 
+			(
+			select * from shop_order_goods sog 
+			where shop_order.order_id=sog.order_id
+			and EXISTS 
+			(select * from shop_goods sg where sog.goods_id = sg.goods_id
+			and sg.supplier_id = #{supplierId})
+			)
+		</if>
+	</sql>
+	
+	<!-- 插入订单 -->
+	<insert id="saveOrder" parameterType="com.Vshop.core.entity.Order" useGeneratedKeys="true" keyProperty="orderId">
+		insert into shop_order
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			order_sn, store_id, store_name, buyer_id, buyer_name, create_time, order_type, payment_id, payment_name, payment_code, payment_state,
+			<if test="buyerEmail !=null and buyerEmail != '' ">
+				buyer_email,
+			</if>
+			<if test="paymentDirect != null and paymentDirect != '' ">
+				payment_direct,
+			</if>
+			<if test="outSn != null and outSn != '' ">
+				out_sn,
+			</if>
+			<if test="payMessage != null and payMessage != '' ">
+				pay_message,
+			</if>
+			<if test="shippingExpressId != null">
+				shipping_express_id,
+			</if>
+			<if test="shippingCode != null">
+				shipping_code,
+			</if>
+			<if test="outPaymentCode != null and outPaymentCode != '' ">
+				out_payment_code,
+			</if>
+			<if test="invoice != null and invoice != '' ">
+				invoice,
+			</if>
+			<if test="goodsAmount != null">
+				goods_amount,
+			</if>
+			<if test="discount != null">
+				discount,
+			</if>
+			<if test="orderAmount != null">
+				order_amount,
+			</if>
+			<if test="shippingFee != null">
+				shipping_fee,
+			</if>
+			<if test="shippingName != null">
+				shipping_name,
+			</if>
+			<if test="evaluationStatus != null">
+				evaluation_status,
+			</if>
+			<if test="evalsellerStatus != null">
+				evalseller_status,
+			</if>
+			<if test="orderMessage != null and orderMessage != '' ">
+				order_message,
+			</if>
+			<if test="orderState != null">
+				order_state,
+			</if>
+			<if test="orderPointscount != null">
+				order_pointscount,
+			</if>
+			<if test="voucherId != null">
+				voucher_id,
+			</if>
+			<if test="voucherPrice != null">
+				voucher_price,
+			</if>
+			<if test="voucherCode != null and voucherCode != '' ">
+				voucher_code,
+			</if>
+			<if test="refundState != null">
+				refund_state,
+			</if>
+			<if test="returnState != null">
+				return_state,
+			</if>
+			<if test="refundAmount != null">
+				refund_amount,
+			</if>
+			<if test="returnNum != null">
+				return_num,
+			</if>
+			<if test="groupId != null">
+				group_id,
+			</if>
+			<if test="groupCount != null">
+				group_count,
+			</if>
+			<if test="xianshiId != null">
+				xianshi_id,
+			</if>
+			<if test="xianshiExplain != null and xianshiExplain != '' ">
+				xianshi_explain,
+			</if>
+			<if test="mansongId != null">
+				mansong_id,
+			</if>
+			<if test="mansongExplain != null and mansongExplain != '' ">
+				mansong_explain,
+			</if>
+			<if test="bundlingId != null">
+				bundling_id,
+			</if>
+			<if test="bundlingExplain != null and bundlingExplain != '' ">
+				bundling_explain,
+			</if>
+			<if test="orderFrom != null">
+				order_from,
+			</if>
+			<if test="deliverExplain != null and deliverExplain != ''">
+				deliver_explain,
+			</if>
+			<if test="daddressId != null">
+				daddress_id,
+			</if>
+			<if test="addressId != null">
+				address_id,
+			</if>
+			<if test="payId != null">
+				pay_id,
+			</if>
+			<if test="paySn != null and paySn != '' ">
+				pay_sn,
+			</if>
+			<if test="balanceState != null">
+				balance_state,
+			</if>
+			<if test="balanceTime != null">
+				balance_time,
+			</if>
+			<if test="shippingExpressCode != null">
+				shipping_express_code,
+			</if>
+			<if test="predepositAmount != null">
+				predeposit_amount,
+			</if>
+			<if test="cancelCause != null">
+				cancel_cause,
+			</if>
+			<if test="orderTotalPrice != null">
+				order_total_price,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			#{orderSn}, #{storeId}, #{storeName}, #{buyerId}, #{buyerName}, #{createTime},
+			#{orderType}, #{paymentId}, #{paymentName}, #{paymentCode}, #{paymentState},
+			<if test="buyerEmail !=null and buyerEmail != '' ">
+				#{buyerEmail},
+			</if>
+			<if test="paymentDirect != null and paymentDirect != '' ">
+				#{paymentDirect},
+			</if>
+			<if test="outSn != null and outSn != '' ">
+				#{outSn},
+			</if>
+			<if test="payMessage != null and payMessage != '' ">
+				#{payMessage},
+			</if>
+			<if test="shippingExpressId != null">
+				#{shippingExpressId},
+			</if>
+			<if test="shippingCode != null">
+				#{shippingCode},
+			</if>
+			<if test="outPaymentCode != null and outPaymentCode != '' ">
+				#{outPaymentCode},
+			</if>
+			<if test="invoice != null and invoice != '' ">
+				#{invoice},
+			</if>
+			<if test="goodsAmount != null">
+				#{goodsAmount},
+			</if>
+			<if test="discount != null">
+				#{discount},
+			</if>
+			<if test="orderAmount != null">
+				#{orderAmount},
+			</if>
+			<if test="shippingFee != null">
+				#{shippingFee},
+			</if>
+			<if test="shippingName != null">
+				#{shippingName},
+			</if>
+			<if test="evaluationStatus != null">
+				#{evaluationStatus},
+			</if>
+			<if test="evalsellerStatus != null">
+				#{evalsellerStatus},
+			</if>
+			<if test="orderMessage != null and orderMessage != '' ">
+				#{orderMessage},
+			</if>
+			<if test="orderState != null">
+				#{orderState},
+			</if>
+			<if test="orderPointscount != null">
+				#{orderPointscount},
+			</if>
+			<if test="voucherId != null">
+				#{voucherId},
+			</if>
+			<if test="voucherPrice != null">
+				#{voucherPrice},
+			</if>
+			<if test="voucherCode != null and voucherCode != '' ">
+				#{voucherCode},
+			</if>
+			<if test="refundState != null">
+				#{refundState},
+			</if>
+			<if test="returnState != null">
+				#{returnState},
+			</if>
+			<if test="refundAmount != null">
+				#{refundAmount},
+			</if>
+			<if test="returnNum != null">
+				#{returnNum},
+			</if>
+			<if test="groupId != null">
+				#{groupId},
+			</if>
+			<if test="groupCount != null">
+				#{groupCount},
+			</if>
+			<if test="xianshiId != null">
+				#{xianshiId},
+			</if>
+			<if test="xianshiExplain != null and xianshiExplain != '' ">
+				#{xianshiExplain},
+			</if>
+			<if test="mansongId != null">
+				#{mansongId},
+			</if>
+			<if test="mansongExplain != null and mansongExplain != '' ">
+				#{mansongExplain},
+			</if>
+			<if test="bundlingId != null">
+				#{bundlingId},
+			</if>
+			<if test="bundlingExplain != null and bundlingExplain != '' ">
+				#{bundlingExplain},
+			</if>
+			<if test="orderFrom != null">
+				#{orderFrom},
+			</if>
+			<if test="deliverExplain != null and deliverExplain != ''">
+				#{deliverExplain},
+			</if>
+			<if test="daddressId != null">
+				#{daddressId},
+			</if>
+			<if test="addressId != null">
+				#{addressId},
+			</if>
+			<if test="payId != null">
+				#{payId},
+			</if>
+			<if test="paySn != null and paySn != '' ">
+				#{paySn},
+			</if>
+			<if test="balanceState != null">
+				#{balanceState},
+			</if>
+			<if test="balanceTime != null">
+				#{balanceTime},
+			</if>
+			<if test="shippingExpressCode != null">
+				#{shippingExpressCode},
+			</if>
+			<if test="predepositAmount != null">
+				#{predepositAmount},
+			</if>
+			<if test="cancelCause != null">
+				#{cancelCause},
+			</if>
+			<if test="orderTotalPrice != null">
+				#{orderTotalPrice},
+			</if>
+		</trim>
+	</insert>
+	
+	<!-- 删除订单 -->
+	<delete id="deleteOrder" parameterType="int">
+		delete from shop_order where order_id = #{orderId}
+	</delete>
+	
+	<!-- 修改订单 -->
+	<update id="updateOrder" parameterType="com.Vshop.core.entity.Order">
+		update shop_order
+		<set>
+			<if test="orderSn != null and orderSn != '' ">
+				order_sn = #{orderSn},
+			</if>
+			<if test="storeId != null">
+				store_id = #{storeId},
+			</if>
+			<if test="storeName != null and storeName != '' ">
+				store_name = #{storeName},
+			</if>
+			<if test="buyerId != null">
+				buyer_id = #{buyerId},
+			</if>
+			<if test="buyerName != null and buyerName != '' ">
+				buyer_name = #{buyerName},
+			</if>
+			<if test="buyerEmail != null and buyerEmail != '' ">
+				buyer_email = #{buyerEmail},
+			</if>
+			<if test="createTime != null">
+				create_time = #{createTime},
+			</if>
+			<if test="orderType != null">
+				order_type = #{orderType},
+			</if>
+			<if test="paymentId != null">
+				payment_id = #{paymentId},
+			</if>
+			<if test="paymentName != null and paymentName != '' ">
+				payment_name = #{paymentName},
+			</if>
+			<if test="paymentCode != null and paymentCode != '' ">
+				payment_code = #{paymentCode},
+			</if>
+			<if test="paymentDirect != null and paymentDirect != '' ">
+				payment_direct = #{paymentDirect},
+			</if>
+			<if test="paymentTime != null">
+				payment_time = #{paymentTime},
+			</if>
+			<if test="paymentState != null">
+				payment_state = #{paymentState},
+			</if>
+			<if test="outSn != null and outSn != '' ">
+				out_sn = #{outSn},
+			</if>
+			<if test="outPaymentCode = null and outPaymentCode != '' ">
+				out_payment_code = #{outPaymentCode},
+			</if>
+			<if test="payMessage != null and payMessage != ''">
+				pay_message = #{payMessage},
+			</if>
+			<if test="shippingTime != null">
+				shipping_time = #{shippingTime},
+			</if>
+			<if test="shippingExpressId != null">
+				shipping_express_id = #{shippingExpressId},
+			</if>
+			<if test="shippingCode != null and shippingCode != '' ">
+				shipping_code = #{shippingCode},
+			</if>
+			<if test="finnshedTime != null">
+				finnshed_time = #{finnshedTime},
+			</if>
+			<if test="invoice != null and invoice != ''">
+				invoice = #{invoice},
+			</if>
+			<if test="goodsAmount != null">
+				goods_amount = #{goodsAmount},
+			</if>
+			<if test="discount != null">
+				discount = #{discount},
+			</if>
+			<if test="orderAmount != null">
+				order_amount = #{orderAmount},
+			</if>
+			<if test="shippingFee != null">
+				shipping_fee = #{shippingFee},
+			</if>
+			<if test="shippingName != null and shippingName != '' ">
+				shipping_name = #{shippingName},
+			</if>
+			<if test="evaluationStatus != null">
+				evaluation_status = #{evaluationStatus},
+			</if>
+			<if test="evaluationTime != null">
+				evaluation_time = #{evaluationTime},
+			</if>
+			<if test="evalsellerStatus != null">
+				evalseller_status = #{evalsellerStatus},
+			</if>
+			<if test="evalsellerTime != null">
+				evalseller_time = #{evalsellerTime},
+			</if>
+			<if test="orderMessage != null and orderMessage != ''">
+				order_message = #{orderMessage},
+			</if>
+			<if test="orderState != null">
+				order_state = #{orderState},
+			</if>
+			<if test="orderPointscount != null">
+				order_pointscount = #{orderPointscount},
+			</if>
+			<if test="voucherId != null">
+				voucher_id = #{voucherId},
+			</if>
+			<if test="voucherPrice != null">
+				voucher_price = #{voucherPrice},
+			</if>
+			<if test="voucherCode != null and voucherCode != '' ">
+				voucher_code = #{voucherCode},
+			</if>
+			<if test="refundState != null">
+				refund_state = #{refundState},
+			</if>
+			<if test="returnState != null">
+				return_state = #{returnState},
+			</if>
+			<if test="refundAmount != null">
+				refund_amount = #{refundAmount},
+			</if>
+			<if test="returnNum != null">
+				return_num = #{returnNum},
+			</if>
+			<if test="groupId != null">
+				group_id = #{groupId},
+			</if>
+			<if test="groupCount != null">
+				group_count = #{groupCount},
+			</if>
+			<if test="xianshiId != null">
+				xianshi_id = #{xianshiId},
+			</if>
+			<if test="xianshiExplain != null and xianshiExplain != '' ">
+				xianshi_explain = #{xianshiExplain},
+			</if>
+			<if test="mansongId != null">
+				mansong_id = #{mansongId},
+			</if>
+			<if test="mansongExplain != null and mansongExplain != ''">
+				mansong_explain = #{mansongExplain},
+			</if>
+			<if test="bundlingId != null">
+				bundling_id = #{bundlingId},
+			</if>
+			<if test="bundlingExplain != null and bundlingExplain != ''">
+				bundling_explain = #{bundlingExplain},
+			</if>
+			<if test="orderFrom != null and orderFrom != '' ">
+				order_from = #{orderFrom},
+			</if>
+			<if test="deliverExplain != null and deliverExplain != ''">
+				deliver_explain = #{deliverExplain},
+			</if>
+			<if test="daddressId != null">
+				daddress_id = #{daddressId},
+			</if>
+			<if test="addressId != null">
+				address_id = #{addressId},
+			</if>
+			<if test="payId != null">
+				pay_id = #{payId},
+			</if>
+			<if test="paySn != null and paySn != '' ">
+				pay_sn = #{paySn},
+			</if>
+			<if test="balanceState != null">
+				balance_state = #{balanceState},
+			</if>
+			<if test="balanceTime != null">
+				balance_time = #{balanceTime},
+			</if>
+			<if test="shippingExpressCode != null and shippingExpressCode != '' ">
+				shipping_express_code = #{shippingExpressCode},
+			</if>
+			<if test="predepositAmount != null">
+				predeposit_amount = #{predepositAmount},
+			</if>
+			<if test="cancelCause != null">
+				cancel_cause = #{cancelCause},
+			</if>
+			<if test="orderTotalPrice">
+				order_total_price = #{orderTotalPrice},
+			</if>
+		</set>
+		where order_id = #{orderId} 
+	</update>
+	
+	<!-- 修改订单状态 -->
+	<update id="updateOrderState" parameterType="com.Vshop.core.entity.Order">
+		update shop_order 
+		<set>
+			<if test="paymentState != null">
+				payment_state = #{paymentState},
+			</if>
+			<if test="finnshedTime != null">
+				finnshed_time = #{finnshedTime},
+			</if>
+			<if test="shippingTime != null">
+				shipping_time = #{shippingTime},
+			</if>
+			order_state = #{orderState}
+		</set>
+		where order_id = #{orderId} 
+	</update>
+	
+	<!-- 根据订单编号修改订单状态和付款状态 -->
+	<update id="updateOrderStateByOrderSn">
+		update shop_order
+		<set>
+			payment_state = #{2},
+			order_state = #{1},
+			payment_time = #{3}
+		</set>
+		where order_sn = #{0}
+	</update>
+	
+	<!-- 分页查询订单总条数 -->
+	<select id="findOrderCount" parameterType="com.Vshop.core.entity.Order" resultType="int">
+		select count(1)	from shop_order where 1=1
+		<include refid="whereStatement1"/>
+	</select>
+	
+	<!-- 分页查询订单, 增加商品佣金字段(2016-3-30) -->
+	<select id="findOrderList" parameterType="com.Vshop.service.utils.page.Pager" resultMap="BaseResultMap2">
+		select <include refid="Base_Column_List" /> from shop_order where 1=1 
+		<include refid="whereStatement"/> order by create_time desc <!-- limit #{start}, #{pageSize} -->
+	</select>
+	
+	<!-- 全部查询字段 -->
+	<sql id="Base_Column_List_1">
+		so.order_id, so.order_sn, so.store_id, so.store_name, so.buyer_id, so.buyer_name, so.buyer_email,
+		so.create_time, so.order_type, so.payment_id, so.payment_name, so.payment_code, so.payment_direct, so.payment_state,
+		so.out_sn, so.payment_time, so.pay_message, so.shipping_time, so.shipping_express_id, so.shipping_code,
+		so.out_payment_code, so.finnshed_time, so.invoice, so.goods_amount, so.discount, so.order_amount, so.order_total_price,
+		so.shipping_fee, so.shipping_name, so.evaluation_status, so.evaluation_time, so.evalseller_status,
+		so.evalseller_time, so.order_message, so.order_state, so.order_pointscount, so.voucher_id, so.voucher_price,
+		so.voucher_code, so.refund_state, so.return_state, so.refund_amount, so.return_num, so.group_id, so.group_count,
+		so.xianshi_id, so.xianshi_explain, so.mansong_id, so.mansong_explain, so.bundling_id, so.bundling_explain,
+		so.order_from, so.deliver_explain, so.daddress_id, so.address_id, so.pay_id, so.pay_sn, so.balance_state, so.balance_time,
+		so.shipping_express_code, so.predeposit_amount, so.cancel_cause
+	</sql>
+	
+	<!-- 查询条件 -->
+	<sql id="whereStatement_1">
+			<if test="condition.orderSn != null and condition.orderSn != '' ">
+	          	and so.order_sn like concat('%',#{condition.orderSn, jdbcType=VARCHAR},'%')
+	        </if>
+	        <if test="condition.storeName != null and condition.storeName != '' ">
+				and so.store_name like CONCAT('%',#{condition.storeName, jdbcType=VARCHAR},'%')
+			</if>
+	        <if test="condition.orderState != null ">
+	          	and so.order_state = #{condition.orderState, jdbcType=INTEGER} 
+	        </if>
+			<if test="condition.buyerName != null and condition.buyerName != ''">
+				and so.buyer_name like CONCAT('%',#{condition.buyerName,jdbcType=VARCHAR} ,'%')
+			</if>
+			<if test="condition.paymentCode != null and condition.paymentCode != ''">
+				and so.payment_code = #{condition.paymentCode,jdbcType=VARCHAR} 
+			</if>
+			<if test="condition.startTime != null and condition.startTime != '' ">
+				and so.create_time &gt;= #{condition.startTime}   
+			</if>
+			<if test="condition.endTime != null and condition.endTime != '' ">
+				and so.create_time &lt; #{condition.endTime} 
+			</if>
+			<if test="condition.storeId != null">
+				and so.store_id = #{condition.storeId}
+			</if>
+			<if test="condition.buyerId != null">
+				and so.buyer_id = #{condition.buyerId}
+			</if>
+			<if test="condition.balanceState != null">
+				and so.balance_state = #{condition.balanceState}
+			</if>
+			<if test="condition.evaluationStatus != null">
+				and so.evaluation_status = #{condition.evaluationStatus}
+			</if>
+			<if test="condition.orderStates != null">
+				and so.order_state in
+				 <foreach collection="condition.orderStates" item="state" index="index"
+		            open="(" close=")" separator=",">
+		            #{state}
+		        </foreach>
+			</if>
+			
+			<if test="condition.supplierId != null">
+				and  EXISTS 
+				(
+				select * from shop_order_goods sog 
+				where so.order_id=sog.order_id
+				and EXISTS 
+				(select * from shop_goods sg where sog.goods_id = sg.goods_id
+				and sg.supplier_id = #{condition.supplierId})
+				)
+			</if>
+	</sql>
+	<!-- 分页查询订单 -->
+	<select id="findOrderListByCodeStatus" parameterType="com.Vshop.service.utils.page.Pager" resultMap="BaseResultMap1">
+		select <include refid="Base_Column_List_1" /> from shop_order so inner join shop_consumer_codesend scc on so.order_id = scc.order_id 
+		where 1=1 and scc.code_status = 1
+		<include refid="whereStatement_1"/> order by so.create_time desc <!-- limit #{start}, #{pageSize} -->
+	</select>
+	
+	<!-- 根据id查询订单,有订单项 -->
+	<select id="findById" parameterType="int" resultMap="BaseResultMap1">
+		select <include refid="Base_Column_List" /> from shop_order where order_id = #{orderId}
+	</select>
+	
+	<!-- 根据id查询订单,有订单项 -->
+	<select id="findOrderDetail" parameterType="com.Vshop.core.entity.Order" resultMap="BaseResultMap2">
+		select <include refid="Base_Column_List" /> from shop_order where order_id = #{orderId}
+		<if test="buyerId != null">
+			and buyer_id = #{buyerId}
+		</if>
+		<if test="storeId != null">
+			and store_id = #{storeId}
+		</if>
+	</select>
+	
+	<!-- 根据订单编号查询订单信息 -->
+	<select id="findByOrderSn" parameterType="string" resultMap="BaseResultMap1">
+		select <include refid="Base_Column_List" /> from shop_order where order_sn = #{orderSn}
+	</select>
+	
+	<!-- 根据订单支付编号查询订单 -->
+	<select id="findByPaySn" parameterType="string" resultMap="BaseResultMap1">
+		select <include refid="Base_Column_List" /> from shop_order where pay_sn = #{paySn}
+	</select>
+	
+	<!-- 根据订单支付id查询订单 -->
+	<select id="findByPayId" parameterType="int" resultMap="BaseResultMap1">
+		select <include refid="Base_Column_List" /> from shop_order where pay_id = #{payId}
+	</select>
+	
+	<!-- 根据订单状态查询订单数量 -->
+	<select id="findOrderCountByOrder" parameterType="com.Vshop.core.entity.Order" resultType="int">
+		select count(1)	from shop_order where 1=1
+		<include refid="whereStatement1" />
+	</select>
+    
+</mapper>

@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.Vshop.service.module.store.dao.mapper.StoreGoodsClassMapper">
+    <resultMap id="BaseResultMap" type="com.Vshop.core.entity.StoreGoodsClass">
+        <id column="stc_id" property="stcId" jdbcType="INTEGER"/>
+        <result column="stc_name" property="stcName" jdbcType="VARCHAR"/>
+        <result column="stc_parent_id" property="stcParentId" jdbcType="INTEGER"/>
+        <result column="stc_state" property="stcState" jdbcType="BIT"/>
+        <result column="store_id" property="storeId" jdbcType="INTEGER"/>
+        <result column="stc_sort" property="stcSort" jdbcType="INTEGER"/>
+        <result column="is_del" property="isDel" jdbcType="TINYINT"/>
+        <result column="create_time" property="createTime" jdbcType="BIGINT"/>
+        <result column="update_time" property="updateTime" jdbcType="BIGINT"/>
+    </resultMap>
+
+    <resultMap id="VoResultMap" type="com.Vshop.core.entity.vo.StoreGoodsClassVo">
+        <id column="stc_id" property="stcId" jdbcType="INTEGER"/>
+        <result column="store_id" property="storeId" jdbcType="INTEGER"/>
+        <result column="parent_id" property="parentId" jdbcType="INTEGER"/>
+        <result column="parent_name" property="parentName" jdbcType="VARCHAR"/>
+        <result column="parent_state" property="parentState" jdbcType="BIT"/>
+        <result column="parent_sort" property="parentSort" jdbcType="INTEGER"/>
+        <result column="child_id" property="childId" jdbcType="INTEGER"/>
+        <result column="child_name" property="childName" jdbcType="VARCHAR"/>
+        <result column="child_state" property="childState" jdbcType="BIT"/>
+        <result column="child_sort" property="childSort" jdbcType="INTEGER"/>
+    </resultMap>
+    
+     <resultMap id="BaseResultMap3" type="com.Vshop.core.entity.StoreGoodsClass">
+        <id column="stc_id" property="stcId" jdbcType="INTEGER"/>
+        <result column="stc_name" property="stcName" jdbcType="VARCHAR"/>
+        <result column="stc_parent_id" property="stcParentId" jdbcType="INTEGER"/>
+        <result column="stc_state" property="stcState" jdbcType="BIT"/>
+        <result column="store_id" property="storeId" jdbcType="INTEGER"/>
+        <result column="stc_sort" property="stcSort" jdbcType="INTEGER"/>
+        <result column="is_del" property="isDel" jdbcType="TINYINT"/>
+        <result column="has_child" property="hasChild" jdbcType="INTEGER"/>
+        <collection property="classList" ofType="com.Vshop.core.entity.StoreGoodsClass"
+                    column="stc_id" javaType="arraylist"
+                    select="com.Vshop.service.module.store.dao.mapper.StoreGoodsClassMapper.findChild">
+        </collection>
+    </resultMap>
+
+    <!-- 查询List -->
+    <select id="queryClasssList" resultMap="VoResultMap" parameterType="com.Vshop.core.entity.vo.StoreGoodsClassVo">
+        select
+        p.store_id as store_id,
+        p.stc_id as parent_id,
+        p.stc_name as parent_name,
+        p.stc_state as parent_state,
+        p.stc_sort as parent_sort,
+        c.stc_id as child_id,
+        c.stc_name as child_name,
+        c.stc_state as child_state,
+        c.stc_sort as child_sort
+        from
+        shop_store_goods_class p left join
+        shop_store_goods_class c on
+        (p.stc_id = c.stc_parent_id and c.is_del=0)
+        where p.stc_parent_id = 0
+        and p.is_del=0 and p.stc_state=1 
+        <if test="storeId != null">
+            and p.store_id = #{storeId}
+        </if>
+        <if test="parentState != null">
+            and p.stc_state = #{parentState}
+        </if>
+        order by p.stc_sort,c.stc_parent_id,c.stc_sort
+    </select>
+
+    <select id="findParentList" resultMap="BaseResultMap" parameterType="int">
+        select
+        <include refid="Base_Column_List"/>
+        from shop_store_goods_class
+        where is_del=0 and stc_parent_id=0 and store_id = #{id}
+    </select>
+
+    <sql id="Base_Column_List">
+		stc_id, stc_name, stc_parent_id, stc_state, store_id,
+		stc_sort
+	</sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap"
+            parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from shop_store_goods_class
+        where stc_id = #{stcId,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		<!-- update
+		shop_store_goods_class set is_del=1,update_time=now()
+		where stc_id =
+		#{stcId,jdbcType=INTEGER} or stc_parent_id = #{stcId,jdbcType=INTEGER} -->
+	    delete from shop_store_goods_class where stc_id =#{stcId,jdbcType=INTEGER}
+	</delete>
+
+
+    <insert id="insertSelective" parameterType="com.Vshop.core.entity.StoreGoodsClass">
+        insert into shop_store_goods_class
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="stcId != null">
+                stc_id,
+            </if>
+            <if test="stcName != null">
+                stc_name,
+            </if>
+            <if test="stcParentId != null">
+                stc_parent_id,
+            </if>
+            <if test="stcState != null">
+                stc_state,
+            </if>
+            <if test="storeId != null">
+                store_id,
+            </if>
+            <if test="stcSort != null">
+                stc_sort,
+            </if>
+            <if test="createTime != null">
+                create_time
+            </if>
+            
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="stcId != null">
+                #{stcId,jdbcType=INTEGER},
+            </if>
+            <if test="stcName != null">
+                #{stcName,jdbcType=VARCHAR},
+            </if>
+            <if test="stcParentId != null">
+                #{stcParentId,jdbcType=INTEGER},
+            </if>
+            <if test="stcState != null">
+                #{stcState,jdbcType=BIT},
+            </if>
+            <if test="storeId != null">
+                #{storeId,jdbcType=INTEGER},
+            </if>
+            <if test="stcSort != null">
+                #{stcSort,jdbcType=INTEGER},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=BIGINT}
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.Vshop.core.entity.StoreGoodsClass">
+        update shop_store_goods_class
+        <set>
+            <if test="stcName != null">
+                stc_name = #{stcName,jdbcType=VARCHAR},
+            </if>
+            <!-- 修改时，不能修改父id
+            <if test="stcParentId != null">
+                stc_parent_id = #{stcParentId,jdbcType=INTEGER},
+            </if>
+             -->
+            <if test="stcState != null">
+                stc_state = #{stcState,jdbcType=BIT},
+            </if>
+            <if test="storeId != null">
+                store_id = #{storeId,jdbcType=INTEGER},
+            </if>
+            <if test="stcSort != null">
+                stc_sort = #{stcSort,jdbcType=INTEGER},
+            </if>
+            <if test="stcSort != null">
+                stc_sort = #{stcSort,jdbcType=INTEGER},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime,jdbcType=BIGINT}
+            </if>
+        </set>
+        where stc_id = #{stcId,jdbcType=INTEGER}
+    </update>
+
+    <select id="findAll" resultMap="BaseResultMap" parameterType="int">
+        select
+        <include refid="Base_Column_List"/>
+        from shop_store_goods_class
+        where is_del=0 and store_id = #{id}
+    </select>
+
+    <select id="findChild" resultMap="BaseResultMap" parameterType="int">
+        select
+        <include refid="Base_Column_List"/>
+        from shop_store_goods_class
+        where  stc_parent_id = #{id}
+    </select>
+      
+     <!--根据父id查询分类列表-->
+    <select id="findList" resultMap="BaseResultMap3" parameterType="com.Vshop.core.entity.StoreGoodsClass">
+        SELECT
+        <include refid="Base_Column_List" />,
+        (select count(1) from shop_store_goods_class s1 where s1.stc_parent_id=s.stc_id ) has_child
+        FROM shop_store_goods_class s
+        where s.stc_parent_id=#{stcParentId} and s.store_id=#{storeId}
+        order by stc_sort
+    </select>   
+       
+    <update id="updateState" parameterType="com.Vshop.core.entity.StoreGoodsClass">
+        update shop_store_goods_class set stc_state = #{stcState} 
+        where stc_id = #{stcId}
+        <if test="stcParentId != null">
+                and stc_parent_id = #{stcParentId}
+        </if>
+        
+    </update>
+    
+     <!--验证分类名称是否存在-->
+     <select id="findbystcName" resultMap="BaseResultMap" parameterType="string">
+        select
+        <include refid="Base_Column_List"/>
+        from shop_store_goods_class
+        where stc_name=#{stcName}
+    </select>
+    
+     <!--根据父id查询分类列表-->
+    <select id="findListbystate" resultMap="BaseResultMap3" parameterType="com.Vshop.core.entity.StoreGoodsClass">
+        SELECT
+        <include refid="Base_Column_List" />,
+        (select count(1) from shop_store_goods_class s1 where s1.stc_parent_id=s.stc_id and s1.stc_state=#{stcState}) has_child
+        FROM shop_store_goods_class s
+        where s.stc_parent_id=#{stcParentId} and s.store_id=#{storeId} and s.stc_state=#{stcState}
+        order by stc_sort
+    </select> 
+</mapper>

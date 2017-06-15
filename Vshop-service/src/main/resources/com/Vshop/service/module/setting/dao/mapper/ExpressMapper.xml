@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.Vshop.service.module.setting.dao.mapper.ExpressMapper">
+	<resultMap id="BaseResultMap" type="com.Vshop.core.entity.base.Express">
+		<result column="id" jdbcType="INTEGER" property="id" />
+		<result column="e_name" jdbcType="VARCHAR" property="seName" />
+		<result column="e_state" jdbcType="INTEGER" property="estate" />
+		<result column="e_code" jdbcType="VARCHAR" property="eCode" />
+		<result column="e_letter" jdbcType="CHAR" property="eLetter" />
+		<result column="e_order" jdbcType="INTEGER" property="eorder" />
+		<result column="e_url" jdbcType="VARCHAR" property="eUrl" />
+	</resultMap>
+	
+	<insert id="insert" parameterType="com.Vshop.core.entity.base.Express">
+        insert into shop_express (id,
+		e_name, e_state, e_code, e_letter, e_order, e_url) values
+		(#{id,jdbcType=INTEGER}, #{seName,jdbcType=VARCHAR},
+		#{estate,jdbcType=INTEGER}, #{eCode,jdbcType=VARCHAR},
+		#{eLetter,jdbcType=CHAR}, #{eorder,jdbcType=INTEGER},
+		#{eUrl,jdbcType=VARCHAR})
+	</insert>
+
+	<sql id="Base_Column_List">
+		id,e_name,e_state,e_code,e_letter,e_order,e_url
+	</sql>
+
+	<sql id="whereStatement">
+		<where>
+			1 = 1
+			and s.is_del = 0
+			<if test="condition.eLetter != null and condition.eLetter != ''">
+				and s.e_letter = #{condition.ELetter}
+			</if>
+			<if test="condition.seName != null and condition.seName != ''">
+				and s.e_name = #{condition.seName}
+			</if>
+		</where>
+	</sql>
+	
+	<sql id="whereStatement2">
+		<where>
+			1 = 1
+			and s.is_del = 0
+			<if test="eLetter != null and eLetter != ''">
+				and s.e_letter = #{ELetter}
+			</if>
+			<if test="seName != null and seName != ''">
+				and s.e_name = #{seName}
+			</if>
+		</where>
+	</sql>
+
+	<!-- 分页查询count -->
+	<select id="findExpressCount" resultType="java.lang.Integer"
+		parameterType="com.Vshop.core.entity.base.Express">
+		select count(1) from shop_express s
+		<include refid="whereStatement2" />
+	</select>
+
+	<!-- 分页查询List -->
+	<select id="findExpressList" resultMap="BaseResultMap"
+		parameterType="com.Vshop.service.utils.page.Pager">
+        SELECT a.* from (
+		select
+		<include refid="Base_Column_List" />
+		from shop_express s
+		<include refid="whereStatement" />
+		order by e_order desc) a
+	</select>
+	
+	<!-- 通过id查询数据 -->
+	<select id="findById" parameterType="int" resultMap="BaseResultMap">
+		select <include refid="Base_Column_List" /> from shop_express where id = #{id}
+	</select>
+	
+	<!-- 查询所有 -->
+	<select id="findList" resultMap="BaseResultMap">
+		select <include refid="Base_Column_List" /> from shop_express
+	</select>
+	
+	<!-- 根据显示状态和是否常用状态查询物流公司信息 -->
+	<select id="findExpressListByState" resultMap="BaseResultMap">
+		select <include refid="Base_Column_List" /> from shop_express where 1=1
+		<if test="eState != null">
+			and e_state = #{eState}
+		</if>
+		<if test="eOrder">
+			and e_order = #{eOrder}
+		</if>
+		order by e_order desc
+	</select>
+	
+	<!-- 删除快递公司  -->
+	<update id="delete" parameterType="java.lang.Long">
+		update shop_express
+		set is_del = 1
+		where id = #{id}
+	</update>
+	
+	<!-- 更新快递公司是否常用 -->
+	<update id="updateOrder" parameterType="com.Vshop.core.entity.base.Express">
+		update shop_express
+		set e_order = #{eorder,jdbcType=INTEGER}
+		where id = #{id}
+	</update>
+	
+	<!-- 更新快递公司状态 -->
+	<update id="updateState" parameterType="com.Vshop.core.entity.base.Express">
+		update shop_express
+		set e_state = #{estate,jdbcType=INTEGER}
+		where id = #{id}
+	</update>
+	
+</mapper>

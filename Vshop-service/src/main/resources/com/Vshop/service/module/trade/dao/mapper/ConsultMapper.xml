@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.Vshop.service.module.trade.dao.mapper.ConsultMapper" >
+    <resultMap id="BaseResultMap" type="com.Vshop.core.entity.base.Consult" >
+        <id column="consult_id" property="consultId" jdbcType="INTEGER" />
+        <result column="goods_id" property="goodsId" jdbcType="INTEGER" />
+        <result column="cgoods_name" property="cgoodsName" jdbcType="VARCHAR" />
+        <result column="member_id" property="memberId" jdbcType="INTEGER" />
+        <result column="cmember_name" property="cmemberName" jdbcType="VARCHAR" />
+        <result column="store_id" property="storeId" jdbcType="INTEGER" />
+        <result column="email" property="email" jdbcType="VARCHAR" />
+        <result column="consult_content" property="consultContent" jdbcType="VARCHAR" />
+        <result column="consult_addtime" property="consultAddtime" jdbcType="BIGINT" />
+        <result column="consult_reply" property="consultReply" jdbcType="VARCHAR" />
+        <result column="consult_reply_time" property="consultReplyTime" jdbcType="BIGINT" />
+        <result column="isanonymous" property="isanonymous" jdbcType="TINYINT" />
+        <result column="is_del" property="isDel" jdbcType="TINYINT" />
+        <result column="create_time" property="createTime" jdbcType="BIGINT" />
+        <result column="update_time" property="updateTime" jdbcType="BIGINT" />
+        <result column="store_name" property="storeName" jdbcType="VARCHAR" />
+        <result column="member_avatar" property="memberAvatar" jdbcType="VARCHAR" />
+    </resultMap>
+
+    <sql id="Base_Column_List" >
+        cs.consult_id, cs.goods_id, cs.cgoods_name, cs.member_id, cs.cmember_name, cs.store_id, cs.email, cs.consult_content,
+        cs.consult_addtime, cs.consult_reply, cs.consult_reply_time, cs.isanonymous, cs.is_del, cs.create_time, cs.update_time,
+        store.store_name, m.member_avatar
+    </sql>
+    
+    <sql id="Base_Column_List2" >
+        cs.consult_id, cs.goods_id, cs.cgoods_name, cs.member_id, cs.cmember_name, cs.store_id, cs.email, cs.consult_content,
+        cs.consult_addtime, cs.consult_reply, cs.consult_reply_time, cs.isanonymous, cs.is_del, cs.create_time
+    </sql>
+    
+    <sql id="whereStatement">
+    	<where>
+    		cs.is_del = 0
+    		<if test="condition.storeId != null">
+            	and cs.store_id = #{condition.storeId}
+	        </if>
+    		<if test="condition.goodsId != null and condition.goodsId != ''">
+            	and cs.goods_id = #{condition.goodsId}
+	        </if>
+    		<if test="condition.cmemberName != null and condition.cmemberName != ''">
+            	and cs.cmember_name  like CONCAT('%','${condition.cmemberName}','%')
+	        </if>
+	        <if test="condition.consultContent != null and condition.consultContent != ''">
+	            and cs.consult_content  like CONCAT('%','${condition.consultContent}','%')
+	        </if>
+	        <if test="condition.memberId != null and condition.memberId != ''">
+            	and cs.member_id = #{condition.memberId}
+	        </if>
+	        <!-- 未回复 标记值0和1 -->
+	        <if test="condition.replyStatus != null and condition.replyStatus == 0">
+            	and cs.consult_reply is null
+	        </if>
+	        <!-- 已回复 标记值0和1 -->
+	        <if test="condition.replyStatus != null and condition.replyStatus == 1">
+            	and cs.consult_reply is not null
+	        </if>
+    	</where>
+    </sql>
+    
+    <sql id="whereStatement2">
+    	<where>
+    		cs.is_del = 0
+    		<if test="goodsId != null and goodsId != ''">
+            	and cs.goods_id = #{goodsId}
+	        </if>
+    		<if test="cmemberName != null and cmemberName != ''">
+            	and cs.cmember_name  like CONCAT('%','${cmemberName}','%')
+	        </if>
+	        <if test="consultContent != null and consultContent != ''">
+	            and cs.consult_content  like CONCAT('%','${consultContent}','%')
+	        </if>
+	        <if test="memberId != null and memberId != ''">
+            	and cs.member_id = #{memberId}
+	        </if>
+	        <!-- 未回复 标记值0和1 -->
+	        <if test="replyStatus != null and replyStatus == 0">
+            	and cs.consult_reply is null
+	        </if>
+	        <!-- 已回复 标记值0和1 -->
+	        <if test="replyStatus != null and replyStatus == 1">
+            	and cs.consult_reply is not null
+	        </if>
+    	</where>
+    </sql>
+
+    <select id="findList" resultMap="BaseResultMap" parameterType="com.Vshop.service.utils.page.Pager">
+        SELECT s.* from(
+        SELECT <include refid="Base_Column_List"/>
+        FROM shop_consult cs 
+        left join shop_store store on cs.store_id = store.store_id
+        LEFT JOIN shop_member m ON cs.member_id = m.member_id
+        <include refid="whereStatement" />        
+        order by cs.consult_addtime DESC) s
+    </select>
+
+    <select id="findCount" parameterType="com.Vshop.core.entity.base.Consult" resultType="int">
+        SELECT count(1)
+        FROM shop_consult cs left join shop_store store on cs.store_id = store.store_id
+        <include refid="whereStatement2" />
+    </select>
+    
+    
+    <select id="findMemberList" resultMap="BaseResultMap" parameterType="com.Vshop.service.utils.page.Pager">
+        SELECT s.* from(
+        SELECT <include refid="Base_Column_List2"/>
+        FROM shop_consult cs 
+		<include refid="whereStatement" />        
+        order by cs.consult_addtime DESC) s
+    </select>
+
+    <select id="findMemberCount" parameterType="com.Vshop.core.entity.base.Consult" resultType="int">
+        SELECT count(1)
+        FROM shop_consult cs 
+        <include refid="whereStatement2" />
+    </select>
+    
+    <select id="findById" parameterType="int" resultMap="BaseResultMap">
+        SELECT * FROM shop_consult where consult_id = #{id}
+    </select>
+
+    <update id="delete" parameterType="int">
+        update shop_consult set is_del = 1 where consult_id = #{id}
+    </update>
+    
+    <insert id="save" parameterType="com.Vshop.core.entity.base.Consult" useGeneratedKeys="true">
+        insert into shop_consult (goods_id,cgoods_name,member_id,cmember_name,store_id,consult_content
+        ,consult_addtime,isanonymous,is_del,create_time)
+        values (#{goodsId},#{cgoodsName},#{memberId},#{cmemberName},#{storeId},#{consultContent},#{consultAddtime},#{isanonymous},0,#{consultAddtime})
+    </insert>
+    
+    <update id="updateReply" parameterType="com.Vshop.core.entity.base.Consult">
+    	update shop_consult 
+    	set update_time = #{updateTime},
+	    	consult_reply = #{consultReply},
+	    	<if test="consultReplyTime!=null">
+	    		consult_reply_time = #{consultReplyTime}
+	    	</if>
+    	where consult_id = #{consultId}
+    </update>
+</mapper>

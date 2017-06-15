@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.Vshop.service.module.setting.dao.mapper.SiteMapper">
+    <resultMap id="BaseResultMap" type="com.Vshop.core.entity.Site">
+    	<id column="site_id" property="siteId" jdbcType="INTEGER" />
+        <result column="site_name" property="siteName" jdbcType="VARCHAR" />
+        <result column="site_title" property="siteTitle" jdbcType="VARCHAR" />
+        <result column="site_key" property="siteKey" jdbcType="VARCHAR" />
+        <result column="site_dbxx" property="siteDbxx" jdbcType="VARCHAR" />
+        <result column="site_discription" property="siteDiscription" jdbcType="VARCHAR" />
+         <result column="return_time" property="returnTime" jdbcType="VARCHAR" />
+        <result column="site_logo1" property="siteLogo1" jdbcType="VARCHAR" />
+        <result column="site_logo2" property="siteLogo2" jdbcType="VARCHAR" />
+        <result column="site_logo3" property="siteLogo3" jdbcType="VARCHAR" />
+        <result column="site_logo4" property="siteLogo4" jdbcType="VARCHAR" />
+        <result column="site_logo5" property="siteLogo5" jdbcType="VARCHAR" />
+        <result column="site_logo6" property="siteLogo6" jdbcType="VARCHAR" />
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        site_id, site_name, site_title, site_key,site_dbxx,site_discription,return_time,site_logo1,site_logo2,site_logo3,site_logo4,site_logo5,site_logo6
+    </sql>
+	
+	
+	<!--  根据ID查询实体 -->
+    <select id="findById" resultMap="BaseResultMap">
+		select <include refid="Base_Column_List" />
+		from shop_site where 1=1
+	</select>
+	
+	
+	 <!-- demo 保存实体-->
+    <insert id="save"   parameterType="com.Vshop.core.entity.Site">
+        insert into shop_site (
+        	site_name, 
+        	site_title, 
+        	site_key, 
+        	site_dbxx,
+        	site_discription,
+        	return_time,
+        	site_logo1,
+        	site_logo2,
+        	site_logo3,
+        	site_logo4,
+        	site_logo5,
+        	site_logo6)
+        values (
+        #{site_name,jdbcType=VARCHAR},
+        #{site_title,jdbcType=VARCHAR},
+        #{site_key,jdbcType=VARCHAR},
+        #{site_dbxx,jdbcType=VARCHAR},
+        #{site_discription,jdbcType=VARCHAR},
+        #{return_time,jdbcType=VARCHAR},
+        #{site_logo1,jdbcType=VARCHAR},
+        #{site_logo2,jdbcType=VARCHAR},
+        #{site_logo3,jdbcType=VARCHAR},
+        #{site_logo4,jdbcType=VARCHAR},
+        #{site_logo5,jdbcType=VARCHAR},
+        #{site_logo6,jdbcType=VARCHAR}
+        )
+    </insert>
+	<!-- 根据ID修改数据 -->
+    <update id="update" >
+        update shop_site
+        <set>
+            <if test="siteName != null and siteName != ''">
+                site_name = #{siteName},
+            </if>
+            <if test="siteTitle != null and siteTitle != ''">
+                site_title = #{siteTitle},
+            </if>
+            <if test="siteKey != null and siteKey != ''">
+                site_key = #{siteKey},
+            </if>
+            <if test="siteDbxx != null and siteDbxx !=''">
+                site_dbxx = #{siteDbxx},
+            </if>
+            <if test="siteDiscription != null and siteDiscription!=''">
+                site_discription = #{siteDiscription},
+            </if>
+             <if test="returnTime != null and returnTime!=''">
+                return_time = #{returnTime},
+            </if>
+              <if test="siteLogo1 != null and siteLogo1 !=''">
+                site_logo1 = #{siteLogo1},
+            </if>
+              <if test="siteLogo2 != null and siteLogo2 !=''">
+                site_logo2 = #{siteLogo2},
+            </if>
+              <if test="siteLogo3 != null and siteLogo3!=''">
+                site_logo3 = #{siteLogo3},
+            </if>
+              <if test="siteLogo4 != null and siteLogo4!=''">
+                site_logo4 = #{siteLogo4},
+            </if>
+              <if test="siteLogo5 != null and siteLogo5!=''">
+                site_logo5 = #{siteLogo5},
+            </if>
+              <if test="siteLogo6 != null and siteLogo6!=''">
+                site_logo6 = #{siteLogo6}
+            </if>
+        </set>
+        where site_id = #{siteId}
+    </update>
+	
+	<!--  根据ID删除数据
+    <update id="delete" parameterType="java.lang.Long">
+        update shop_payment
+          set is_del = 1
+        WHERE payment_id = #{paymentId,jdbcType=INTEGER}
+    </update>
+    
+    <select id="queryByCode" parameterType="string" resultType="string">
+        select payment_name FROM shop_payment where payment_code = #{code}
+    </select>
+    
+    <select id="selectById" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+	    select 
+	    <include refid="Base_Column_List" />
+	    from shop_payment
+	    where payment_id = #{id,jdbcType=INTEGER}
+	  </select>
+	  
+	  <select id="selectByCode" resultMap="BaseResultMap" parameterType="java.lang.String" >
+	    select 
+	    <include refid="Base_Column_List" />
+	    from shop_payment
+	    where payment_code = #{code,jdbcType=INTEGER}
+	  </select> -->
+	  
+	  <!-- 根据状态查出全部数据 
+    <select id="querybystatelist" resultMap="BaseResultMap" >
+		select <include refid="Base_Column_List" />
+		from shop_payment where payment_state = #{paymentState,jdbcType=VARCHAR}
+	</select>-->
+</mapper>

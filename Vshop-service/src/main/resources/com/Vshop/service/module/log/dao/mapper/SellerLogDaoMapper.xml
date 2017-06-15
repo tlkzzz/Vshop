@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.Vshop.service.module.log.dao.mapper.SellerLogDaoMapper">
+
+	<resultMap type="com.Vshop.core.entity.base.SellerLog" id="BaseResultMap">
+		<result column="log_id" property="logId" />
+		<result column="log_content" property="logContent" />
+		<result column="log_time" property="logTime" />
+		<result column="log_seller_id" property="logSellerId" />
+		<result column="log_seller_name" property="logSellerName" />
+		<result column="log_store_id" property="logStoreId" />
+		<result column="log_seller_ip" property="logSellerIp" />
+		<result column="log_url" property="logUrl" />
+		<result column="log_state" property="logState" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		log_id logId, log_content logContent, log_time logTime, log_seller_id 
+		logSellerId, log_seller_name logSellerName, log_store_id logStoreId, log_seller_ip 
+		logSellerIp, log_url logUrl, log_state logState
+	</sql>
+
+	<sql id="whereStatement">
+		<where>
+			1 = 1
+			and a.log_state = 1
+			<if test="condition.logSellerName != null">
+				and a.log_seller_name like CONCAT('%',#{condition.logSellerName,
+				jdbcType=VARCHAR},'%')
+			</if>
+			<if test="condition.startTime != null">
+				and log_time &gt;= #{condition.startTime}
+			</if>
+			<if test="condition.endTime != null">
+				and log_time &lt;= #{condition.endTime}
+			</if>
+
+		</where>
+	</sql>
+	
+	<sql id="whereStatement2">
+		<where>
+			1 = 1
+			and a.log_state = 1
+			<if test="logSellerName != null">
+				and a.log_seller_name like CONCAT('%',#{logSellerName,
+				jdbcType=VARCHAR},'%')
+			</if>
+			<if test="startTime != null">
+				and log_time &gt;= #{startTime}
+			</if>
+			<if test="endTime != null">
+				and log_time &lt;= #{endTime}
+			</if>
+		</where>
+	</sql>
+
+	<!-- 分页查询count -->
+	<select id="countSellerLog" resultType="int"
+		parameterType="com.Vshop.core.entity.base.SellerLog">
+		select count(1) from shop_seller_log a
+		<include refid="whereStatement2" />
+	</select>
+
+	<!-- 分页查询List -->
+	<select id="selectSellerLogByPager" resultMap="BaseResultMap"
+		parameterType="com.Vshop.service.utils.page.Pager">
+		select
+		<include refid="Base_Column_List" />
+		from shop_seller_log a
+		<include refid="whereStatement" />
+	</select>
+
+	
+	<!-- 增加日志 -->
+	<insert id="saveSellerLog" parameterType="com.Vshop.core.entity.base.SellerLog">
+		insert into
+		shop_seller_log(log_content,log_seller_id,log_seller_name,log_store_id,log_seller_ip,log_url,log_state)
+		values
+		(#{logContent},#{logSellerId},#{logSellerName},#{logStoreId},#{logSellerIp},#{logUrl},#{logState})
+	</insert>
+
+	<!-- 删除日志 -->
+	<delete id="deleteSellerLog" parameterType="int">
+		delete from
+		shop_seller_log where log_id=#{logId}
+	</delete>
+
+	<!-- 修改日志 -->
+	<update id="updateSellerLog" parameterType="com.Vshop.core.entity.base.SellerLog">
+		update
+		shop_seller_log set
+		log_content=#{logContent},
+		log_seller_id=#{logSellerId},
+		log_seller_name=#{logSellerName},
+		log_store_id=#{logStoreId},
+		log_seller_ip=#{logSellerIp},
+		log_url=#{logUrl},
+		log_state=#{logState}
+		where log_id=#{logId}
+	</update>
+
+	<select id="selectAllSellerLog" resultMap="BaseResultMap">
+		select
+		log_id,
+		log_content,
+		log_time,
+		log_seller_id,
+		log_seller_name,
+		log_store_id,
+		log_seller_ip,
+		log_url,
+		log_state
+		from shop_seller_log
+	</select>
+
+</mapper>

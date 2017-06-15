@@ -1,0 +1,81 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <parent>
+        <artifactId>Vshop</artifactId>
+        <groupId>com.Vshop</groupId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+    <artifactId>Vshop-seller</artifactId>
+    <packaging>war</packaging>
+    <name>Vshop-seller</name>
+    <url>http://maven.apache.org</url>
+    <dependencies>
+       <!--  <dependency>
+            <groupId>com.Vshop</groupId>
+            <artifactId>Vshop-entity</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency> -->
+        
+        <dependency>
+            <groupId>com.Vshop</groupId>
+            <artifactId>Vshop-core</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+        
+        <dependency>
+            <groupId>com.Vshop</groupId>
+            <artifactId>Vshop-service</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+        
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>javax.servlet-api</artifactId>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>javax.servlet.jsp</groupId>
+            <artifactId>javax.servlet.jsp-api</artifactId>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.jsoup</groupId>
+            <artifactId>jsoup</artifactId>
+            <version>1.8.1</version>
+        </dependency>
+		<dependency>
+            <groupId>org.json</groupId>
+            <artifactId>json</artifactId>
+            <version>20140107</version>
+        </dependency>
+        <dependency>
+		    <groupId>com.alibaba</groupId>
+		    <artifactId>fastjson</artifactId>
+		    <version>1.2.4</version>
+		</dependency>
+        
+        <!--二维码生成工具-->
+        <dependency>
+        <groupId>com.swetake</groupId>
+        <artifactId>swetake</artifactId>
+        <version>0.0.1</version>
+        <scope>system</scope>
+        <systemPath>
+			${project.basedir}/src/main/webapp/WEB-INF/lib/QRCode-0.0.1.jar
+		</systemPath>
+      </dependency>
+      <dependency>
+			<groupId>jasperreport</groupId>
+			<artifactId>jasperreport-theme</artifactId>
+			<version>5.2.0</version>
+			<scope>system</scope>
+			<systemPath>
+				${project.basedir}/src/main/webapp/WEB-INF/lib/jasperreports-chart-themes-5.2.0.jar
+			</systemPath>
+		</dependency>
+    </dependencies>
+    <build>
+        <finalName>Vshop-seller</finalName>
+    </build>
+</project>

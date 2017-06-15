@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.Vshop.service.module.trade.dao.mapper.TransportSupplierMapper">
+    <resultMap id="BaseResultMap" type="com.Vshop.core.entity.TransportSupplier" >
+        <id column="id" property="id" jdbcType="INTEGER" />
+        <result column="title" property="title" jdbcType="VARCHAR" />
+        <result column="send_tpl_id" property="sendTplId" jdbcType="INTEGER" />
+        <result column="supplier_id" property="supplierId" jdbcType="INTEGER" />
+        <result column="is_del" property="isDel" jdbcType="TINYINT" />
+        <result column="create_time" property="createTime" jdbcType="BIGINT" />
+        <result column="update_time" property="updateTime" jdbcType="BIGINT" />
+        <result column="is_default" property="isDefault"/>
+    </resultMap>
+
+    <sql id="Base_Column_List" >
+        id, title, send_tpl_id, supplier_id, is_del,create_time,update_time,is_default
+    </sql>
+    
+    <insert id="save" parameterType="com.Vshop.core.entity.Transport" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO shop_transport_supplier(title, send_tpl_id, supplier_id,create_time,update_time,is_default)
+        VALUES(#{title},#{sendTplId},#{supplierId},#{createTime},#{updateTime},#{isDefault});
+    </insert>
+    
+    <select id="findById" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List" />
+        from shop_transport_supplier where id=#{id}
+    </select>
+    
+    <select id="getDefTransportBySupplierId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM shop_transport_supplier
+        where supplier_id= #{supplierId} and is_del = 0 and is_default = 1
+    </select>
+    
+    <sql id="pageWhere">
+    	<where>
+    		1=1
+	        <if test="condition.supplierId != null">
+	            AND supplier_id= #{condition.supplierId}
+	        </if>
+	        <if test="condition.isDefault != null">
+	            AND is_default= #{condition.isDefault}
+	        </if>
+    	</where>
+    </sql>
+    
+    <!--查询分页列表-->
+    <select id="queryList" parameterType="com.Vshop.service.utils.page.Pager" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM shop_transport_supplier
+        <include refid="pageWhere"/> and is_del = 0 
+    </select>
+    
+    <update id="delete" parameterType="java.lang.Integer">
+        update shop_transport_supplier
+          set is_del = 1
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    
+    <update id="update" parameterType="com.Vshop.core.entity.Transport">
+        update shop_transport_supplier
+           <set>
+		      <if test="title != null" >
+		        title=#{title},
+		      </if>
+		      <if test="isDefault != null" >
+		        is_default=#{isDefault},
+		      </if>
+		      update_time=#{updateTime}
+		  </set>
+        where 
+	        supplier_id=#{supplierId}
+	        <if test="id != null">
+	        	and id = #{id,jdbcType=INTEGER} 
+	        </if>
+    </update>
+    
+    
+</mapper>

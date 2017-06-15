@@ -1,0 +1,112 @@
+*{
+	margin: 0;
+	padding: 0;
+}
+.wrap{
+	width: 100%;
+	height: 100%;
+	background: #e5e5e5;
+}
+.header{
+	width:100%;
+	height: 40px;
+	background: #c81313;
+	display: -webkit-box;
+	-webkit-box-align: center;
+	-webkit-box-pack: justify;
+	-webkit-box-orient: horizontal;
+}
+.header a{
+	width: 24px;
+	display: block;
+}
+.header p{
+	width: 60%;
+	display: block;
+	-webkit-box-flex: 1;
+	height: 40px;
+	font-size: 14px;
+	text-align: center;
+	line-height: 40px;
+	color: #ffffff;
+}
+.header img{
+	width: 12px;
+	height: 22px;
+	margin-left: 15px;
+}
+.zhifu_cont{
+	width: 100%;
+	height:190px;
+	background: #fff;
+	border-bottom: 1px solid #cdcccd;
+}
+.zhifu_cont p{
+	font-size: 14px;
+	line-height: 40px;
+	margin-left: 5%;
+}
+.zhifu_cont p img{
+	width: 23px;
+	float: left;
+	margin-top: 12px;
+}
+.zhifu_cont p span{
+	margin-left: 5px;
+}
+.imgs{
+	width: 100%;
+	background: #fff;
+}
+.imgs img{
+	width: 76px;
+	margin-left: 5%;
+	padding-top: 1%;
+}
+.imgs button{
+	width: 80px;
+	height: 25px;
+	border: 1px solid #c81313;
+	border-radius: 5px;
+	font-size: 12px;
+	color: #c81313;
+	float: left;
+	margin-left: 5%;
+	margin-top: 3%;
+}
+.zhifu_cont h1{
+	clear: both;
+	font-weight: normal;
+	font-size: 12px;
+	color: #666;
+	line-height: 35px;
+	margin-left: 5%;
+}
+.but{
+	width: 100%;
+	height: 44px;
+	background: #c81313;
+	color: #fff;
+	position: absolute;
+	bottom: 0;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

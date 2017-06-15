@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.Vshop.service.module.report.dao.mapper.MemberReportMapper">
+
+	<sql id="timeWhereSql2">
+		<where>
+			1=1
+			<if test="startTime != null">
+				and TO_DAYS(so.member_time) &gt;= TO_DAYS(#{startTime})
+			</if>
+			<if test="endTime != null">
+				and TO_DAYS(so.member_time) &lt;= TO_DAYS(#{endTime})
+			</if>
+		</where>
+	</sql>
+		
+	<sql id="GroupBySql">
+		<if test="condition == 'week'">
+			DAYOFWEEK(b.finnshed_time)
+		</if>
+		<if test="condition == 'month'">
+			DAYOFMONTH(b.finnshed_time)
+		</if>
+		<if test="condition == 'year'">
+			MONTH(b.finnshed_time)
+		</if>
+		<if test="condition == 'today'">
+			DATE(b.finnshed_time)
+		</if>
+		<if test="condition == 'assign'">
+			DATE(b.finnshed_time)
+		</if>
+	</sql>
+
+	<!-- 会员注册数量 -->
+	<resultMap id="goodsClickMapper" type="com.Vshop.core.entity.base.MemberRegister">
+		<result column="memberName" property="memberName" jdbcType="INTEGER" />
+		<result column="finnshedTime" property="finnshedTime" />
+		<result column="memberCount" property="memberCount" jdbcType="INTEGER" />
+	</resultMap>
+	
+	<!--  会员注册数量 -->
+	<select id="getMemberRegister" resultMap="goodsClickMapper" parameterType="com.Vshop.core.entity.base.GoodsClick">
+		select  b.member_name memberName, <include refid="GroupBySql"/> finnshedTime , count(b.member_id) memberCount from
+		(select so.member_name, so.member_id, so.member_time finnshed_time from shop_member so <include refid="timeWhereSql2"/>) b
+		group by <include refid="GroupBySql"/>
+	</select>
+	
+</mapper>

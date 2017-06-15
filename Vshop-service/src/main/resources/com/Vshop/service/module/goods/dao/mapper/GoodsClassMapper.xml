@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.Vshop.service.module.goods.dao.mapper.GoodsClassMapper">
+    <resultMap id="BaseResultMap" type="com.Vshop.core.entity.GoodsClass" >
+        <id column="gc_id" property="gcId" jdbcType="INTEGER" />
+        <result column="gc_name" property="gcName" jdbcType="VARCHAR" />
+        <result column="gc_pic" property="gcpic" jdbcType="VARCHAR" />
+        <result column="type_id" property="typeId" jdbcType="INTEGER" />
+        <result column="type_name" property="typename" jdbcType="VARCHAR" />
+        <result column="gc_parent_id" property="gcParentId" jdbcType="INTEGER" />
+        <result column="gc_sort" property="gcSort" jdbcType="INTEGER" />
+        <result column="gc_show" property="gcshow" jdbcType="INTEGER" />
+        <result column="gc_title" property="gcTitle" jdbcType="VARCHAR" />
+        <result column="gc_keywords" property="gcKeywords" jdbcType="VARCHAR" />
+        <result column="gc_description" property="gcDescription" jdbcType="VARCHAR" />
+        <result column="gc_idpath" property="gcIdpath" jdbcType="VARCHAR" />
+        <result column="has_child" property="hasChild" jdbcType="INTEGER" />
+        <collection property="classList" ofType="com.Vshop.core.entity.GoodsClass"
+                    column="gc_id" javaType="arraylist"
+                    select="com.Vshop.service.module.goods.dao.mapper.GoodsClassMapper.findChild">
+        </collection>
+    </resultMap>
+    
+    <resultMap id="BaseResultMap2" type="com.Vshop.core.entity.GoodsClass" >
+        <id column="gc_id" property="gcId" jdbcType="INTEGER" />
+        <result column="gc_name" property="gcName" jdbcType="VARCHAR" />
+        <result column="type_id" property="typeId" jdbcType="INTEGER" />
+        <result column="type_name" property="typename" jdbcType="VARCHAR" />
+        <result column="gc_parent_id" property="gcParentId" jdbcType="INTEGER" />
+        <result column="gc_sort" property="gcSort" jdbcType="INTEGER" />
+        <result column="gc_title" property="gcTitle" jdbcType="VARCHAR" />
+        <result column="gc_keywords" property="gcKeywords" jdbcType="VARCHAR" />
+        <result column="gc_description" property="gcDescription" jdbcType="VARCHAR" />
+        <result column="gc_show" property="gcshow" jdbcType="INTEGER" />
+        <result column="gc_pic" property="gcpic" jdbcType="VARCHAR" />
+        <result column="gc_idpath" property="gcIdpath" jdbcType="VARCHAR" />
+        <result column="has_child" property="hasChild" jdbcType="INTEGER" />
+    </resultMap>
+    
+    <sql id="Base_Column_List" >
+        gc_id,gc_name,type_id,type_name,gc_parent_id,gc_sort,gc_title,gc_keywords,
+        gc_description,gc_show,gc_pic,gc_idpath
+    </sql>
+
+    <!--保存-->
+    <insert id="save" parameterType="com.Vshop.core.entity.GoodsClass" useGeneratedKeys="true" keyProperty="gcId">
+        INSERT INTO shop_goods_class(gc_name,type_id,type_name,gc_parent_id,gc_sort,gc_title,gc_keywords,gc_description,gc_show,gc_pic,gc_idpath)
+        VALUES(#{gcName},#{typeId},#{typename},#{gcParentId},#{gcSort},#{gcTitle},#{gcKeywords},#{gcDescription},#{gcshow},#{gcpic},#{gcIdpath});
+    </insert>
+
+    <!--修改-->
+    <update id="update" parameterType="com.Vshop.core.entity.GoodsClass">
+        update shop_goods_class
+        <set>
+            <if test="gcName != null and gcName != '' ">
+                gc_name = #{gcName},
+            </if>
+            <if test="typeId != null ">
+                type_id = #{typeId},
+            </if>
+            <if test="typename != null and typename != '' ">
+                type_name = #{typename},
+            </if>
+            <if test="gcParentId != null ">
+                gc_parent_id = #{gcParentId},
+            </if>
+            <if test="gcSort != '' ">
+                gc_sort = #{gcSort},
+            </if>
+            <if test="gcTitle != null and gcTitle != '' ">
+                gc_title = #{gcTitle},
+            </if>
+            <if test="gcKeywords != null and gcKeywords != '' ">
+                gc_keywords = #{gcKeywords},
+            </if>
+            <if test="gcDescription != null and gcDescription != '' ">
+                gc_description = #{gcDescription},
+            </if>
+            <if test="gcDescription != null and gcDescription != '' ">
+                gc_description = #{gcDescription},
+            </if>
+            <if test="gcshow != null">
+                gc_show = #{gcshow},
+            </if>
+            <if test="gcpic != null and gcpic != '' ">
+                gc_pic = #{gcpic},
+            </if>
+            <if test="gcIdpath != null and gcIdpath != '' ">
+                gc_idpath = #{gcIdpath},
+            </if>
+        </set>
+        where gc_id=#{gcId}
+    </update>
+
+    <!--删除-->
+    <delete id="delete" parameterType="java.lang.Integer">
+        delete from shop_goods_class  where gc_id = #{gcId}
+    </delete>
+
+    <!--查找单个类别-->
+    <select id="findById" resultMap="BaseResultMap2" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List" />
+        from shop_goods_class where gc_id = #{gcId}
+    </select>
+
+	<select id="findByList" resultMap="BaseResultMap2" parameterType="java.util.List">
+        select
+        <include refid="Base_Column_List" />
+        from shop_goods_class where gc_id in 
+        <foreach item="item" index="index" collection="list" separator="," open="(" close=")">
+			(#{item})
+		</foreach>
+    </select>
+
+    <!--根据父id查询分类列表-->
+    <select id="findList" resultMap="BaseResultMap2" parameterType="java.lang.Integer">
+        SELECT
+        <include refid="Base_Column_List" />,
+        (select count(*) from shop_goods_class s1 where s1.gc_parent_id=s.gc_id) has_child
+        FROM shop_goods_class s
+        where  gc_parent_id = #{parentid}
+        order by gc_sort
+    </select>
+
+    <!--条件查询条数-->
+    <select id="findCount" parameterType="com.Vshop.core.entity.GoodsClass" resultType="int">
+        SELECT
+        count(*)
+        FROM shop_goods_class
+        where  gc_parent_id !=-1
+        <if test="gcName != '' and gcName != null">
+            and gc_name = #{gcName}
+        </if>
+        <if test="gcParentId != null ">
+            and gc_parent_id = #{gcParentId}
+        </if>
+        <if test="gcId != null">
+            and gc_id != #{gcId}
+        </if>
+    </select>
+
+    <!--递归查询所有分类-->
+    <select id="findAll" resultMap="BaseResultMap">
+		SELECT
+		<include refid="Base_Column_List" />,
+		(select count(*) from shop_goods_class s1 where s1.gc_parent_id=s.gc_id ) has_child
+		FROM shop_goods_class s where gc_parent_id = 0
+		order by gc_sort
+	</select>
+	
+	<select id="findChild" resultMap="BaseResultMap" parameterType="int">
+        SELECT
+        <include refid="Base_Column_List" />,
+        (select count(*) from shop_goods_class s1 where s1.gc_parent_id=s.gc_id ) has_child
+        FROM shop_goods_class s
+        where  gc_parent_id = #{gcId} order by gc_sort
+    </select>
+    
+     <!--递归查询所有分类-->
+    <select id="findAllbyisshow" resultMap="BaseResultMap" parameterType="com.Vshop.core.entity.GoodsClass">
+		SELECT
+		<include refid="Base_Column_List" />,
+		(select count(*) from shop_goods_class s1 where s1.gc_parent_id=s.gc_id and s1.gc_show=#{gcshow}) has_child
+		FROM shop_goods_class s where gc_parent_id = 0 and gc_show=#{gcshow}
+		order by gc_sort
+	</select>
+	
+	 <!--根据父id查询分类列表-->
+    <select id="findListbyishow" resultMap="BaseResultMap2" parameterType="com.Vshop.core.entity.GoodsClass">
+        SELECT
+        <include refid="Base_Column_List" />,
+        (select count(*) from shop_goods_class s1 where s1.gc_parent_id=s.gc_id and s1.gc_show=#{gcshow}) has_child
+        FROM shop_goods_class s
+        where  gc_parent_id = #{gcParentId} and gc_show=#{gcshow}
+        order by gc_sort
+    </select>
+    
+    <!-- 根据学院id查询课程的类别 -->
+    <select id="findListByStoreId" resultMap="BaseResultMap2" parameterType="com.Vshop.core.entity.GoodsStoreCls">
+        SELECT DISTINCT r.*, 1 AS has_child FROM 
+		shop_goods g, shop_goods_store s, shop_goods_class c, shop_goods_class r
+		WHERE g.goods_id = s.goods_id
+		AND g.gc_id = c.gc_id
+		AND SUBSTRING_INDEX(SUBSTRING_INDEX(c.gc_idpath, ',', ${clsLevel}), ',', -1) = r.gc_id
+        AND s.store_id = #{storeId}
+		<if test="gcParentId &gt;= 0">
+			AND r.gc_parent_id = #{gcParentId}
+		</if>
+		AND s.goods_show = 1
+		AND g.goods_state = 0
+		AND g.is_del = 0
+		ORDER BY r.gc_sort
+    </select>
+    
+    <!-- 根据学院id查询课程的叶子节点类别 -->
+    <select id="findLeafListByStoreId" resultMap="BaseResultMap2" parameterType="com.Vshop.core.entity.GoodsStoreCls">
+        SELECT DISTINCT c.*, 1 AS has_child FROM  
+		shop_goods g, shop_goods_store s, shop_goods_class c
+		WHERE g.goods_id = s.goods_id
+		AND g.gc_id = c.gc_id
+		AND c.gc_idpath LIKE CONCAT(#{topId}, ',%')		
+		AND s.store_id = #{storeId}
+		AND s.goods_show = 1
+		AND g.goods_state = 0
+		AND g.is_del = 0
+		ORDER BY c.gc_sort
+    </select>
+</mapper>

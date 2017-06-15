@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.Vshop.service.module.adv.dao.mapper.AdvPositionMapper">
+	<resultMap id="BaseResultMap" type="com.Vshop.core.entity.base.AdvPosition">
+		<result column="ap_id" property="apId" jdbcType="INTEGER" />
+		<result column="ap_name" property="apName" jdbcType="INTEGER" />
+		<result column="ap_intro" property="apIntro" jdbcType="VARCHAR" />
+		<result column="ap_class" property="apClass" jdbcType="INTEGER" />
+		<result column="ap_display" property="apDisplay" jdbcType="INTEGER" />
+		<result column="is_use" property="isUse" jdbcType="INTEGER" />
+		<result column="ap_width" property="apWidth" jdbcType="INTEGER" />
+		<result column="ap_height" property="apHeight" jdbcType="INTEGER" />
+		<result column="ap_key" property="apKey" jdbcType="VARCHAR"/>
+	</resultMap>
+	
+	<resultMap id="BaseResultMapVo" type="com.Vshop.core.entity.vo.AdvPositionVo">
+		<result column="ap_id" property="apId" jdbcType="INTEGER" />
+		<result column="ap_name" property="apName" jdbcType="INTEGER" />
+		<result column="ap_intro" property="apIntro" jdbcType="VARCHAR" />
+		<result column="ap_class" property="apClass" jdbcType="INTEGER" />
+		<result column="ap_display" property="apDisplay" jdbcType="INTEGER" />
+		<result column="is_use" property="isUse" jdbcType="INTEGER" />
+		<result column="ap_width" property="apWidth" jdbcType="INTEGER" />
+		<result column="ap_height" property="apHeight" jdbcType="INTEGER" />
+		<result column="ap_key" property="apKey" jdbcType="VARCHAR"/>
+		<collection property="advList" ofType="com.Vshop.core.entity.base.Adv" column="ap_id" javaType="arraylist"
+                    select="com.Vshop.service.module.adv.dao.mapper.AdvMapper.findByAdvPositionId">
+        </collection>
+	</resultMap>
+
+	<sql id="Base_Column_List">
+		ap_id,ap_name,ap_intro,ap_class,is_use,ap_width,ap_height,ap_key
+	</sql>
+
+	<sql id="whereStatement">
+		<where>
+			1 = 1
+			<if test="condition.apId != null">
+				and a.ap_id = ${condition.apId}
+			</if>
+			<if test="condition.apName != null and condition.apName !='' ">
+				and a.ap_name like CONCAT('%','${condition.apName}','%' )
+			</if>
+			<if test="condition.apClass != null">
+				and a.ap_display = ${condition.apClass}
+			</if>
+			<if test="condition.isUse != null">
+				and a.is_use = ${condition.isUse}
+			</if>
+			<if test="condition.apWidth != null">
+				and a.is_allowtalk = ${condition.apWidth}
+			</if>
+			<if test="condition.apHeight != null">
+				and a.ap_height = ${condition.apHeight}
+			</if>
+			<if test="condition.apHeight != null">
+				and a.ap_height = ${condition.apHeight}
+			</if>
+			<if test="condition.apHeight != null">
+				and a.ap_height = ${condition.apHeight}
+			</if>
+			<if test="condition.apKey != null and condition.apKey !='' ">
+				and a.ap_key= ${condition.apKey}
+			</if>
+		</where>
+	</sql>
+	
+	<sql id="whereStatement2">
+		<where>
+			1 = 1
+			<if test="apId != null">
+				and a.ap_id = ${apId}
+			</if>
+			<if test="apName != null and apName !='' ">
+				and a.ap_name like CONCAT('%','${apName}','%' )
+			</if>
+			<if test="apClass != null">
+				and a.ap_display = ${apClass}
+			</if>
+			<if test="isUse != null">
+				and a.is_use = ${isUse}
+			</if>
+			<if test="apWidth != null">
+				and a.is_allowtalk = ${apWidth}
+			</if>
+			<if test="apHeight != null">
+				and a.ap_height = ${apHeight}
+			</if>
+			<if test="apHeight != null">
+				and a.ap_height = ${apHeight}
+			</if>
+			<if test="apHeight != null">
+				and a.ap_height = ${apHeight}
+			</if>
+			<if test="apKey != null and apKey !='' ">
+				and a.ap_key= ${apKey}
+			</if>
+		</where>
+	</sql>
+
+	<delete id="delete" parameterType="java.lang.Integer">
+		delete from shop_adv_position where ap_id=#{apId}
+	</delete>
+
+	<insert id="save" parameterType="com.Vshop.core.entity.base.AdvPosition">
+		insert into shop_adv_position (ap_id,ap_name,ap_intro,ap_class,ap_display,is_use,ap_width,ap_height,ap_key)
+		values(#{apId},#{apName},#{apIntro},#{apClass},#{apDisplay},#{isUse},#{apWidth},#{apHeight},#{apKey});
+	</insert>
+
+	<update id="update" parameterType="com.Vshop.core.entity.base.AdvPosition">
+	 update shop_adv_position set 
+	 	<if test="apName != null">ap_name =#{apName},</if>
+	  	<if test="apIntro != null and apIntro!=''">ap_intro =#{apIntro},</if>
+	   	<if test="apClass != null">ap_class =#{apClass},</if>
+	    <if test="apDisplay != null">ap_display =#{apDisplay},</if>
+	    <if test="isUse != null">is_use =#{isUse},</if>
+	    <if test="apWidth != null">ap_width =#{apWidth},</if>
+	    <if test="apHeight != null">ap_height =#{apHeight},</if>
+	    <if test="apKey != null and apKey !=''">ap_key =#{apKey}</if>
+	    where ap_id=#{apId}
+	</update>
+
+	<select id="findAdvPositionCount" resultType="java.lang.Integer" parameterType="com.Vshop.core.entity.base.AdvPosition">
+		select count(1) from shop_adv_position a
+		<include refid="whereStatement2" />
+	</select>
+	
+	<select id="findAdvPositionPagerList" resultMap="BaseResultMap" parameterType="com.Vshop.service.utils.page.Pager">
+		SELECT s.* from (select a.* from shop_adv_position a
+			<include refid="whereStatement" />
+			) s
+	</select>
+
+	<select id="findAllAdvPosition" resultMap="BaseResultMap" parameterType="com.Vshop.core.entity.base.AdvPosition">
+		select 
+			<include refid="Base_Column_List" />
+			from shop_adv_position
+	</select>
+
+	<select id="findAdvPositionById" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+		select 
+			<include refid="Base_Column_List" />
+			from shop_adv_position where ap_id=#{apId}
+	</select>
+	
+	<select id="findAdvPositionVoList" resultMap="BaseResultMapVo" parameterType="com.Vshop.core.entity.base.AdvPosition">
+		select 
+			<include refid="Base_Column_List" />
+			from shop_adv_position where is_use=1 
+			<if test="apId != null">and ap_id=#{apId}</if>
+			<if test="apKey != null and apKey !='' ">and ap_key=#{apKey}</if>
+	</select>
+	
+	<select id="findAdvPositionVoByKey" resultMap="BaseResultMapVo" parameterType="java.lang.String">
+		select 
+			<include refid="Base_Column_List" />
+			from shop_adv_position where is_use=1 and ap_key=#{apKey}
+	</select>
+	
+	<!-- <select id="findAdvPositionVoList" resultMap="BaseResultMapVo" parameterType="java.lang.Integer">
+		select 
+			<include refid="Base_Column_List" />
+			from shop_adv_position where ap_id=#{apId}
+	</select> -->
+	
+</mapper>

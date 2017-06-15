@@ -1,0 +1,383 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.Vshop.service.module.goods.dao.mapper.SupplierMapper">
+    <resultMap id="BaseResultMap" type="com.Vshop.core.entity.base.Supplier" >
+        <id column="id" property="id" jdbcType="INTEGER" />
+        <result column="name" property="name" jdbcType="VARCHAR" />
+        <result column="shortName" property="shortName" jdbcType="VARCHAR" />
+        <result column="supplierNO" property="supplierNO" jdbcType="VARCHAR" />
+        <result column="entType" property="entType" jdbcType="INTEGER" />
+        <result column="address" property="address" jdbcType="VARCHAR" />
+        <result column="longitude" property="longitude" jdbcType="DECIMAL" />
+        <result column="latitude" property="latitude" jdbcType="DECIMAL" />
+        <result column="contacter" property="contacter" jdbcType="VARCHAR" />
+        <result column="mobile" property="mobile" jdbcType="VARCHAR" />
+        <result column="fixedTel" property="fixedTel" jdbcType="VARCHAR" />
+        <result column="fax" property="fax" jdbcType="VARCHAR" />
+        <result column="contacterBak" property="contacterBak" jdbcType="VARCHAR" />
+        <result column="mobileBak" property="mobileBak" jdbcType="VARCHAR" />
+        <result column="busType" property="busType" jdbcType="INTEGER" />
+        <result column="marketType" property="marketType" jdbcType="INTEGER" />
+        <result column="busArea" property="busArea" jdbcType="DECIMAL" />
+        <result column="managerId" property="managerId" jdbcType="VARCHAR" />
+        <result column="busLicenseNO" property="busLicenseNO" jdbcType="VARCHAR" />
+        <result column="busLicenPurl" property="busLicenPurl" jdbcType="VARCHAR" />
+        <result column="dishuiRegistNO" property="dishuiRegistNO" jdbcType="VARCHAR" />
+        <result column="dishuiRegistPurl" property="dishuiRegistPurl" jdbcType="VARCHAR" />
+        <result column="guoshuiRegistNO" property="guoshuiRegistNO" jdbcType="VARCHAR" />
+        <result column="guoshuiRegistPurl" property="guoshuiRegistPurl" jdbcType="VARCHAR" />
+        <result column="zzshuiPurl" property="zzshuiPurl" jdbcType="VARCHAR" />
+        <result column="legaler" property="legaler" jdbcType="VARCHAR" />
+        <result column="legalerID" property="legalerID" jdbcType="VARCHAR" />
+        <result column="legalerPurl" property="legalerPurl" jdbcType="VARCHAR" />
+        <result column="shopType" property="shopType" jdbcType="INTEGER" />
+        <result column="accountBank" property="accountBank" jdbcType="VARCHAR" />
+        <result column="openingBank" property="openingBank" jdbcType="VARCHAR" />
+        <result column="accountNO" property="accountNO" jdbcType="VARCHAR" />
+        <result column="openingName" property="openingName" jdbcType="VARCHAR" />
+        <result column="accountMethod" property="accountMethod" jdbcType="INTEGER" />
+        <result column="accountCycle" property="accountCycle" jdbcType="INTEGER" />
+        <result column="acountDate" property="acountDate" jdbcType="DATE" />
+        <result column="deleted" property="deleted" jdbcType="INTEGER" />
+        <result column="createTime" property="createTime" jdbcType="DATE" />
+        <result column="updateTime" property="updateTime" jdbcType="DATE" />
+        
+        <result column="name_auth" property="nameAuth" jdbcType="INTEGER" />
+        <result column="member_id" property="memberId" jdbcType="INTEGER" />
+        <result column="member_name" property="memberName" jdbcType="VARCHAR" />
+        <result column="supplier_state" property="supplierState" jdbcType="INTEGER" />
+        <result column="supplier_logintime" property="supplierLogintime" jdbcType="BIGINT" />
+        <result column="supplier_lastlogintime" property="supplierLastLogintime" jdbcType="BIGINT" />
+        <result column="supplier_logo" property="supplierLogo" jdbcType="VARCHAR" />
+        <result column="supplier_close_info" property="supplierCloseInfo" jdbcType="VARCHAR" />
+    </resultMap>
+    
+    <sql id="Base_Column_List" >
+    	id, name, shortName, supplierNO, entType, address, longitude, latitude, contacter, mobile,
+		fixedTel, fax, contacterBak, mobileBak, busType, marketType, busArea, managerId, busLicenseNO,
+		busLicenPurl, dishuiRegistNO, dishuiRegistPurl, guoshuiRegistNO, guoshuiRegistPurl, zzshuiPurl,
+		legaler, legalerID, legalerPurl, shopType, accountBank, openingBank, accountNO, openingName,
+		accountMethod, accountCycle, acountDate, deleted, createTime, updateTime, member_id, member_name, name_auth, supplier_state,
+		supplier_logintime,supplier_lastlogintime,supplier_logo,supplier_close_info
+    </sql>
+  
+    <insert id="save" parameterType="com.Vshop.core.entity.base.Supplier" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO shop_supplier
+	    <trim prefix="(" suffix=")" suffixOverrides="," >
+	      <include refid="Base_Column_List" />
+	    </trim>
+	    <trim prefix="values (" suffix=")" suffixOverrides="," >
+	      #{id,jdbcType=INTEGER},
+	      #{name,jdbcType=VARCHAR},
+	      #{shortName,jdbcType=VARCHAR},
+	      #{supplierNO,jdbcType=VARCHAR},
+	      #{entType,jdbcType=INTEGER},
+	      #{address,jdbcType=VARCHAR},
+	      #{longitude,jdbcType=DECIMAL},
+	      #{latitude,jdbcType=DECIMAL},
+	      #{contacter,jdbcType=VARCHAR},
+	      #{mobile,jdbcType=VARCHAR},
+	      #{fixedTel,jdbcType=VARCHAR},
+	      #{fax,jdbcType=VARCHAR},
+	      #{contacterBak,jdbcType=VARCHAR},
+	      #{mobileBak,jdbcType=VARCHAR},
+	      #{busType,jdbcType=INTEGER},
+	      #{marketType,jdbcType=INTEGER},
+	      #{busArea,jdbcType=DECIMAL},
+	      #{managerId,jdbcType=VARCHAR},
+	      #{busLicenseNO,jdbcType=VARCHAR},
+	      #{busLicenPurl,jdbcType=VARCHAR},
+	      #{dishuiRegistNO,jdbcType=VARCHAR},
+	      #{dishuiRegistPurl,jdbcType=VARCHAR},
+	      #{guoshuiRegistNO,jdbcType=VARCHAR},
+	      #{guoshuiRegistPurl,jdbcType=VARCHAR},
+	      #{zzshuiPurl,jdbcType=VARCHAR},
+	      #{legaler,jdbcType=VARCHAR},
+	      #{legalerID,jdbcType=VARCHAR},
+	      #{legalerPurl,jdbcType=VARCHAR},
+	      #{shopType,jdbcType=INTEGER},
+	      #{accountBank,jdbcType=VARCHAR},
+	      #{openingBank,jdbcType=VARCHAR},
+	      #{accountNO,jdbcType=VARCHAR},
+	      #{openingName,jdbcType=VARCHAR},
+	      #{accountMethod,jdbcType=INTEGER},
+	      #{accountCycle,jdbcType=INTEGER},
+	      #{acountDate,jdbcType=TIMESTAMP},
+	      #{deleted,jdbcType=INTEGER},
+	      NOW(),
+	      NOW(),
+	      #{memberId,jdbcType=INTEGER},
+	      #{memberName,jdbcType=VARCHAR},
+	      #{nameAuth,jdbcType=INTEGER},
+	      #{supplierState,jdbcType=INTEGER},
+	      #{supplierLogintime,jdbcType=BIGINT},
+	      #{supplierLastLogintime,jdbcType=BIGINT},
+	      #{supplierLogo,jdbcType=VARCHAR},
+	      #{supplierCloseInfo,jdbcType=VARCHAR}
+	    </trim>
+    </insert>
+	
+	 <sql id="whereStatement2">
+		<where>
+			1 = 1
+	        <if test="name !=null and name !='' ">
+	            AND name LIKE CONCAT('%','${name}','%' )
+	        </if>
+	        <if test="id != null and id != ''">
+	            AND id != #{id}
+	        </if>
+		</where>
+	</sql>
+    
+    <delete id="delete" parameterType="Map">
+         UPDATE shop_supplier SET deleted = 1 WHERE id = #{id} 
+    </delete>
+    
+    <!-- 更新品牌 -->
+    <update id="update" parameterType="com.Vshop.core.entity.base.Supplier">
+        UPDATE shop_supplier
+	    <set >
+	      <if test="id != null" >
+	        id = #{id,jdbcType=INTEGER},
+	      </if>
+	      <if test="name != null" >
+	        `name` = #{name,jdbcType=VARCHAR},
+	      </if>
+	      <if test="shortName != null" >
+	        shortName = #{shortName,jdbcType=VARCHAR},
+	      </if>
+	      <if test="supplierNO != null" >
+	        supplierNO = #{supplierNO,jdbcType=VARCHAR},
+	      </if>
+	      <if test="entType != null" >
+	        entType = #{entType,jdbcType=INTEGER},
+	      </if>
+	      <if test="address != null" >
+	        address = #{address,jdbcType=VARCHAR},
+	      </if>
+	      <if test="longitude != null" >
+	        longitude = #{longitude,jdbcType=DECIMAL},
+	      </if>
+	      <if test="latitude != null" >
+	        latitude = #{latitude,jdbcType=DECIMAL},
+	      </if>
+	      <if test="contacter != null" >
+	        contacter = #{contacter,jdbcType=VARCHAR},
+	      </if>
+	      <if test="mobile != null" >
+	        mobile = #{mobile,jdbcType=VARCHAR},
+	      </if>
+	      <if test="fixedTel != null" >
+	        fixedTel = #{fixedTel,jdbcType=VARCHAR},
+	      </if>
+	      <if test="fax != null" >
+	        fax = #{fax,jdbcType=VARCHAR},
+	      </if>
+	      <if test="contacterBak != null" >
+	        contacterBak = #{contacterBak,jdbcType=VARCHAR},
+	      </if>
+	      <if test="mobileBak != null" >
+	        mobileBak = #{mobileBak,jdbcType=VARCHAR},
+	      </if>
+	      <if test="busType != null" >
+	        busType = #{busType,jdbcType=INTEGER},
+	      </if>
+	      <if test="marketType != null" >
+	        marketType = #{marketType,jdbcType=INTEGER},
+	      </if>
+	      <if test="busArea != null" >
+	        busArea = #{busArea,jdbcType=DECIMAL},
+	      </if>
+	      <if test="managerId != null" >
+	        managerId = #{managerId,jdbcType=VARCHAR},
+	      </if>
+	      <if test="busLicenseNO != null" >
+	        busLicenseNO = #{busLicenseNO,jdbcType=VARCHAR},
+	      </if>
+	      <if test="busLicenPurl != null" >
+	        busLicenPurl = #{busLicenPurl,jdbcType=VARCHAR},
+	      </if>
+	      <if test="dishuiRegistNO != null" >
+	        dishuiRegistNO = #{dishuiRegistNO,jdbcType=VARCHAR},
+	      </if>
+	      <if test="dishuiRegistPurl != null" >
+	        dishuiRegistPurl = #{dishuiRegistPurl,jdbcType=VARCHAR},
+	      </if>
+	      <if test="guoshuiRegistNO != null" >
+	        guoshuiRegistNO = #{guoshuiRegistNO,jdbcType=VARCHAR},
+	      </if>
+	      <if test="guoshuiRegistPurl != null" >
+	        guoshuiRegistPurl = #{guoshuiRegistPurl,jdbcType=VARCHAR},
+	      </if>
+	      <if test="zzshuiPurl != null" >
+	        zzshuiPurl = #{zzshuiPurl,jdbcType=VARCHAR},
+	      </if>
+	      <if test="legaler != null" >
+	        legaler = #{legaler,jdbcType=VARCHAR},
+	      </if>
+	      <if test="legalerID != null" >
+	        legalerID = #{legalerID,jdbcType=VARCHAR},
+	      </if>
+	      <if test="legalerPurl != null" >
+	        legalerPurl = #{legalerPurl,jdbcType=VARCHAR},
+	      </if>
+	      <if test="shopType != null" >
+	        shopType = #{shopType,jdbcType=INTEGER},
+	      </if>
+	      <if test="accountBank != null" >
+	        accountBank = #{accountBank,jdbcType=VARCHAR},
+	      </if>
+	      <if test="openingBank != null" >
+	        openingBank = #{openingBank,jdbcType=VARCHAR},
+	      </if>
+	      <if test="accountNO != null" >
+	        accountNO = #{accountNO,jdbcType=VARCHAR},
+	      </if>
+	      <if test="openingName != null" >
+	        openingName = #{openingName,jdbcType=VARCHAR},
+	      </if>
+	      <if test="accountMethod != null" >
+	        accountMethod = #{accountMethod,jdbcType=INTEGER},
+	      </if>
+	      <if test="accountCycle != null" >
+	        accountCycle = #{accountCycle,jdbcType=INTEGER},
+	      </if>
+	      <if test="acountDate != null" >
+	        acountDate = #{acountDate,jdbcType=TIMESTAMP},
+	      </if>
+	      <if test="deleted != null" >
+	        deleted = #{deleted,jdbcType=INTEGER},
+	      </if>
+	      <if test="memberId != null and memberId !=''">
+               member_id= #{memberId,jdbcType=INTEGER},
+          </if>
+          <if test="memberName != null and memberName !=''">
+               member_name= #{memberName,jdbcType=VARCHAR},
+          </if>
+          <if test="supplierState != null">
+               supplier_state = #{supplierState,jdbcType=INTEGER},
+          </if>
+      	  <if test="supplierLogintime != null and supplierLogintime!=''">
+               supplier_logintime= #{supplierLogintime},
+          </if>
+          <if test="supplierLastLogintime != null and supplierLastLogintime!=''">
+               supplier_lastlogintime = #{supplierLastLogintime},
+          </if>
+          <if test="supplierLogo != null and supplierLogo !=''">
+               supplier_logo = #{supplierLogo},
+          </if>
+          <if test="supplierCloseInfo != null and supplierCloseInfo !=''">
+               supplier_close_info = #{supplierCloseInfo},
+          </if>
+	      updateTime = NOW()
+	    </set>
+        WHERE id=#{id}
+    </update>
+    
+    <!--查询分页列表-->
+    <select id="findPageList" parameterType="com.Vshop.service.utils.page.Pager" resultMap="BaseResultMap">
+        SELECT a.* FROM(
+        SELECT
+         <include refid="Base_Column_List" />
+        FROM shop_supplier
+        <where>
+			1 = 1
+	        <if test="condition.name != null and condition.name != ''">
+	            AND name LIKE CONCAT('%','${condition.name}','%' )
+	        </if>
+	        <if test="condition.supplierState != null">
+	            AND supplier_state = #{condition.supplierState}
+	        </if>
+		</where>
+        ORDER BY id DESC) a 
+    </select>
+    
+    <!-- 获取全部数据 -->
+    <select id="findList" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM shop_supplier
+        WHERE 1 = 1 and deleted != 1
+    </select>
+
+    <select id="findById" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List" />
+        from shop_supplier where id=#{id}
+    </select>
+
+    
+    <!-- 根据获取总数 -->
+    <select id="countSupplier" resultType="Integer" parameterType="com.Vshop.core.entity.base.Supplier">
+        SELECT count(1) from shop_supplier 
+        <where>
+			1 = 1
+	        <if test="name !=null and name !='' ">
+	            AND name LIKE CONCAT('%','${name}','%')
+	        </if>
+	        <if test="id != null">
+	            AND id != #{id}
+	        </if>
+		</where>
+		<!-- 
+        <include refid="whereStatement2" />
+         -->
+    </select>
+   
+   <insert id="saveSupplierBrand" parameterType="java.util.List">
+		INSERT INTO shop_supplier_brand(supplier_id, brand_id) VALUES
+		<foreach collection="list" item="item" index="index" separator=",">
+			(#{item.supplierId},#{item.brandId})
+		</foreach>
+	</insert>
+	
+	<resultMap id="BrandBaseResultMap" type="com.Vshop.core.entity.base.Brand" >
+        <id column="brand_id" property="brandId" jdbcType="INTEGER" />
+        <result column="brand_name" property="brandName" jdbcType="VARCHAR" />
+        <result column="brand_class" property="brandClass" jdbcType="VARCHAR" />
+        <result column="brand_pic" property="brandPic" jdbcType="VARCHAR" />
+        <result column="brand_sort" property="brandSort" jdbcType="INTEGER" />
+        <result column="brand_recommend" property="brandRecommend" jdbcType="INTEGER" />
+        <result column="store_id" property="storeId" jdbcType="INTEGER" />
+        <result column="brand_apply" property="brandApply" jdbcType="INTEGER" />
+        <result column="class_id" property="classId" jdbcType="INTEGER" />
+        <result column="is_del" property="isDel" jdbcType="TINYINT" />
+        <result column="create_time" property="createTime" jdbcType="BIGINT" />
+        <result column="update_time" property="updateTime" jdbcType="BIGINT" />
+    </resultMap>
+	<sql id="Brand_Base_Column_List" >
+        b.brand_id, brand_name, brand_class, brand_pic, brand_sort, brand_recommend, store_id,brand_apply,
+        class_id,is_del,create_time,update_time
+    </sql>
+    
+	<select id="findBrandListBySupplier" resultMap="BrandBaseResultMap" parameterType="Map">
+		SELECT 
+		  <include refid="Brand_Base_Column_List"/> 
+		FROM
+		  shop_supplier_brand s 
+		  INNER JOIN shop_brand b 
+		    ON s.brand_id = b.brand_id 
+		WHERE s.supplier_id = #{id} 
+	</select>
+	
+	<select id="findSupplierListByBrand" resultMap="BaseResultMap" parameterType="com.Vshop.core.entity.base.Brand">
+		SELECT 
+		  <include refid="Base_Column_List" />
+		FROM
+		  shop_supplier_brand b 
+		  INNER JOIN shop_supplier s 
+		    ON b.supplier_id = s.id 
+		WHERE b.brand_id = #{brandId}
+	</select>
+	
+	<delete id="deleteSupplierBrandBySupplierId" parameterType="Map">
+         DELETE FROM shop_supplier_brand WHERE supplier_id =#{id} 
+    </delete>
+    
+    <!-- 根据ID查询实体 -->
+    <select id="findByMemberId" resultMap="BaseResultMap" parameterType="integer">
+        select <include refid="Base_Column_List" />
+        from shop_supplier where member_id = #{id}
+    </select>
+    
+</mapper>

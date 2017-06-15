@@ -1,0 +1,295 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.Vshop.union.dao.mapper.UnionGoodsClassMapper">
+
+	<resultMap id="BaseResultMap" type="com.Vshop.union.entity.UnionGoodsClass">
+		<result column="id" property="id" jdbcType="INTEGER" />
+		<result column="name" property="name" jdbcType="VARCHAR" />
+		<result column="names" property="names" jdbcType="VARCHAR" />
+		<result column="icon" property="icon" jdbcType="VARCHAR" />
+		<result column="show_flag" property="showFlag" jdbcType="INTEGER" />
+		<result column="sort" property="sort" jdbcType="INTEGER" />
+		<result column="pid" property="pid" jdbcType="INTEGER" />
+		<result column="idpaths" property="idpaths" jdbcType="VARCHAR" />
+		<result column="has_child" property="hasChild" jdbcType="INTEGER" />
+		<result column="levels" property="levels" jdbcType="INTEGER" />
+		<result column="create_by" property="createBy" jdbcType="INTEGER" />
+		<result column="create_date" property="createDate" jdbcType="BIGINT" />
+		<result column="remarks" property="remarks" jdbcType="VARCHAR" />
+		<result column="del_flag" property="delFlag" jdbcType="INTEGER" />
+		<result column="update_by" property="updateBy" jdbcType="INTEGER" />
+		<result column="update_date" property="updateDate" jdbcType="BIGINT" />
+	</resultMap>
+	
+	<resultMap id="BaseResultMap1" type="com.Vshop.union.entity.UnionGoodsClass">
+		<result column="id" property="id" jdbcType="INTEGER" />
+		<result column="name" property="name" jdbcType="VARCHAR" />
+		<result column="names" property="names" jdbcType="VARCHAR" />
+		<result column="icon" property="icon" jdbcType="VARCHAR" />
+		<result column="show_flag" property="showFlag" jdbcType="INTEGER" />
+		<result column="sort" property="sort" jdbcType="INTEGER" />
+		<result column="pid" property="pid" jdbcType="INTEGER" />
+		<result column="idpaths" property="idpaths" jdbcType="VARCHAR" />
+		<result column="has_child" property="hasChild" jdbcType="INTEGER" />
+		<result column="levels" property="levels" jdbcType="INTEGER" />
+		<result column="create_by" property="createBy" jdbcType="INTEGER" />
+		<result column="create_date" property="createDate" jdbcType="BIGINT" />
+		<result column="remarks" property="remarks" jdbcType="VARCHAR" />
+		<result column="del_flag" property="delFlag" jdbcType="INTEGER" />
+		<result column="update_by" property="updateBy" jdbcType="INTEGER" />
+		<result column="update_date" property="updateDate" jdbcType="BIGINT" />
+		<collection property="classList" ofType="com.Vshop.union.entity.UnionGoodsClass"
+	        column="id" javaType="arraylist"
+	        select="com.Vshop.union.dao.mapper.UnionGoodsClassMapper.findChild">
+        </collection>
+	</resultMap>
+	
+	
+
+	<sql id="Base_Column_List">
+		id,name,names,icon,show_flag,sort,pid,idpaths,levels,create_by,create_date,remarks,del_flag,update_by,update_date
+	</sql>
+
+	<sql id="whereStatement">
+		<where>
+			1 = 1
+			
+			<if test="condition !=null">
+				<if test="condition.name !=null and condition.name!=''">
+					and name like CONCAT('%',#{condition.name},'%')
+				</if>
+			</if>
+		</where>
+	</sql>
+
+	<select id="findPagerList" resultMap="BaseResultMap"
+		parameterType="com.Vshop.service.utils.page.Pager">
+
+		SELECT s.* from( select c.* from union_goods_class c
+		<include refid="whereStatement" />
+		order by sort desc
+		<if test="orderBy == 0">
+			,id desc
+		</if>
+		<if test="orderBy == 1">
+			,id asc
+		</if>
+		) s
+
+	</select>
+
+	<select id="findById" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+
+		select
+		<include refid="Base_Column_List" />,
+		(select count(*) from union_goods_class s1 where s1.pid=ugc.id) has_child
+		from union_goods_class ugc where id = #{id}
+
+	</select>
+
+	<delete id="deleteById" parameterType="java.lang.Integer">
+		delete from
+		union_goods_class where id = #{id}
+	</delete>
+
+	<insert id="save" parameterType="com.Vshop.union.entity.UnionGoodsClass"  useGeneratedKeys="true" keyProperty="id">
+
+		insert into union_goods_class
+
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+
+			<if test="name != null">
+				name,
+			</if>
+			<if test="names != null">
+				names,
+			</if>
+			<if test="icon != null">
+				icon,
+			</if>
+			<if test="showFlag != null">
+				show_flag,
+			</if>
+			<if test="sort != null">
+				sort,
+			</if>
+			<if test="pid != null">
+				pid,
+			</if>
+			<if test="idpaths != null">
+				idpaths,
+			</if>
+			<if test="levels != null">
+				levels,
+			</if>
+			<if test="remarks != null">
+				remarks,
+			</if>
+			<if test="delFlag != null">
+				del_flag,
+			</if>
+			<if test="createBy != null">
+				create_by,
+			</if>
+			<if test="createDate != null">
+				create_date,
+			</if>
+
+		</trim>
+
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+
+			<if test="name != null">
+				#{name},
+			</if>
+			<if test="names != null">
+				#{names},
+			</if>
+			<if test="icon != null">
+				#{icon},
+			</if>
+			<if test="showFlag != null">
+				#{showFlag},
+			</if>
+			<if test="sort != null">
+				#{sort},
+			</if>
+			<if test="pid != null">
+				#{pid},
+			</if>
+			<if test="idpaths != null">
+				#{idpaths},
+			</if>
+			<if test="levels != null">
+				#{levels},
+			</if>
+			<if test="remarks != null">
+				#{remarks},
+			</if>
+			<if test="delFlag != null">
+				#{delFlag},
+			</if>
+			<if test="createBy != null">
+				#{createBy},
+			</if>
+			<if test="createDate != null">
+				#{createDate},
+			</if>
+
+		</trim>
+
+	</insert>
+
+	<update id="update" parameterType="com.Vshop.union.entity.UnionGoodsClass">
+
+		update union_goods_class
+		set
+
+		<trim suffixOverrides=",">
+			<if test="name != null">
+				name=#{name},
+			</if>
+			<if test="names != null">
+				names=#{names},
+			</if>
+			<if test="icon != null">
+				icon=#{icon},
+			</if>
+			<if test="showFlag != null">
+				show_flag=#{showFlag},
+			</if>
+			<if test="sort != null">
+				sort=#{sort},
+			</if>
+			<if test="pid != null">
+				pid=#{pid},
+			</if>
+			<if test="idpaths != null">
+				idpaths=#{idpaths},
+			</if>
+			<if test="levels != null">
+				levels=#{levels},
+			</if>
+			<if test="remarks != null">
+				remarks=#{remarks},
+			</if>
+			<if test="delFlag != null">
+				del_flag=#{delFlag},
+			</if>
+			<if test="updateBy != null">
+				update_by=#{updateBy},
+			</if>
+			<if test="updateDate != null">
+				update_date=#{updateDate},
+			</if>
+		</trim>
+
+		where id = #{id}
+
+	</update>
+	
+	<select id="findChild" resultMap="BaseResultMap1" parameterType="int">
+        SELECT
+        <include refid="Base_Column_List" />,
+        (select count(*) from union_goods_class s1 where s1.pid=ugc.id) has_child
+        FROM union_goods_class ugc
+        where  pid = #{pid} order by sort desc,id desc
+    </select>
+
+	<select id="findAll" resultMap="BaseResultMap1"
+		parameterType="com.Vshop.union.entity.UnionGoodsClass">
+		SELECT
+		<include refid="Base_Column_List" />,
+		(select count(*) from union_goods_class s1 where s1.pid=ugc.id) has_child
+		from union_goods_class ugc
+		where pid = 0
+		order by sort desc,id desc
+	</select>
+	
+	<sql id="frontWhereStatement">
+		<where>
+			1 = 1
+			and show_flag=1
+			and del_flag=0
+		</where>
+	</sql>
+	
+	<select id="findAllIsShow" resultMap="BaseResultMap"
+		parameterType="com.Vshop.union.entity.UnionGoodsClass">
+		SELECT
+		<include refid="Base_Column_List" />
+		from union_goods_class
+		<include refid="frontWhereStatement" />
+		order by sort desc,id desc
+	</select>
+	
+	<select id="findListByPid" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+		SELECT
+		<include refid="Base_Column_List" />,
+		(select count(*) from union_goods_class s1 where s1.pid=ugc.id) has_child
+		from union_goods_class ugc
+		where  pid = #{pid}
+		order by sort desc,id desc
+	</select>
+	
+	<select id="findFrontListByPid" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+		SELECT
+		<include refid="Base_Column_List" />,
+		(select count(*) from union_goods_class s1 where s1.pid=ugc.id) has_child
+		from union_goods_class ugc
+		where 1 = 1	and show_flag=1	and del_flag=0	and pid = #{pid}
+		order by sort desc,id desc
+	</select>
+	
+	<select id="findListByIds" resultType="String" >
+		SELECT
+		ugc.name
+		from union_goods_class ugc
+		where  id in
+		 <foreach collection="array" index="index" item="id" open="(" separator="," close=")">  
+            #{id}   
+   		 </foreach> 
+		order by levels asc
+	</select>
+
+</mapper>

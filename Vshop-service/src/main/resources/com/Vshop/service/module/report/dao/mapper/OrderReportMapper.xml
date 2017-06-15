@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.Vshop.service.module.report.dao.mapper.OrderReportMapper">
+	<!-- 订单报表 -->
+	<resultMap id="orderReportMapper" type="com.Vshop.core.entity.base.OrderReport">
+		<result column="storeName" property="storeName" jdbcType="VARCHAR" />
+		<result column="orderCount" property="orderCount" jdbcType="INTEGER" />
+		<result column="orderAmount" property="orderAmount"/>
+		<result column="finishTime" property="finishTime"/>
+	</resultMap>
+		
+	<sql id="timeWhereSql">
+		<where>
+			1=1
+			<if test="startTime != null">
+				and TO_DAYS(so.finnshed_time) &gt;= TO_DAYS(#{startTime})
+			</if>
+			<if test="endTime != null">
+				and TO_DAYS(so.finnshed_time) &lt;= TO_DAYS(#{endTime})
+			</if>
+		</where>
+	</sql>
+	
+	<sql id="GroupBySql">
+		<if test="condition == 'week'">
+			DAYOFWEEK(a.finnshed_time)
+		</if>
+		<if test="condition == 'month'">
+			DAYOFMONTH(a.finnshed_time)
+		</if>
+		<if test="condition == 'year'">
+			MONTH(a.finnshed_time)
+		</if>
+		<if test="condition == 'today'">
+			DATE(a.finnshed_time)
+		</if>
+		<if test="condition == 'assign'">
+			DATE(a.finnshed_time)
+		</if>
+	</sql>
+	
+	<!-- 订单报表 -->
+	<select id="getOrderReport" resultMap="orderReportMapper" parameterType="com.Vshop.core.entity.base.OrderReport">
+		select
+		a.store_name storeName, count(a.order_id) orderCount, sum(a.goods_amount) orderAmount,
+		cast(<include refid="GroupBySql"/> as char) finishTime
+		from
+		(select so.order_id, so.store_name, so.goods_amount, so.finnshed_time from shop_order so 
+			<include refid="timeWhereSql"/>  and so.store_id=#{storeId} and so.order_state=40) a
+		group by <include refid="GroupBySql"/>
+	</select>
+</mapper>

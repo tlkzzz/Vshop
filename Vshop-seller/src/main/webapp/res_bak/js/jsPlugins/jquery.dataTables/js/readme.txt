@@ -1,0 +1,3 @@
+由于datatables在设置aoColumns时会修改theader和tfoot的样式,所以修改该逻辑.
+如有需要更新该js,请一起修改替换掉.
+见TODO YANSHENG

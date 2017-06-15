@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.Vshop.service.module.website.dao.mapper.ArticleClassMapper">
+    <resultMap id="BaseResultMap" type="com.Vshop.core.entity.ArticleClass" >
+        <id column="ac_id" property="acId" jdbcType="INTEGER" />
+        <result column="ac_code" property="acCode" jdbcType="VARCHAR" />
+        <result column="ac_name" property="acName" jdbcType="VARCHAR" />
+        <result column="ac_parent_id" property="acParentId" jdbcType="INTEGER" />
+        <result column="ac_sort" property="acSort" jdbcType="INTEGER" />
+        <result column="ac_status" property="acStatus" jdbcType="INTEGER" />
+        <result column="is_del" property="isDel" jdbcType="TINYINT" />
+        <result column="create_time" property="createTime" jdbcType="BIGINT" />
+        <result column="update_time" property="updateTime" jdbcType="BIGINT" />
+    </resultMap>
+
+    <resultMap id="BaseResultMap1" type="com.Vshop.core.entity.ArticleClassVo" >
+        <id column="ac_id" property="acId" jdbcType="INTEGER" />
+        <result column="ac_name" property="acName" jdbcType="VARCHAR" />
+        <result column="ac_status" property="acStatus" jdbcType="INTEGER" />
+        <result column="has_child" property="hasChildren" jdbcType="INTEGER" />
+        <result column="ac_sort" property="acSort" jdbcType="INTEGER" />
+        <result column="ac_code" property="acCode" jdbcType="VARCHAR" />
+    </resultMap>
+
+    <resultMap id="BaseResultMap2" type="com.Vshop.core.entity.ArticleClass" >
+        <id column="ac_id" property="acId" jdbcType="INTEGER" />
+        <result column="ac_code" property="acCode" jdbcType="VARCHAR" />
+        <result column="ac_name" property="acName" jdbcType="VARCHAR" />
+        <result column="ac_parent_id" property="acParentId" jdbcType="INTEGER" />
+        <result column="ac_sort" property="acSort" jdbcType="INTEGER" />
+        <result column="ac_status" property="acStatus" jdbcType="INTEGER" />
+        <result column="is_del" property="isDel" jdbcType="TINYINT" />
+        <result column="create_time" property="createTime" jdbcType="BIGINT" />
+        <result column="update_time" property="updateTime" jdbcType="BIGINT" />
+        <collection property="articleClassList" ofType="com.Vshop.core.entity.base.Article"
+                    column="ac_id" javaType="arraylist"
+                    select="com.Vshop.service.module.website.dao.mapper.ArticleClassMapper.findChildren1">
+        </collection>
+    </resultMap>
+    
+    <resultMap id="BaseResultMapVo" type="com.Vshop.core.entity.ArticleClassVo">
+        <result column="ac_id" property="acId" jdbcType="INTEGER"/>
+        <result column="ac_code" property="acCode" jdbcType="VARCHAR"/>
+        <result column="ac_name" property="acName" jdbcType="VARCHAR"/>
+        <result column="ac_parent_id" property="acParentId" jdbcType="INTEGER"/>
+        <result column="ac_sort" property="acSort" jdbcType="INTEGER"/>
+        <result column="article_id" property="articleId" jdbcType="INTEGER"/>
+        <result column="article_url" property="articleUrl" jdbcType="VARCHAR"/>
+        <result column="article_title" property="articleTitle" jdbcType="VARCHAR"/>
+        <result column="article_content" property="articleContent" jdbcType="VARCHAR"/>
+    </resultMap>
+    
+    <sql id="Base_Column_List" >
+        ac_id, ac_code, ac_name, ac_parent_id, ac_sort, ac_status,is_del,create_time,update_time
+    </sql>
+    <sql id="Base_Column_List1" >
+        ac_id,  ac_name,  ac_status,ac_sort,ac_code
+    </sql>
+    
+    <insert id="save" parameterType="com.Vshop.core.entity.ArticleClass" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO shop_article_class(ac_code,ac_name,ac_parent_id,ac_sort,ac_status,is_del,create_time)
+        VALUES(#{acCode},#{acName},#{acParentId},#{acSort},#{acStatus},0,#{createTime});
+    </insert>
+    
+    <update id="update" parameterType="com.Vshop.core.entity.ArticleClass">
+        update shop_article_class
+        <set>
+            <if test="acCode != null and acCode !=''">
+                ac_code = #{acCode},
+            </if>
+            <if test="acName != null and acName !=''">
+                ac_name = #{acName},
+            </if>
+            <if test="acParentId != null">
+                ac_parent_id = #{acParentId},
+            </if>
+            <if test="acSort != null">
+                ac_sort = #{acSort},
+            </if>
+            <if test="acStatus != null and acStatus !=''">
+                ac_status = #{acStatus},
+            </if>
+            <if test="updateTime != null">
+                 update_time = #{updateTime}
+            </if>
+        </set>
+        where ac_id=#{acId}
+    </update>
+    
+    <delete id="delete" parameterType="java.lang.Integer">
+        update shop_article_class set is_del = 1 ,update_time = now()  where ac_id=#{id}
+    </delete>
+
+    <select id="findById" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List" />
+        from shop_article_class where ac_id=#{id}
+    </select>
+
+    <select id="findList" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM shop_article_class
+        where is_del = 0 and ac_parent_id = 0
+        order by ac_sort
+    </select>
+
+    <select id="findPageList" resultMap="BaseResultMap1">
+        SELECT
+        <include refid="Base_Column_List1" />,
+        (select count(1) from shop_article_class s1 where s1.ac_parent_id=s.ac_id and s1.is_del = 0 ) has_child
+        FROM shop_article_class s
+        where is_del = 0 and ac_parent_id = 0 order by ac_sort
+    </select>
+
+    <select id="findCount" resultType="int">
+        select count(*) from shop_article_class where is_del = 0 and ac_parent_id = 0
+    </select>
+
+    <select id="findAllList" resultMap="BaseResultMap2">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM shop_article_class
+        where is_del = 0 order by ac_sort
+    </select>
+
+	<select id="findChildren" resultMap="BaseResultMap1" parameterType="int">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM shop_article_class
+        where is_del = 0 and ac_parent_id = #{id} order by ac_sort
+    </select>
+
+    <select id="findChildren1" resultMap="BaseResultMap" parameterType="int">
+        SELECT
+        <include refid="Base_Column_List1" />
+        FROM shop_article_class
+        where is_del = 0 and ac_parent_id = #{id} order by ac_sort
+    </select>
+
+    <select id="duplicate" resultType="int" parameterType="com.Vshop.core.entity.ArticleClass">
+        SELECT count(1) from shop_article_class
+        where is_del = 0
+        <if test="acName != null and acName !=''">
+            and ac_name = #{acName}
+        </if>
+        <if test="acId != null">
+            and ac_id != #{acId}
+        </if>
+        <if test="acParentId != null">
+            and ac_parent_id = #{acParentId}
+        </if>
+    </select>
+    
+    <select id="findArticleList" resultMap="BaseResultMapVo" parameterType="com.Vshop.core.entity.ArticleClassVo">
+        SELECT
+        shop_article_class.ac_id,
+        shop_article_class.ac_code,
+        shop_article_class.ac_parent_id,
+        shop_article_class.ac_sort,
+        shop_article_class.ac_name,
+        shop_article.article_title,
+        shop_article.article_id,
+        shop_article.article_content,
+        shop_article.article_url
+        FROM shop_article_class, shop_article
+        where shop_article_class.ac_id = shop_article.ac_id
+        and shop_article_class.is_del = 0
+        and shop_article.is_del = 0
+        and shop_article.article_show = 1
+        	and shop_article_class.ac_code is not null
+        <if test="articleId != '' and articleId != null">
+            and shop_article.article_id = #{articleId}
+        </if>
+        order by shop_article_class.ac_sort desc
+    </select>
+</mapper>

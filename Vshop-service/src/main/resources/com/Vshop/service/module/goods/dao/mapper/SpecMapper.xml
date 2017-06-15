@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.Vshop.service.module.goods.dao.mapper.SpecMapper">
+
+    <resultMap id="BaseResultMap" type="com.Vshop.core.entity.base.Spec" >
+        <id column="sp_id" property="spId"/>
+        <result column="sp_name" property="spName"/>
+        <result column="sp_format" property="spFormat"/>
+        <result column="sp_value" property="spValue"/>
+        <result column="sp_sort" property="spSort"/>
+    </resultMap>
+    
+    <resultMap id="BaseResultMap1" type="com.Vshop.core.entity.vo.SpecVo" >
+        <id column="sp_id" property="spId"/>
+        <result column="sp_name" property="spName"/>
+        <result column="sp_format" property="spFormat"/>
+        <result column="sp_value" property="spValue"/>
+        <result column="sp_sort" property="spSort"/>
+        <collection property="specValueList" ofType="com.Vshop.core.entity.base.SpecValue"
+                    column="sp_id" javaType="arraylist"
+                    select="com.Vshop.service.module.goods.dao.mapper.SpecMapper.findListBySpId">
+        </collection>
+    </resultMap>
+    
+    <resultMap id="SpecValueResultMap" type="com.Vshop.core.entity.base.SpecValue" >
+        <id column="sp_value_id" property="spValueId"/>
+        <result column="sp_value_name" property="spValueName"/>
+        <result column="sp_id" property="spId"/>
+        <result column="sp_value_image" property="spValueImage"/>
+        <result column="sp_value_sort" property="spValueSort"/>
+    </resultMap>
+
+    <sql id="Base_Column_List" >
+        sp_id, sp_name, sp_format, sp_value, sp_sort
+    </sql>
+    
+    	<sql id="whereStatement">
+		<where>
+			1 = 1
+			<if test="condition.spName != null">
+				and sp_name like CONCAT('%',#{condition.spName},'%')
+			</if>
+			<if test="condition.spFormat != null">
+				and sp_format = #{condition.spFormat}
+			</if>
+		</where>
+	</sql>
+
+    <select id="findById" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List" />
+        from shop_spec where sp_id=#{spId}
+    </select>
+
+    <select id="findAllList"  resultMap="BaseResultMap" parameterType="com.Vshop.core.entity.base.Spec">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM shop_spec
+        order by sp_sort
+    </select>
+    
+    <select id="findPageList" resultMap="BaseResultMap" parameterType="com.Vshop.service.utils.page.Pager">
+        select a.* from(
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM shop_spec
+        <include refid="whereStatement" />
+        order by sp_sort) a 
+    </select>
+    
+    <select id="findPageListCount" resultType="int" parameterType="com.Vshop.service.utils.page.Pager">
+        select
+		count(*)
+		from shop_spec
+		<include refid="whereStatement" />
+    </select>
+    
+    <sql id="Base_Column_List_SpecValue" >
+        sp_value_id, sp_value_name, sp_id, sp_value_image, sp_value_sort
+    </sql>
+    
+    <select id="findListBySpId"  resultMap="SpecValueResultMap" parameterType="int">
+        SELECT
+        <include refid="Base_Column_List_SpecValue" />
+        FROM shop_spec_value
+        where sp_id = #{spId}
+        order by sp_value_sort
+    </select>
+	
+	<select id="findSpecListBySpId" resultMap="BaseResultMap1" parameterType="int">
+		select a.sp_id, a.sp_name, a.sp_format, a.sp_value, a.sp_sort from shop_spec a where a.sp_id=#{spId} 
+	</select>
+	
+    <select id="findListByType" resultMap="BaseResultMap1" parameterType="int">
+		select a.sp_id, a.sp_name, a.sp_format, a.sp_value, a.sp_sort from shop_spec a join shop_type_spec b on a.sp_id=b.sp_id where b.type_id=#{typeId}	 
+	</select>
+	
+	<delete id="deleteSpecBySpId" parameterType="int">
+		delete from shop_spec where sp_id=#{spId}
+	</delete>
+
+	<delete id="deleteSpecValueBySpId" parameterType="int">
+		delete from shop_spec_value where sp_id=#{spId}
+	</delete>
+	
+	<insert id="save" parameterType="com.Vshop.core.entity.base.Spec" useGeneratedKeys="true" keyProperty="spId" keyColumn="sp_id">
+        INSERT INTO shop_spec(sp_name, sp_format, sp_value, sp_sort)
+        VALUES(#{spName},#{spFormat,jdbcType=VARCHAR},#{spValue},#{spSort});
+    </insert>
+    
+    <update id="update" parameterType="com.Vshop.core.entity.base.Spec">
+         update shop_spec
+         <set>
+             <if test="spName != '' and spName != null">
+                 sp_name = #{spName},
+             </if>
+             <if test="spFormat != null">
+                 sp_format = #{spFormat},
+             </if>
+             <if test="spValue != '' and spValue != null">
+                 sp_value = #{spValue},
+             </if>
+             <if test="spSort != null">
+                 sp_sort = #{spSort}
+             </if>
+         </set>
+        where sp_id=#{spId}
+    </update>
+</mapper>

@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.Vshop.service.module.operation.dao.mapper.SponsorMapper">
+	<resultMap id="BaseResultMap" type="com.Vshop.core.entity.base.Sponsor" >
+	    <id column="id" property="id" jdbcType="INTEGER" />
+	    <result column="name" property="name" jdbcType="VARCHAR" />
+	    <result column="short_name" property="shortName" jdbcType="VARCHAR" />
+	    <result column="address" property="address" jdbcType="VARCHAR" />
+	    <result column="contacter" property="contacter" jdbcType="VARCHAR" />
+	    <result column="mobile" property="mobile" jdbcType="VARCHAR" />
+	    <result column="deleted" property="deleted" jdbcType="INTEGER" />
+	    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+	    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+	</resultMap>
+	
+	<sql id="Base_Column_List" >
+	    id, `name`, short_name, address, contacter, mobile, deleted, create_time, update_time
+	</sql>
+	
+	<insert id="save" parameterType="com.Vshop.core.entity.base.Sponsor" useGeneratedKeys="true" keyProperty="id" >
+	    insert into shop_sponsor
+	    <trim prefix="(" suffix=")" suffixOverrides="," >
+	      `name`, short_name, address, contacter, mobile, deleted, create_time, update_time,
+	    </trim>
+	    <trim prefix="values (" suffix=")" suffixOverrides="," >
+	      #{name,jdbcType=VARCHAR},
+	      #{shortName,jdbcType=VARCHAR},
+	      #{address,jdbcType=VARCHAR},
+	      #{contacter,jdbcType=VARCHAR},
+	      #{mobile,jdbcType=VARCHAR},
+	      #{deleted,jdbcType=INTEGER},
+	      #{createTime,jdbcType=TIMESTAMP},
+	      #{updateTime,jdbcType=TIMESTAMP},
+	    </trim>
+  	</insert>
+  	
+  	<delete id="delete" parameterType="Map">
+         UPDATE shop_sponsor SET deleted = 1 WHERE id = #{id} 
+    </delete>
+    
+    <update id="update" parameterType="com.Vshop.core.entity.base.Sponsor" >
+	    update shop_sponsor
+	    <set >
+	      <if test="name != null" >
+	        `name` = #{name,jdbcType=VARCHAR},
+	      </if>
+	      <if test="shortName != null" >
+	        short_name = #{shortName,jdbcType=VARCHAR},
+	      </if>
+	      <if test="address != null" >
+	        address = #{address,jdbcType=VARCHAR},
+	      </if>
+	      <if test="contacter != null" >
+	        contacter = #{contacter,jdbcType=VARCHAR},
+	      </if>
+	      <if test="mobile != null" >
+	        mobile = #{mobile,jdbcType=VARCHAR},
+	      </if>
+	      <if test="deleted != null" >
+	        deleted = #{deleted,jdbcType=INTEGER},
+	      </if>
+	      <if test="createTime != null" >
+	        create_time = #{createTime,jdbcType=TIMESTAMP},
+	      </if>
+	      <if test="updateTime != null" >
+	        update_time = #{updateTime,jdbcType=TIMESTAMP},
+	      </if>
+	    </set>
+	    where id = #{id,jdbcType=INTEGER}
+  	</update>
+  	
+  	<select id="findById" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List" />
+        from shop_sponsor where id=#{id}
+    </select>
+    
+    <select id="findPageList" parameterType="com.Vshop.service.utils.page.Pager" resultMap="BaseResultMap">
+        SELECT a.* FROM(
+        SELECT
+         <include refid="Base_Column_List" />
+        FROM shop_sponsor
+        <where>
+			1 = 1
+	        <if test="condition.name != null and condition.name != ''">
+	            AND name LIKE CONCAT('%','${condition.name}','%' )
+	        </if>
+	        <if test="condition.deleted != null and condition.deleted != ''">
+	            AND deleted = #{condition.deleted}
+	        </if>
+		</where>
+        ORDER BY id DESC) a 
+    </select>
+    
+    <select id="findList" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM shop_sponsor
+        WHERE 1 = 1 and deleted != 1
+    </select>
+    
+    <select id="countSponsor" resultType="Integer" parameterType="com.Vshop.core.entity.base.Sponsor">
+        SELECT count(1) from shop_sponsor 
+        <where>
+			1 = 1
+	        <if test="name !=null and name !='' ">
+	            AND name LIKE CONCAT('%','${name}','%' )
+	        </if>
+	        <if test="id != null">
+	            AND id != #{id}
+	        </if>
+		</where>
+    </select>
+</mapper>

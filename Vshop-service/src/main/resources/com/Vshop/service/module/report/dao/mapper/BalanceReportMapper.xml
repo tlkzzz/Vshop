@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.Vshop.service.module.report.dao.mapper.BalanceReportMapper">
+
+	<sql id="whereSql">
+		<where>
+			1=1
+			<if test="startTime != null">
+				and TO_DAYS(so.balance_time) &gt;= TO_DAYS(#{startTime})
+			</if>
+			<if test="endTime != null">
+				and TO_DAYS(so.balance_time) &lt;= TO_DAYS(#{endTime})
+			</if>
+			<if test="storeId != null">
+				and so.store_id = #{storeId}
+			</if>
+		</where>
+	</sql>
+
+	<sql id="whereSql2">
+		<where>
+			1=1
+			<if test="startTime != null">
+				and TO_DAYS(soo.balance_time) &gt;= TO_DAYS(#{startTime})
+			</if>
+			<if test="endTime != null">
+				and TO_DAYS(soo.balance_time) &lt;= TO_DAYS(#{endTime})
+			</if>
+		</where>
+	</sql>
+		
+	<sql id="GroupBySql">
+		<if test="condition == 'week'">
+			DAYOFWEEK(so.balance_time)
+		</if>
+		<if test="condition == 'month'">
+			DAYOFMONTH(so.balance_time)
+		</if>
+		<if test="condition == 'year'">
+			MONTH(so.balance_time)
+		</if>
+		<if test="condition == 'today'">
+			DATE(so.balance_time)
+		</if>
+		<if test="condition == 'assign'">
+			DATE(so.balance_time)
+		</if>
+	</sql>
+
+	<!-- 会员注册数量 -->
+	<resultMap id="goodsClickMapper" type="com.Vshop.core.entity.base.BalanceReport">
+		<result column="storeName" property="storeName" jdbcType="VARCHAR" />
+		<result column="balanceCount" property="balanceCount" jdbcType="INTEGER" />
+		<result column="notBalanceCount" property="notBalanceCount" jdbcType="INTEGER" />
+		<result column="balanceTime" property="balanceTime" />
+	</resultMap>
+	
+	<!--  会员注册数量 -->
+	<select id="getHaveBalanced" resultMap="goodsClickMapper" parameterType="com.Vshop.core.entity.base.BalanceReport">
+		select 
+		so.store_name storeName, count(so.store_id) balanceCount, b.notBalance notBalanceCount, <include refid="GroupBySql"/> balanceTime
+		from
+		shop_order so
+		join (select soo.store_id, count(*) notBalance from shop_order soo <include refid="whereSql2"/> and soo.balance_state=0 group by soo.store_id) b
+		on so.store_id=b.store_id
+		<include refid="whereSql"/> and so.balance_state=1 
+		group by so.store_id,<include refid="GroupBySql"/>
+	</select>
+	
+</mapper>

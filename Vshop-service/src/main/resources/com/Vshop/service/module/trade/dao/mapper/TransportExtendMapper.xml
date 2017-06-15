@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.Vshop.service.module.trade.dao.mapper.TransportExtendMapper">
+    <resultMap id="BaseResultMap" type="com.Vshop.core.entity.base.TransportExtend" >
+        <id column="id" property="id" jdbcType="INTEGER" />
+        <result column="type" property="type" jdbcType="VARCHAR" />
+        <result column="area_id" property="areaId" jdbcType="VARCHAR" />
+        <result column="top_area_id" property="topAreaId" jdbcType="VARCHAR" />
+        <result column="area_name" property="areaName" jdbcType="VARCHAR" />
+        <result column="snum" property="snum" jdbcType="INTEGER" />
+        <result column="sprice" property="sprice" jdbcType="DOUBLE" />
+        <result column="xnum" property="xnum" jdbcType="INTEGER" />
+        <result column="xprice" property="xprice" jdbcType="DOUBLE" />
+        <result column="transport_id" property="transportId" jdbcType="INTEGER" />
+        <result column="transport_title" property="transportTitle" jdbcType="VARCHAR" />
+        <result column="is_del" property="isDel" jdbcType="TINYINT" />
+        <result column="create_time" property="createTime" jdbcType="BIGINT" />
+        <result column="update_time" property="updateTime" jdbcType="BIGINT" />
+    </resultMap>
+
+    <sql id="Base_Column_List" >
+        id, type, area_id, top_area_id, area_name, snum, sprice, xnum, xprice, transport_id, transport_title,is_del,create_time,update_time
+    </sql>
+    
+    <select id="findById" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List" />
+        from shop_transport_extend where id=#{id}
+    </select>
+    
+    <!-- 根据ID查询实体 -->
+    <select id="queryByTransportId" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+		select <include refid="Base_Column_List" />
+		from shop_transport_extend where transport_id = #{id,jdbcType=INTEGER} and is_del=0
+	</select>
+	
+	<sql id="conditionWhere">
+		<where>
+			1=1
+			<if test="transportId != null">
+				and transport_id = #{transportId,jdbcType=INTEGER}
+			</if>
+			<if test="type != null">
+				and type = #{type,jdbcType=VARCHAR}
+			</if>
+			<if test="areaId != null">
+				and area_id like CONCAT('%,',#{areaId,jdbcType=VARCHAR},',%')
+			</if>
+			<if test="areaId == null">
+				and area_id = ''
+			</if>
+		</where>
+	</sql>
+	
+	<!-- 根据transportExtend作为查询条件,查询transportExtend -->
+    <select id="selectTransportExtendByCondition" resultMap="BaseResultMap" parameterType="com.Vshop.core.entity.base.TransportExtend">
+		select <include refid="Base_Column_List" />
+		from shop_transport_extend <include refid="conditionWhere"/> and is_del=0
+	</select>
+    
+    <insert id="save" parameterType="com.Vshop.core.entity.base.TransportExtend" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO shop_transport_extend(type, area_id, area_name, snum, sprice, xnum, xprice, transport_id, transport_title)
+        VALUES(#{type},#{areaId},#{areaName},#{snum},#{sprice},#{xnum},#{xprice},#{transportId},#{transportTitle});
+    </insert>
+    
+    <delete id="delete" parameterType="int">
+    	delete from shop_transport_extend where transport_id=#{transportId}
+    </delete>
+    
+</mapper>

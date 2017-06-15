@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.Vshop.service.module.search.dao.mapper.GoodsWordsMapper">
+    <resultMap id="BaseResultMap" type="com.Vshop.core.entity.base.GoodsWords">
+        <result column="words_id" property="wordsId" jdbcType="INTEGER"/>
+        <result column="keyword" property="keyword" jdbcType="VARCHAR"/>
+        <result column="quanping" property="quanPing" jdbcType="VARCHAR"/>
+        <result column="shouzimu" property="shouZiMu" jdbcType="VARCHAR"/>
+        <result column="words_num" property="wordsNum" jdbcType="VARCHAR"/>
+        <result column="update_time" property="updateTime"/>
+    </resultMap>
+    
+   	<sql id="whereStatement">
+		<where>
+			1 = 1
+			<if test="wordsId != null">
+				and words_id = #{wordsId}
+			</if>
+			<if test="keyword != null">
+				and keyword = #{keyword}
+			</if>
+			<if test="quanPing != null">
+				and quanping = #{quanPing}
+			</if>
+			<if test="shouZiMu != null">
+				and shouzimu = #{shouZiMu}
+			</if>
+			<if test="updateTime != null">
+				and update_time &gt; #{updateTime}
+			</if>
+		</where>
+	</sql>
+	
+    <insert id="saveGoodsWords" parameterType="com.Vshop.core.entity.base.GoodsWords">
+    	insert into shop_goods_words 
+    	<trim prefix="(" suffix=")" suffixOverrides=",">
+	      <if test="keyword != null" >
+	        keyword,
+	      </if>
+	      <if test="quanPing != null" >
+	        quanping,
+	      </if>
+	      <if test="shouZiMu != null" >
+	        shouzimu,
+	      </if>
+	      <if test="wordsNum != null" >
+	        words_num,
+	      </if>
+	        update_time,
+    	</trim>
+    	<trim prefix="values (" suffix=")" suffixOverrides="," >
+    	  <if test="keyword != null" >
+	        #{keyword},
+	      </if>
+    	  <if test="quanPing != null" >
+	        #{quanPing},
+	      </if>
+    	  <if test="shouZiMu != null" >
+	        #{shouZiMu},
+	      </if>
+    	  <if test="wordsNum != null" >
+	        #{wordsNum},
+	      </if>
+	        #{createTime},
+    	</trim>
+    </insert>
+	
+	<delete id="delete" parameterType="java.lang.Integer">
+		delete from shop_goods_words where words_id=#{wordsId}
+	</delete>
+	
+	<update id="update" parameterType="com.Vshop.core.entity.base.GoodsWords">
+		update shop_goods_words
+		<set>
+			<if test="keyword != null">
+				keyword=#{keyword},
+			</if>
+			<if test="quanPing != null">
+				quanping=#{quanPing},
+			</if>
+			<if test="shouZiMu != null">
+				shouzimu=#{shouZiMu},
+			</if>
+			update_time=#{updateTime}
+		</set>
+	</update>
+	
+	<select id="isExist" parameterType="java.lang.String" resultType="java.lang.Integer">
+		select words_id from shop_goods_words where keyword=#{keyword}
+	</select>
+	
+	<update id="updateWordsNum" parameterType="com.Vshop.core.entity.base.GoodsWords">
+		update shop_goods_words set words_num = words_num+#{wordsNum},update_time=now() where words_id=#{wordsId}
+	</update>
+	
+	
+	<sql id="selectPageWhere">
+		<where>
+			1 = 1
+			<if test="quanPing != null">
+				and quanping like CONCAT('%',#{quanPing},'%')
+			</if>
+			<if test="keyword != null">
+				or keyword like CONCAT('%',#{keyword},'%')
+			</if>
+			<if test="shouZiMu != null">
+				or shouzimu like CONCAT('%',#{shouZiMu},'%')
+			</if>
+		</where>
+	</sql>
+	
+	<select id="keywordMatch" resultMap="BaseResultMap" parameterType="com.Vshop.core.entity.base.GoodsWords">
+		select * from shop_goods_words <include refid="selectPageWhere"/> order by words_num desc limit 0, 10
+	</select>
+	
+	<delete id="deleteAll">
+		truncate shop_goods_words
+	</delete>
+	
+</mapper>

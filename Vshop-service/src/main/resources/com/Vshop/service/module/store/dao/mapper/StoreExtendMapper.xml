@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.Vshop.service.module.store.dao.mapper.StoreExtendMapper">
+    <resultMap id="BaseResultMap" type="com.Vshop.core.entity.base.StoreExtend">
+        <id column="store_id" property="storeId" jdbcType="INTEGER"/>
+        <result column="express" property="express" jdbcType="VARCHAR"/>
+    </resultMap>
+	
+	<sql id="Base_Column_List">
+		store_id, express
+	</sql>
+	
+	<!-- 插入店铺物流表 -->
+	<insert id="saveStoreExtend" parameterType="com.Vshop.core.entity.base.StoreExtend">
+		insert into shop_store_extend(store_id, express) values(#{storeId},#{express})
+	</insert>
+	
+	<!-- 修改店铺物流表 -->
+	<update id="updateStoreExtend" parameterType="com.Vshop.core.entity.base.StoreExtend">
+		update shop_store_extend 
+		<set>
+			express = #{express}
+		</set>
+		where store_id = #{storeId}
+	</update>   
+	
+	<!-- 删除店铺物流表 -->
+	<delete id="deleteStoreExtend" parameterType="int">
+		delete from shop_store_extend where store_id = #{storeId}
+	</delete> 
+	
+	<select id="findByStoreId" parameterType="int" resultMap="BaseResultMap">
+		select <include refid="Base_Column_List" /> from shop_store_extend where store_id = #{storeId}
+	</select>
+</mapper>

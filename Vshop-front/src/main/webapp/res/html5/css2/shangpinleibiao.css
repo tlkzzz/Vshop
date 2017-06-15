@@ -1,0 +1,158 @@
+*{
+	width: 100%;
+}
+.wrap{
+	width：100%;
+	height:100%;
+	background: #f5f6f7;
+	overflow: auto;
+}
+.header{
+	width:100%;
+	height: 40px;
+	background: #c81313;
+	z-index: 11;
+	display: -webkit-box;
+	position: fixed;
+	-webkit-box-align: center;
+	-webkit-box-pack: justify;
+	-webkit-box-orient: horizontal;
+}
+.header a{
+	width: 24px;
+	display: block;
+}
+.header img{
+	width: 10px;
+	height: 16px;
+	margin-left: 15px;
+	margin-top: 8px;
+}
+.header p{
+	width: 60%;
+	display: block;
+	-webkit-box-flex: 1;
+	height: 40px;
+	font-size: 14px;
+	text-align: center;
+	line-height: 40px;
+	color: #ffffff;
+}
+.tuijian{
+	position: absolute;
+	top: 40px;
+	width: 100%;
+	height: 44px;
+	background: #f4f4f4;
+	z-index: 10;
+	border-bottom: 1px solid #dcdbdc;
+}
+.tuijian ul li{
+	width: 33.33%;
+	text-align: center;
+	font-size: 12px;
+	float: left;
+	line-height: 44px;
+	background-size: 9.5px;
+	background-position-x:83%;
+}
+
+.tuijian ul li img{
+	width: 9.5px;
+	height: 6px;
+	float: left;
+}
+.conter{
+	position: relative;
+	top: 89px;
+	z-index: 8;
+}
+.conter dl{
+	
+	width: 99.2%;
+	height: 105px;
+	border: 1px solid #dbdbdb;
+	border-radius: 5px;
+	margin-left: 0.1%;
+	background: #ffffff;
+}
+.conter dl{
+	margin-top: 3%;
+}
+.conter dl dt{
+	width: 80px;
+	height: 80px;
+	margin-left: 3%;
+	margin-top: 3.8%;
+	float: left;
+}
+.conter dl dt img{
+	width: 100%;
+	height: 100%;
+	float: left;
+}
+.conter dl dd{
+	height: 20px;
+	float: left;
+	width: 150px;
+	margin-top: 3.8%;
+	margin-left: 3%;
+}
+.conter dl dd h2{
+	font-size: 12px;
+	font-weight: normal;
+}
+
+
+.pholder{
+	width: 100%;
+	position: absolute;
+	top: 85px;
+	z-index: 12;
+	background: #fff;
+}
+.toggle_menu_one_left{
+	width: 49.5%;
+	height: 100%;
+	background: red;
+	float: left;
+}
+.toggle_menu_two_left{
+	width: 49.5%;
+	height: 100%;
+	float: left;
+}
+.toggle_menu_three_left{
+	width: 49.5%;
+	height: 100%;
+	background: green;
+	float: left;
+}
+.toggle_menu_one_left ul li ,.toggle_menu_two_left ul li ,.toggle_menu_three_left ul li{
+	line-height: 45px;
+	height: 45px;
+	font-size: 14px;
+	text-align: center;
+	background: #ebebeb;
+	border-bottom: 1px solid #dcdbdc;
+	border-right: 1px solid #dcdbdc;
+}
+.toggle_menu_one_right ul li ,.toggle_menu_two_right ul li ,.toggle_menu_three_right ul li{
+	line-height: 45px;
+	height: 45px;
+	font-size: 14px;
+	text-align: center;
+	border-bottom: 1px solid #dcdbdc;
+}
+.toggle_menu_two_right ul li,.toggle_menu_three_right ul li{
+	width: 100%; 
+}
+.toggle_menu_one_right ,.toggle_menu_two_right ,.toggle_menu_three_right{
+	width: 50%;
+	height: 100%;
+	float: left;
+}
+
+.toggle_menu_one_right{
+	overflow: hidden;
+}

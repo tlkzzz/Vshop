@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.Vshop.service.module.website.dao.mapper.ArticleMapper">
+    <resultMap id="BaseResultMap" type="com.Vshop.core.entity.base.Article" >
+        <id column="article_id" property="articleId" jdbcType="INTEGER" />
+        <result column="ac_id" property="acId" jdbcType="VARCHAR" />
+        <result column="article_url" property="articleUrl" jdbcType="VARCHAR" />
+        <result column="article_show" property="articleShow" jdbcType="INTEGER" />
+        <result column="article_sort" property="articleSort" jdbcType="INTEGER" />
+        <result column="article_title" property="articleTitle" jdbcType="VARCHAR" />
+        <result column="article_content" property="articleContent" jdbcType="VARCHAR" />
+        <result column="article_time" property="articleTime" jdbcType="BIGINT" />
+        <result column="is_del" property="isDel" jdbcType="TINYINT" />
+        <result column="create_time" property="createTime" jdbcType="BIGINT" />
+        <result column="update_time" property="updateTime" jdbcType="BIGINT" />
+        <association property="articleClass" column="ac_id"  javaType="com.Vshop.core.entity.ArticleClass"
+                     select="com.Vshop.service.module.website.dao.mapper.ArticleClassMapper.findById"/>
+    </resultMap>
+
+    <sql id="Base_Column_List" >
+        article_id, ac_id,article_url, article_show, article_sort, article_title, article_content,article_time,is_del,create_time,update_time
+    </sql>
+
+    <insert id="save" parameterType="com.Vshop.core.entity.base.Article" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO shop_article(ac_id,article_url,article_show,article_sort,article_title,article_content,article_time,is_del,create_time)
+        VALUES(#{acId},#{articleUrl},#{articleShow},#{articleSort},#{articleTitle},#{articleContent},#{articleTime},0,now());
+    </insert>
+    <update id="update" parameterType="com.Vshop.core.entity.base.Article">
+        update shop_article set
+        ac_id = #{acId},
+        article_url = #{articleUrl},
+        article_show = #{articleShow},
+        article_sort = #{articleSort},
+        article_title = #{articleTitle},
+        article_content = #{articleContent},
+        article_time = #{articleTime},
+        update_time = #{updateTime}
+        where article_id=#{articleId}
+    </update>
+    <delete id="delete" parameterType="java.lang.Integer">
+        update shop_article set is_del = 1 where article_id=#{articleId}
+    </delete>
+
+    <select id="findById" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List" />
+        from shop_article where article_id=#{articleId}
+    </select>
+
+    <select id="findList" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM shop_article
+        where is_del = 0
+        order by ac_sort
+    </select>
+    
+    
+    <select id="findListByArticle" resultMap="BaseResultMap" parameterType="com.Vshop.core.entity.base.Article">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM shop_article
+        where is_del = 0 and article_show＝0
+        <if test="acId!=null">
+        	AND ac_id=#{acId}
+        </if>
+        <if test="createTime!=null">
+        	AND create_time &gt;= #{createTime}
+        </if>
+        <if test="article.articleTitle !=null and article.articleTitle != ''">
+            AND s.article_title like CONCAT('%','${articleTitle}','%' )
+        </if>
+        <if test="article.acId != null and article.acId != 0">
+            AND s.ac_id = #{acId}
+        </if>
+        order by ac_sort
+    </select>
+
+    <select id="findPageList" resultMap="BaseResultMap" parameterType="java.util.Map">
+        select a.* from (
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM shop_article s
+        where s.is_del = 0
+        <if test="article.articleTitle !=null and article.articleTitle != ''">
+            AND s.article_title like CONCAT('%','${article.articleTitle}','%' )
+        </if>
+        <if test="article.acId != null and article.acId != 0 ">
+            AND s.ac_id = #{article.acId}
+        </if>
+        <if test="article.createTime!=null">
+        	AND create_time &gt;= #{article.createTime}
+        </if>
+        order by article_sort asc,article_id asc) a 
+    </select>
+
+    <select id="findCount" resultType="int" parameterType="com.Vshop.core.entity.base.Article">
+        select count(*) from shop_article s where s.is_del = 0
+        <if test="articleTitle !=null and articleTitle != ''">
+            AND s.article_title like CONCAT('%','${articleTitle}','%' )
+        </if>
+        <if test="acId != 0 and acId != null">
+            AND s.ac_id = #{acId}
+        </if>
+    </select>
+
+</mapper>

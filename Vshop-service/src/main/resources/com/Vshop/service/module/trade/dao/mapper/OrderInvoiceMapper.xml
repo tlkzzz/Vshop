@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.Vshop.service.module.trade.dao.mapper.OrderInvoiceMapper">
+	<resultMap id="BaseResultMap" type="com.Vshop.core.entity.base.OrderInvoice" >
+		<result column="inv_id" property="invId" jdbcType="INTEGER" />
+		<result column="member_id" property="memberId" jdbcType="INTEGER" />
+		<result column="order_id" property="orderId" jdbcType="INTEGER" />
+		<result column="inv_state" property="invState" jdbcType="VARCHAR" />
+		<result column="inv_title" property="invTitle" jdbcType="VARCHAR" />
+		<result column="inv_content" property="invContent" jdbcType="VARCHAR" />
+		<result column="inv_company" property="invCompany" jdbcType="VARCHAR" />
+		<result column="inv_code" property="invCode" jdbcType="VARCHAR" />
+		<result column="inv_reg_addr" property="invRegAddr" jdbcType="VARCHAR" />
+		<result column="inv_reg_phone" property="invRegPhone" jdbcType="VARCHAR" />
+		<result column="inv_reg_bname" property="invRegBname" jdbcType="VARCHAR" />
+		<result column="inv_reg_baccount" property="invRegBaccount" jdbcType="VARCHAR" />
+		<result column="inv_rec_name" property="invRecName" jdbcType="VARCHAR" />
+		<result column="inv_rec_mobphone" property="invRecMobphone" jdbcType="VARCHAR" />
+		<result column="inv_rec_province" property="invRecProvince" jdbcType="VARCHAR" />
+		<result column="inv_goto_addr" property="invGotoAddr" jdbcType="VARCHAR" />
+		<result column="is_default" property="isDefault" jdbcType="INTEGER" />
+	</resultMap>
+	
+	<sql id="Base_Column_List">
+		inv_id, member_id, order_id, inv_state, inv_title, inv_content, inv_company, inv_code, inv_reg_addr,
+		inv_reg_phone, inv_reg_bname, inv_reg_baccount, inv_rec_name, inv_rec_mobphone,
+		inv_rec_province, inv_goto_addr, is_default
+	</sql>
+	
+	<!-- 保存 -->
+	<insert id="saveOrderInvoice" parameterType="com.Vshop.core.entity.base.OrderInvoice" useGeneratedKeys="true" keyProperty="invId">
+		insert into shop_order_invoice
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="memberId != null">
+				member_id,
+			</if>
+			<if test="orderId != null">
+				order_id,
+			</if>
+			<if test="invState != null">
+				inv_state,
+			</if>
+			<if test="invTitle != null ">
+				inv_title,
+			</if>
+			<if test="invContent != null ">
+				inv_content,
+			</if>
+			<if test="invCompany != null ">
+				inv_company,
+			</if>
+			<if test="invCode != null ">
+				inv_code,
+			</if>
+			<if test="invRegAddr != null ">
+				inv_reg_addr,
+			</if>
+			<if test="invRegPhone != null ">
+				inv_reg_phone,
+			</if>
+			<if test="invRegBname != null ">
+				inv_reg_bname,
+			</if>
+			<if test="invRegBaccount != null ">
+				inv_reg_baccount,
+			</if>
+			<if test="invRecName != null ">
+				inv_rec_name,
+			</if>
+			<if test="invRecMobphone != null ">
+				inv_rec_mobphone,
+			</if>
+			<if test="invRecProvince != null ">
+				inv_rec_province,
+			</if>
+			<if test="invGotoAddr != null ">
+				inv_goto_addr,
+			</if>
+			<if test="isDefault != null ">
+				is_default,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="memberId != null">
+				#{memberId},
+			</if>
+			<if test="orderId != null">
+				#{orderId},
+			</if>
+			<if test="invState != null">
+				#{invState},
+			</if>
+			<if test="invTitle != null ">
+				#{invTitle},
+			</if>
+			<if test="invContent != null ">
+				#{invContent},
+			</if>
+			<if test="invCompany != null ">
+				#{invCompany},
+			</if>
+			<if test="invCode != null ">
+				#{invCode},
+			</if>
+			<if test="invRegAddr != null ">
+				#{invRegAddr},
+			</if>
+			<if test="invRegPhone != null ">
+				#{invRegPhone},
+			</if>
+			<if test="invRegBname != null ">
+				#{invRegBname},
+			</if>
+			<if test="invRegBaccount != null ">
+				#{invRegBaccount},
+			</if>
+			<if test="invRecName != null ">
+				#{invRecName},
+			</if>
+			<if test="invRecMobphone != null ">
+				#{invRecMobphone},
+			</if>
+			<if test="invRecProvince != null ">
+				#{invRecProvince},
+			</if>
+			<if test="invGotoAddr != null ">
+				#{invGotoAddr},
+			</if>
+			<if test="isDefault != null ">
+				#{isDefault},
+			</if>
+		</trim>
+	</insert>
+	
+	<!-- 根据订单id查询订单发票信息 -->
+	<select id="findByOrderId" parameterType="int" resultMap="BaseResultMap">
+		select <include refid="Base_Column_List" /> from shop_order_invoice where order_id = #{orderId}
+	</select>
+	
+</mapper>

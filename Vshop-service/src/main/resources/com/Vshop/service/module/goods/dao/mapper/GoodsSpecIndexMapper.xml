@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.Vshop.service.module.goods.dao.mapper.GoodsSpecIndexMapper">
+    <resultMap id="BaseResultMap" type="com.Vshop.core.entity.base.GoodsSpecIndex" >
+        <result column="goods_id" property="goodsId" jdbcType="INTEGER" />
+        <result column="gc_id" property="gcId" jdbcType="INTEGER" />
+        <result column="type_id" property="typeId" jdbcType="INTEGER" />
+        <result column="sp_id" property="spId" jdbcType="INTEGER" />
+        <result column="sp_value_id" property="spValueId" jdbcType="INTEGER" />
+        <result column="sp_value_name" property="spValueName" jdbcType="VARCHAR" />
+        <result column="goods_store_price" property="goodsStorePrice"/>
+        <result column="goods_store_price" property="goodsClick"/>
+        <result column="goods_store_price" property="salenum"/>
+        <result column="province_id" property="provinceId"/>
+    </resultMap>
+
+    <sql id="Base_Column_List" >
+    	goods_id, gc_id, type_id, sp_id, sp_value_id, sp_value_name
+    </sql>
+    <insert id="save" parameterType="com.Vshop.core.entity.base.GoodsSpecIndex">
+        INSERT INTO shop_goods_spec_index(<include refid="Base_Column_List"/>)
+        VALUES(#{goodsId},#{gcId},#{typeId},#{spId},#{spValueId},#{spValueName})
+    </insert>
+
+    <delete id="deleteByGoodsId" parameterType="java.lang.Integer">
+        delete from  shop_goods_spec_index where goods_id=#{goodsId}
+    </delete>
+
+    <select id="findByGoodsId" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List" />
+        from shop_goods_spec_index where goods_id=#{goodsId}
+    </select>
+    
+	<sql id="whereStatement">
+		<where>
+			sg.goods_show=1 and sg.goods_state=0 and sg.goods_store_state=0
+		</where>
+	</sql>
+    
+    <select id="findPagerListCount" resultType="int" parameterType="com.Vshop.service.utils.page.Pager">
+		select count(1) from 
+			shop_goods sg 
+			join
+			shop_goods_spec_index sgsi
+			on sg.goods_id = sgsi.goods_id
+		<include refid="whereStatement"/>
+    </select>
+    
+    <select id="findPagerList" resultMap="BaseResultMap" parameterType="com.Vshop.service.utils.page.Pager">
+	    select a.* from 
+	    	(select sgsi.*,sg.goods_store_price,sg.goods_click,sg.salenum,sg.province_id  from
+				shop_goods sg 
+				join
+				shop_goods_spec_index sgsi
+				on sg.goods_id = sgsi.goods_id
+			<include refid="whereStatement"/>) a
+		limit #{start}, #{pageSize}
+    </select>
+    
+</mapper>

@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.Vshop.service.module.trade.dao.mapper.ReturnOrderMapper">
+	<resultMap id="BaseResultMap" type="com.Vshop.core.entity.base.ReturnOrder">
+		<id column="return_id" property="returnId" jdbcType="INTEGER" />
+		<result column="order_id" property="orderId" jdbcType="INTEGER" /> 
+		<result column="return_sn" property="returnSn" jdbcType="VARCHAR" />
+		<result column="order_sn" property="orderSn" jdbcType="VARCHAR" />
+		<result column="store_id" property="storeId" jdbcType="INTEGER" />
+		<result column="store_name" property="storeName" jdbcType="VARCHAR" />
+		<result column="buyer_id" property="buyerId" jdbcType="INTEGER" />
+		<result column="buyer_name" property="buyerName" jdbcType="VARCHAR" />
+		<result column="return_goodsnum" property="returnGoodsNum" jdbcType="INTEGER" />
+		<result column="return_message" property="returnMessage" jdbcType="VARCHAR" />
+		<result column="buyer_message" property="buyerMessage" jdbcType="VARCHAR" />
+		<result column="return_type" property="returnType" jdbcType="INTEGER" />
+		<result column="return_state" property="returnState" jdbcType="INTEGER" />
+		<result column="create_time" property="createTime" jdbcType="BIGINT" />
+		<result column="seller_time" property="sellerTime" jdbcType="BIGINT" />
+	</resultMap>
+	
+	<resultMap id="BaseResultVoMap" type="com.Vshop.core.entity.vo.ReturnOrderVo" extends="BaseResultMap">
+		<collection property="returnGoodsList" ofType="com.Vshop.core.entity.base.ReturnGoods"
+                    column="return_id" javaType="arraylist"
+                    select="com.Vshop.service.module.trade.dao.mapper.ReturnGoodsMapper.findByReturnOrderId">
+        </collection>
+	</resultMap>
+	
+	<!-- 全部查询字段 -->
+	<sql id="Base_Column_List">
+		return_id, order_id, return_sn, order_sn, store_id, store_name, buyer_id,
+		buyer_name, return_goodsnum, return_message, buyer_message, return_type, return_state,
+		create_time, seller_time
+	</sql>
+	
+	<!-- 查询条件 -->
+	<sql id="whereStatement">
+		<if test="condition.orderSn != null and condition.orderSn != '' ">
+          	and order_sn like concat('%',#{condition.orderSn, jdbcType=VARCHAR},'%')
+        </if>
+        <if test="condition.returnSn != null and condition.returnSn != '' ">
+          	and return_sn like concat('%',#{condition.returnSn, jdbcType=VARCHAR},'%')
+        </if>
+        <if test="condition.storeName != null and condition.storeName != '' ">
+          	and store_name like concat('%',#{condition.storeName, jdbcType=VARCHAR},'%')
+        </if>
+        <if test="condition.buyerName != null and condition.buyerName != '' ">
+          	and buyer_name like concat('%',#{condition.buyerName, jdbcType=VARCHAR},'%')
+        </if>
+        <if test="condition.storeId != null">
+          	and store_id = #{condition.storeId, jdbcType=INTEGER}
+        </if>
+        <if test="condition.buyerId != null">
+        	and buyer_id = #{condition.buyerId, jdbcType=INTEGER}
+        </if>
+        <if test="condition.startTime != null and condition.startTime != '' ">
+			and create_time &gt;= #{condition.startTime}   
+		</if>
+		<if test="condition.endTime != null and condition.endTime != '' ">
+			and create_time &lt; #{condition.endTime} 
+		</if>
+		
+		<if test="condition.supplierId != null">
+			and  EXISTS 
+			(
+			select * from shop_order_goods sog 
+			where shop_return.order_id=sog.order_id
+			and EXISTS 
+			(select * from shop_goods sg where sog.goods_id = sg.goods_id
+			and sg.supplier_id = #{condition.supplierId})
+			)
+		</if>
+		
+	</sql>
+	
+	<!-- 查询条件 -->
+	<sql id="whereStatement2">
+		<if test="orderSn != null and orderSn != '' ">
+          	and order_sn like concat('%',#{orderSn, jdbcType=VARCHAR},'%')
+        </if>
+        <if test="returnSn != null and returnSn != '' ">
+          	and return_sn like concat('%',#{returnSn, jdbcType=VARCHAR},'%')
+        </if>
+        <if test="storeName != null and storeName != '' ">
+          	and store_name like concat('%',#{storeName, jdbcType=VARCHAR},'%')
+        </if>
+        <if test="buyerName != null and buyerName != '' ">
+          	and buyer_name like concat('%',#{buyerName, jdbcType=VARCHAR},'%')
+        </if>
+        <if test="storeId != null">
+          	and store_id = #{storeId, jdbcType=INTEGER}
+        </if>
+        <if test="buyerId != null">
+        	and buyer_id = #{buyerId, jdbcType=INTEGER}
+        </if>
+        <if test="startTime != null and startTime != '' ">
+			and create_time &gt;= #{startTime}   
+		</if>
+		<if test="endTime != null and endTime != '' ">
+			and create_time &lt; #{endTime} 
+		</if>
+	</sql>
+	
+	<!-- 保存退货表 -->
+	<insert id="saveReturnOrder" parameterType="com.Vshop.core.entity.base.ReturnOrder" useGeneratedKeys="true" keyProperty="returnId">
+		insert into shop_return
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			return_id, order_id, return_sn, order_sn, store_id, store_name, buyer_id, buyer_name, return_goodsnum, create_time,
+			<if test="returnMessage != null and returnMessage != '' ">
+				return_message,
+			</if>
+			<if test="buyerMessage != null and buyerMessage != '' ">
+				buyer_message,
+			</if>
+			<if test="returnType != null">
+				return_type,
+			</if>
+			<if test="returnState != null">
+				return_state,
+			</if>
+			<if test="sellerTime != null">
+				seller_time,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			#{returnId}, #{orderId}, #{returnSn}, #{orderSn}, #{storeId}, #{storeName}, #{buyerId}, #{buyerName}, #{returnGoodsNum}, #{createTime},
+			<if test="returnMessage != null and returnMessage != '' ">
+				#{returnMessage},
+			</if>
+			<if test="buyerMessage != null and buyerMessage != '' ">
+				#{buyerMessage},
+			</if>
+			<if test="returnType != null">
+				#{returnType},
+			</if>
+			<if test="returnState != null">
+				#{returnState},
+			</if>
+			<if test="sellerTime != null">
+				#{sellerTime},
+			</if>
+		</trim>
+	</insert>
+	
+	<!-- 修改退货表 -->
+	<update id="updateReturnOrder" parameterType="com.Vshop.core.entity.base.ReturnOrder">
+		update shop_return
+		<set>
+			<if test="orderId != null">
+				order_id = #{orderId},
+			</if>
+			<if test="returnSn != null and returnSn != '' ">
+				return_sn = #{returnSn},
+			</if>
+			<if test="orderSn != null and orderSn != '' ">
+				order_sn = #{orderSn},
+			</if>
+			<if test="storeId != null">
+				store_id = #{storeId},
+			</if>
+			<if test="storeName != null and storeName != '' ">
+				store_name = #{storeName},
+			</if>
+			<if test="buyerId != null">
+				buyer_id = #{buyerId},
+			</if>
+			<if test="buyerName != null and buyerName != '' ">
+				buyer_name = #{buyerName},
+			</if>
+			<if test="returnGoodsNum != null">
+				return_goodsnum = #{returnGoodsNum},
+			</if>
+			<if test="returnMessage != null and returnMessage != '' ">
+				return_message = #{returnMessage},
+			</if>
+			<if test="buyerMessage != null and buyerMessage != '' ">
+				buyer_message = #{buyerMessage},
+			</if>
+			<if test="returnType != null">
+				return_type = #{returnType},
+			</if>
+			<if test="returnState != null ">
+				return_state = #{returnState},
+			</if>
+			<if test="createTime != null">
+				create_time = #{createTime},
+			</if>
+			<if test="sellerTime != null">
+				seller_time = #{sellerTime},
+			</if>
+		</set>
+		where return_id = #{returnId}
+	</update>
+	
+	<!-- 根据id删除退货表 -->
+	<delete id="deleteReturnOrder" parameterType="int">
+		delete from shop_return where return_id = #{returnId}
+	</delete>
+	
+	<!-- 分页查询退货总条数 -->
+	<select id="findReturnOrderCount" parameterType="com.Vshop.core.entity.base.ReturnOrder" resultType="int">
+		select count(1)	from shop_return where 1=1
+		<include refid="whereStatement2"/>
+	</select>
+	
+	<!-- 分页查询退货记录 -->
+	<select id="findReturnOrderList" parameterType="com.Vshop.service.utils.page.Pager" resultMap="BaseResultMap">
+		select <include refid="Base_Column_List" /> from shop_return where 1=1 
+		<include refid="whereStatement"/> order by create_time desc
+	</select>
+	
+	<!-- 根据id查询退货记录 -->
+	<select id="findById" parameterType="int" resultMap="BaseResultVoMap">
+		select <include refid="Base_Column_List" /> from shop_return where return_id = #{returnId} 
+	</select>
+	
+	<!-- 根据订单id查询退货记录 -->
+	<select id="findByOrderId" parameterType="int" resultMap="BaseResultVoMap">
+		select <include refid="Base_Column_List" /> from shop_return where order_id = #{orderId}
+	</select>
+</mapper>

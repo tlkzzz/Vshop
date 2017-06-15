@@ -1,0 +1,111 @@
+*{
+	margin: 0;
+	padding: 0;
+}
+.wrap{
+	width: 100%;
+	height: 100%;
+	background: #e8e8e8;
+}
+.header{
+	width:100%;
+	height: 40px;
+	background: #c81313;
+	display: -webkit-box;
+	-webkit-box-align: center;
+	-webkit-box-pack: justify;
+	-webkit-box-orient: horizontal;
+}
+.header a{
+	width: 24px;
+	display: block;
+}
+.header p{
+	width: 60%;
+	display: block;
+	-webkit-box-flex: 1;
+	height: 40px;
+	font-size: 14px;
+	text-align: center;
+	line-height: 40px;
+	color: #ffffff;
+}
+.header img{
+	width: 10px;
+	height: 16px;
+	margin-left: 15px;
+}
+.zhifu{
+	width: 100%;
+	height: 120px;
+	background: url(../img/cont1_02.png) no-repeat;
+}
+.zhifu dl dt{
+	float: left;
+	margin-left: 7%;
+	margin-top: 5%;
+}
+.zhifu dl dt img{
+	width: 73px;
+	height: 73px;
+	background: darkblue;
+}
+.zhifu dl dd{
+	float: left;
+	margin-top: 5%;
+	margin-left: 4%;
+}
+.zhifu dl dd p{
+	line-height: 20px;
+}
+.wei{
+	width: 100%;
+	height: 50px;
+	background: #fff;
+	border-bottom: 1px solid #d2d1d1;
+	margin-top: 30%;
+}
+.wei img{
+	width: 31px;
+	margin-left: 5%;
+	padding-top: 2.5%;
+	float: left;
+}
+.wei p{
+	font-size: 16px;
+	line-height: 50px;
+	margin-left: 10px;
+	float: left;
+}
+button{
+	width: 100%;
+	height: 50px;
+	background: #ff9600;
+	font-size: 17px;
+	color: #fff;
+	margin-top: 2%;
+}
+.qita{
+	width: 100%;
+	height: 30px;
+	position: relative;
+}
+.qita p{
+	font-size: 12px;
+	color: #666666;
+	-webkit-transform: scale(1);;
+	line-height: 30px;
+	font-weight: bold;
+	position: absolute;
+	right: 10px;
+}
+
+
+
+
+
+
+
+
+
+

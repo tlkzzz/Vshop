@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.Vshop.service.module.website.dao.mapper.DocumentMapper">
+    <resultMap id="BaseResultMap" type="com.Vshop.core.entity.base.Document" >
+        <id column="doc_id" property="docId" jdbcType="INTEGER" />
+        <result column="doc_code" property="docCode" jdbcType="VARCHAR" />
+        <result column="doc_title" property="docTitle" jdbcType="VARCHAR" />
+        <result column="doc_content" property="docContent" jdbcType="VARCHAR" />
+        <result column="doc_time" property="docTime" jdbcType="BIGINT" />
+        <result column="is_del" property="isDel" jdbcType="TINYINT" />
+        <result column="create_time" property="createTime" jdbcType="BIGINT" />
+        <result column="update_time" property="updateTime" jdbcType="BIGINT" />
+    </resultMap>
+
+    <sql id="Base_Column_List" >
+        doc_id, doc_code,doc_title, doc_content, doc_time,is_del,create_time,update_time
+    </sql>
+
+    <insert id="save" parameterType="com.Vshop.core.entity.base.Document" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO shop_document(doc_code,doc_title,doc_content,doc_time,is_del,create_time)
+        VALUES(#{docCode},#{docTitle},#{docContent},#{docTime},0,#{createTime});
+    </insert>
+    <update id="update" parameterType="com.Vshop.core.entity.base.Document">
+        update shop_document
+        <set>
+            <if test="docCode != null and docCode != ''">
+                doc_code = #{docCode},
+            </if>
+            <if test="docTitle != null and docTitle != ''">
+                doc_title = #{docTitle},
+            </if>
+            <if test="docContent != null and docContent != ''">
+                doc_content = #{docContent},
+            </if>
+            <if test="createTime != null">
+            	 update_time = #{createTime}
+            </if>
+        </set>
+        where doc_id=#{docId}
+    </update>
+    <delete id="delete" parameterType="java.lang.Integer">
+        update shop_document set is_del = 1 where doc_id=#{docId}
+    </delete>
+
+    <select id="findById" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List" />
+        from shop_document where doc_id=#{docId}
+    </select>
+
+    <select id="findPageList" resultMap="BaseResultMap" parameterType="com.Vshop.service.utils.page.Pager">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM shop_document
+        where is_del = 0 order by doc_time desc
+    </select>
+
+    <select id="findCount" resultType="int">
+        select count(*) from shop_document  where is_del = 0
+    </select>
+
+</mapper>

@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.Vshop.service.module.setting.dao.mapper.PaymentMapper">
+    <resultMap id="BaseResultMap" type="com.Vshop.core.entity.base.Payment">
+    	<id column="payment_id" property="paymentId" jdbcType="INTEGER" />
+        <result column="payment_code" property="paymentCode" jdbcType="VARCHAR" />
+        <result column="payment_name" property="paymentName" jdbcType="VARCHAR" />
+        <result column="payment_config" property="paymentConfig" jdbcType="INTEGER" />
+        <result column="payment_state" property="paymentState" jdbcType="VARCHAR" />
+        <result column="payment_logo" property="paymentLogo" jdbcType="VARCHAR" />
+        <result column="is_del" property="isDel" jdbcType="TINYINT" />
+        <result column="create_time" property="createTime" jdbcType="BIGINT" />
+        <result column="update_time" property="updateTime" jdbcType="BIGINT" />
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        payment_id, payment_code, payment_name, payment_config,payment_state,payment_logo,is_del,create_time,update_time
+    </sql>
+	
+	
+	<!--  根据ID查询实体 -->
+    <select id="findById" resultMap="BaseResultMap" parameterType="java.lang.Long">
+		select <include refid="Base_Column_List" />
+		from shop_payment where payment_id = #{paymentId,jdbcType=INTEGER} and is_del = 0
+	</select>
+	
+	<!-- 查出全部数据 -->
+    <select id="queryAll" resultMap="BaseResultMap" >
+		select <include refid="Base_Column_List" />
+		from shop_payment where is_del = 0
+	</select>
+	
+	
+	 <!-- demo 保存实体-->
+    <insert id="save" useGeneratedKeys="true" keyProperty="paymentId" parameterType="com.Vshop.core.entity.base.Payment">
+        insert into shop_payment (
+        	payment_code, 
+        	payment_name, 
+        	payment_config, 
+        	payment_state,
+        	is_del,
+        	payment_logo,
+        	create_time)
+        values (
+        #{paymentCode,jdbcType=VARCHAR},
+        #{paymentName,jdbcType=VARCHAR},
+        #{paymentConfig,jdbcType=VARCHAR},
+        #{paymentState,jdbcType=VARCHAR},
+        #{isDel,jdbcType=TINYINT},
+        #{paymentLogo,jdbcType=VARCHAR},
+        #{createTime,jdbcType=BIGINT}
+        )
+    </insert>
+	<!-- 根据ID修改数据 -->
+    <update id="update" parameterType="com.Vshop.core.entity.base.Payment">
+        update shop_payment
+        <set>
+            <if test="paymentLogo != null and paymentLogo != ''">
+                payment_logo = #{paymentLogo},
+            </if>
+            <if test="paymentState != null">
+                payment_state = #{paymentState},
+            </if>
+            <if test="updateTime != null and updateTime!=''">
+                update_time = #{updateTime},
+            </if>
+            <if test="paymentName != null and paymentName!=''">
+                payment_name = #{paymentName},
+            </if>
+            <if test="paymentCode != null and paymentCode!=''">
+                payment_code = #{paymentCode}
+            </if>
+        </set>
+        where payment_id = #{paymentId}
+    </update>
+	
+	<!--  根据ID删除数据 -->
+    <update id="delete" parameterType="java.lang.Long">
+        update shop_payment
+          set is_del = 1
+        WHERE payment_id = #{paymentId,jdbcType=INTEGER}
+    </update>
+    
+    <select id="queryByCode" parameterType="string" resultType="string">
+        select payment_name FROM shop_payment where payment_code = #{code}
+    </select>
+    
+    <select id="selectById" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+	    select 
+	    <include refid="Base_Column_List" />
+	    from shop_payment
+	    where payment_id = #{id,jdbcType=INTEGER}
+	  </select>
+	  
+	  <select id="selectByCode" resultMap="BaseResultMap" parameterType="java.lang.String" >
+	    select 
+	    <include refid="Base_Column_List" />
+	    from shop_payment
+	    where payment_code = #{code,jdbcType=INTEGER}
+	  </select>
+	  
+	  <!-- 根据状态查出全部数据 -->
+    <select id="querybystatelist" resultMap="BaseResultMap" >
+		select <include refid="Base_Column_List" />
+		from shop_payment where payment_state = #{paymentState,jdbcType=VARCHAR}
+	</select>
+</mapper>

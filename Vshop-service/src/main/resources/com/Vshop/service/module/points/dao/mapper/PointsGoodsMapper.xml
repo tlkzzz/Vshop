@@ -1,0 +1,481 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.Vshop.service.module.points.dao.mapper.PointsGoodsMapper">
+    <resultMap id="BaseResultMap" type="com.Vshop.core.entity.base.PointsGoods">
+        <result column="points_goods_id" property="pointsGoodsId" jdbcType="INTEGER"/>
+        <result column="goods_spec_id" property="goodsSpecId" jdbcType="INTEGER"/>
+        <result column="points_goods_name" property="pointsGoodsName" jdbcType="VARCHAR"/>
+        <result column="points_goods_subtitle" property="pointsGoodsSubtitle" jdbcType="VARCHAR"/>
+        <result column="gc_id" property="gcId" jdbcType="INTEGER"/>
+        <result column="gc_name" property="gcName" jdbcType="VARCHAR"/>
+        <result column="brand_id" property="brandId" jdbcType="INTEGER"/>
+        <result column="brand_name" property="brandName" jdbcType="VARCHAR"/>
+        <result column="type_id" property="typeId" jdbcType="INTEGER"/>
+        <result column="store_id" property="storeId" jdbcType="INTEGER"/>
+        <result column="store_name" property="storeName" jdbcType="VARCHAR"/>
+        <result column="points_goods_image" property="pointsGoodsImage" jdbcType="VARCHAR"/>
+        <result column="points_goods_image_more" property="pointsGoodsImageMore" jdbcType="VARCHAR"/>
+        <result column="points_goods_store_price" property="pointsGoodsStorePrice" jdbcType="DECIMAL"/>
+        <result column="points_goods_serial" property="pointsGoodsSerial" jdbcType="VARCHAR"/>
+        <result column="points_goods_show" property="pointsGoodsShow" jdbcType="INTEGER"/>
+        <result column="points_goods_click" property="pointsGoodsClick" jdbcType="INTEGER"/>
+        <result column="points_goods_commend" property="pointsGoodsCommend" jdbcType="INTEGER"/>
+        <result column="points_goods_add_time" property="pointsGoodsAddTime" jdbcType="BIGINT"/>
+        <result column="points_goods_body" property="pointsGoodsBody" jdbcType="VARCHAR"/>
+        <result column="points_goods_attr" property="pointsGoodsAttr" jdbcType="VARCHAR"/>
+        <result column="points_goods_spec" property="pointsGoodsSpec" jdbcType="VARCHAR"/>
+        <result column="points_goods_starttime" property="pointsGoodsStarttime" jdbcType="BIGINT"/>
+        <result column="points_goods_endtime" property="pointsGoodsEndtime" jdbcType="BIGINT"/>
+        <result column="city_id" property="cityId" jdbcType="INTEGER"/>
+        <result column="city_name" property="cityName" jdbcType="VARCHAR"/>
+        <result column="province_id" property="provinceId" jdbcType="INTEGER"/>
+        <result column="province_name" property="provinceName" jdbcType="VARCHAR"/>
+        <result column="salenum" property="salenum" jdbcType="INTEGER"/>
+        <result column="points_goods_collect" property="pointsGoodsCollect" jdbcType="INTEGER"/>
+        <result column="points_goods_transfee_charge" property="pointsGoodsTransfeeCharge" jdbcType="INTEGER"/>
+        <result column="pointsnums" property="pointsNums" jdbcType="INTEGER"/>
+        <result column="member_grade_id" property="memberGradeId" jdbcType="INTEGER"/>
+        <result column="exchange_count" property="exchangeCount" jdbcType="INTEGER"/>
+        <result column="points_goods_storage" property="pointsGoodsStorage" jdbcType="INTEGER"/>
+    </resultMap>
+    
+    <sql id="Base_Column_List">
+    	points_goods_id,goods_spec_id,points_goods_name,points_goods_subtitle,gc_id,gc_name,brand_id,brand_name,type_id,
+    	store_id,store_name,points_goods_image,points_goods_image_more,
+    	points_goods_store_price,points_goods_serial,points_goods_show,points_goods_click,
+    	points_goods_commend,points_goods_add_time,points_goods_body,
+    	points_goods_attr,points_goods_spec,points_goods_starttime,points_goods_endtime,
+    	city_id,city_name,
+    	province_id,province_name,
+    	salenum,points_goods_collect,points_goods_transfee_charge,
+    	pointsnums,member_grade_id,exchange_count,points_goods_storage
+    </sql>
+
+	<sql id="whereStatement">
+		<where>
+			1 = 1
+			<if test="condition.pointsGoodsName != null and condition.pointsGoodsName != '' ">
+				and points_goods_name like CONCAT('%',#{condition.pointsGoodsName},'%')
+			</if>
+			<if test="condition.storeId != null">
+				and store_id = #{condition.storeId}
+			</if>
+			<if test="condition.pointsGoodsShow != null">
+				and points_goods_show = #{condition.pointsGoodsShow}
+			</if>
+			<if test="condition.gcId != null">
+				and gc_id = #{condition.gcId}
+			</if>
+			<if test="condition.typeId != null">
+				and type_id = #{condition.typeId}
+			</if>
+			<if test="condition.cityId != null">
+				and city_id = #{condition.cityId}
+			</if>
+			<if test="condition.provinceId != null">
+				and province_id = #{condition.provinceId}
+			</if>
+			<if test="condition.pointsGoodsStarttime != null">
+				and points_goods_starttime &lt; #{condition.pointsGoodsCommend}
+			</if>
+			<if test="condition.pointsGoodsSerial != null and condition.pointsGoodsSerial != '' ">
+				and points_goods_serial like CONCAT('%',#{condition.pointsGoodsSerial},'%')
+			</if>
+			and is_del = 0
+		</where>
+	</sql>
+	
+	<sql id="orderBy">
+		<if test="condition.sortField == 'pointsGoodsAddTime'">
+			order by sg.points_goods_add_time ${condition.orderBy}
+		</if>
+		<if test="condition.sortField == 'pointsGoodsStorePrice'">
+			order by sg.points_goods_store_price ${condition.orderBy}
+		</if>
+		<if test="condition.sortField == 'pointsNums'">
+			order by sg.pointsnums ${condition.orderBy}
+		</if>
+		<if test="condition.sortField == 'salenum'">
+			order by sg.salenum ${condition.orderBy}
+		</if>
+		<if test="condition.sortField == 'pointsGoodsCollect'">
+			order by sg.points_goods_collect ${condition.orderBy}
+		</if>
+		<if test="condition.sortField == 'pointsGoodsClick'">
+			order by sg.points_goods_click ${condition.orderBy}
+		</if>
+	</sql>
+	
+	<!-- 分页查询count -->
+	<select id="findPointsGoodPagerListCount" resultType="int" parameterType="com.Vshop.service.utils.page.Pager">
+		select
+		count(points_goods_id)
+		from shop_points_goods
+		<include refid="whereStatement" />
+	</select>
+	
+	<select id="findPointsGoodsPagerList" resultMap="BaseResultMap" parameterType="com.Vshop.service.utils.page.Pager">
+		select a.* from(
+			select
+			sg.* 
+			from shop_points_goods sg  <include refid="whereStatement" />
+				<if test="condition.sortField != null">
+					<if test="condition.orderBy != null">
+						<include refid="orderBy"/>
+					</if>
+				</if>
+		) a 
+	</select>
+	
+	
+    <select id="findOnePointsGoodByCondition" resultMap="BaseResultMap" parameterType="com.Vshop.core.entity.base.PointsGoods">
+        select
+        <include refid="Base_Column_List" />
+        from shop_points_goods
+        WHERE 1=1
+		<if test="pointsGoodsId != null">
+			and points_goods_id = #{pointsGoodsId}
+		</if>
+		<if test="goodsSpecId != null">
+			and goods_spec_id = #{goodsSpecId}
+		</if>
+		<if test="storeId != null">
+			and store_id = #{storeId}
+		</if>
+		<if test="pointsGoodsShow != null">
+			and points_goods_show = #{pointsGoodsShow}
+		</if>
+		and is_del = 0
+    </select>
+        
+    <select id="findPointsGoodById" resultMap="BaseResultMap" parameterType="int">
+        select
+        sg.*
+        from 
+			shop_points_goods sg 
+        WHERE sg.points_goods_id = #{pointsGoodsId} and sg.is_del = 0
+    </select>
+    
+    <insert id="savePointsGoods" parameterType="com.Vshop.core.entity.base.PointsGoods" useGeneratedKeys="true" keyProperty="pointsGoodsId">
+    	insert into shop_points_goods
+	    <trim prefix="(" suffix=")" suffixOverrides="," >
+	      <if test="goodsSpecId != null" >
+	        goods_spec_id,
+	      </if>
+	      <if test="pointsGoodsName != null" >
+	        points_goods_name,
+	      </if>
+	      <if test="pointsGoodsSubtitle != null" >
+	        points_goods_subtitle,
+	      </if>
+	      <if test="gcId != null" >
+	        gc_id,
+	      </if>
+	      <if test="gcName != null" >
+	        gc_name,
+	      </if>
+	      <if test="brandId != null" >
+	        brand_id,
+	      </if>
+	      <if test="brandName != null" >
+	        brand_name,
+	      </if>
+	      <if test="typeId != null" >
+	        type_id,
+	      </if>
+	      <if test="storeId != null" >
+	        store_id,
+	      </if>
+	      <if test="storeName != null" >
+	        store_name,
+	      </if>
+	      <if test="pointsGoodsImage != null" >
+	        points_goods_image,
+	      </if>
+	      <if test="pointsGoodsImageMore != null" >
+	        points_goods_image_more,
+	      </if>
+	      <if test="pointsGoodsStorePrice != null" >
+	        points_goods_store_price,
+	      </if>
+	      <if test="pointsGoodsSerial != null" >
+	        points_goods_serial,
+	      </if>
+	      <if test="pointsGoodsShow != null" >
+	        points_goods_show,
+	      </if>
+	      <if test="pointsGoodsClick != null" >
+	        points_goods_click,
+	      </if>
+	      <if test="pointsGoodsCommend != null" >
+	        points_goods_commend,
+	      </if>
+	      <if test="pointsGoodsAddTime != null" >
+	        points_goods_add_time,
+	      </if>
+	      <if test="pointsGoodsBody != null" >
+	        points_goods_body,
+	      </if>
+	      <if test="pointsGoodsAttr != null" >
+	        points_goods_attr,
+	      </if>
+	      <if test="pointsGoodsSpec != null" >
+	        points_goods_spec,
+	      </if>
+	      <if test="pointsGoodsStarttime != null" >
+	        points_goods_starttime,
+	      </if>
+	      <if test="pointsGoodsEndtime != null" >
+	        points_goods_endtime,
+	      </if>
+	      <if test="cityId != null" >
+	        city_id,
+	      </if>
+	      <if test="cityName != null" >
+	        city_name,
+	      </if>
+	      <if test="provinceId != null" >
+	        province_id,
+	      </if>
+	      <if test="provinceName != null" >
+	        province_name,
+	      </if>
+	      <if test="salenum != null" >
+	        salenum,
+	      </if>
+	      <if test="pointsGoodsCollect != null" >
+	        points_goods_collect,
+	      </if>
+	      <if test="pointsGoodsTransfeeCharge != null" >
+	        points_goods_transfee_charge,
+	      </if>
+	      <if test="pointsNums != null" >
+	        pointsnums,
+	      </if>
+	      <if test="memberGradeId != null" >
+	        member_grade_id,
+	      </if>
+	      <if test="exchangeCount != null" >
+	        exchange_count,
+	      </if>
+	      <if test="pointsGoodsStorage != null" >
+	        points_goods_storage,
+	      </if>
+	    </trim>
+	    <trim prefix="values (" suffix=")" suffixOverrides="," >
+	      <if test="goodsSpecId != null" >
+	        #{goodsSpecId},
+	      </if>
+	      <if test="pointsGoodsName != null" >
+	        #{pointsGoodsName},
+	      </if>
+	      <if test="pointsGoodsSubtitle != null" >
+	        #{pointsGoodsSubtitle},
+	      </if>
+	      <if test="gcId != null" >
+	        #{gcId},
+	      </if>
+	      <if test="gcName != null" >
+	        #{gcName},
+	      </if>
+	      <if test="brandId != null" >
+	        #{brandId},
+	      </if>
+	      <if test="brandName != null" >
+	        #{brandName},
+	      </if>
+	      <if test="typeId != null" >
+	        #{typeId},
+	      </if>
+	      <if test="storeId != null" >
+	        #{storeId},
+	      </if>
+	      <if test="storeName != null" >
+	        #{storeName},
+	      </if>
+	      <if test="pointsGoodsImage != null" >
+	        #{pointsGoodsImage},
+	      </if>
+	      <if test="pointsGoodsImageMore != null" >
+	        #{pointsGoodsImageMore},
+	      </if>
+	      <if test="pointsGoodsStorePrice != null" >
+	        #{pointsGoodsStorePrice},
+	      </if>
+	      <if test="pointsGoodsSerial != null" >
+	        #{pointsGoodsSerial},
+	      </if>
+	      <if test="pointsGoodsShow != null" >
+	        #{pointsGoodsShow},
+	      </if>
+	      <if test="pointsGoodsClick != null" >
+	        #{pointsGoodsClick},
+	      </if>
+	      <if test="pointsGoodsCommend != null" >
+	        #{pointsGoodsCommend},
+	      </if>
+	      <if test="pointsGoodsAddTime != null" >
+	        #{pointsGoodsAddTime},
+	      </if>
+	      <if test="pointsGoodsBody != null" >
+	        #{pointsGoodsBody},
+	      </if>
+	      <if test="pointsGoodsAttr != null" >
+	        #{pointsGoodsAttr},
+	      </if>
+	      <if test="pointsGoodsSpec != null" >
+	        #{pointsGoodsSpec},
+	      </if>
+	      <if test="pointsGoodsStarttime != null" >
+	        #{pointsGoodsStarttime},
+	      </if>
+	      <if test="pointsGoodsEndtime != null" >
+	        #{pointsGoodsEndtime},
+	      </if>
+	      <if test="cityId != null" >
+	        #{cityId},
+	      </if>
+	      <if test="cityName != null" >
+	        #{cityName},
+	      </if>
+	      <if test="provinceId != null" >
+	        #{provinceId},
+	      </if>
+	      <if test="provinceName != null" >
+	        #{provinceName},
+	      </if>
+	      <if test="salenum != null" >
+	        #{salenum},
+	      </if>
+	      <if test="pointsGoodsCollect != null" >
+	        #{pointsGoodsCollect},
+	      </if>
+	      <if test="pointsGoodsTransfeeCharge != null" >
+	        #{pointsGoodsTransfeeCharge},
+	      </if>
+	      <if test="pointsNums != null" >
+	        #{pointsNums},
+	      </if>
+	      <if test="memberGradeId != null" >
+	        #{memberGradeId},
+	      </if>
+	      <if test="exchangeCount != null" >
+	        #{exchangeCount},
+	      </if>
+	      <if test="pointsGoodsStorage != null" >
+	        #{pointsGoodsStorage},
+	      </if>
+	    </trim>
+  </insert>
+  
+  	<update id="updatePointsGoods" parameterType="com.Vshop.core.entity.base.PointsGoods" >
+    	update shop_points_goods
+	    <set>
+	      <if test="pointsGoodsName != null" >
+	        points_goods_name=#{pointsGoodsName},
+	      </if>
+	      <if test="pointsGoodsSubtitle != null" >
+	        points_goods_subtitle=#{pointsGoodsSubtitle},
+	      </if>
+	      <if test="gcId != null" >
+	        gc_id=#{gcId},
+	      </if>
+	      <if test="gcName != null" >
+	        gc_name=#{gcName},
+	      </if>
+	      <if test="brandId != null" >
+	        brand_id=#{brandId},
+	      </if>
+	      <if test="brandName != null" >
+	        brand_name=#{brandName},
+	      </if>
+	      <if test="typeId != null" >
+	        type_id=#{typeId},
+	      </if>
+	      <if test="storeId != null" >
+	        store_id=#{storeId},
+	      </if>
+	      <if test="storeName != null" >
+	        store_name=#{storeName},
+	      </if>
+	      <if test="pointsGoodsImage != null" >
+	        points_goods_image=#{pointsGoodsImage},
+	      </if>
+	      <if test="pointsGoodsImageMore != null" >
+	        points_goods_image_more=#{pointsGoodsImageMore},
+	      </if>
+	      <if test="pointsGoodsStorePrice != null" >
+	        points_goods_store_price=#{pointsGoodsStorePrice},
+	      </if>
+	      <if test="pointsGoodsSerial != null" >
+	        points_goods_serial=#{pointsGoodsSerial},
+	      </if>
+	      <if test="pointsGoodsShow != null" >
+	        points_goods_show=#{pointsGoodsShow},
+	      </if>
+	      <if test="pointsGoodsClick != null" >
+	        points_goods_click=#{pointsGoodsClick},
+	      </if>
+	      <if test="pointsGoodsCommend != null" >
+	        points_goods_commend=#{pointsGoodsCommend},
+	      </if>
+	      <if test="pointsGoodsAddTime != null" >
+	        points_goods_add_time=#{pointsGoodsAddTime},
+	      </if>
+	      <if test="pointsGoodsBody != null" >
+	        points_goods_body=#{pointsGoodsBody},
+	      </if>
+	      <if test="pointsGoodsAttr != null" >
+	        points_goods_attr=#{pointsGoodsAttr},
+	      </if>
+	      <if test="pointsGoodsSpec != null" >
+	        points_goods_spec=#{pointsGoodsSpec},
+	      </if>
+	      <if test="pointsGoodsStarttime != null" >
+	        points_goods_starttime=#{pointsGoodsStarttime},
+	      </if>
+	      <if test="pointsGoodsEndtime != null" >
+	        points_goods_endtime=#{pointsGoodsEndtime},
+	      </if>
+	      <if test="cityId != null" >
+	        city_id=#{cityId},
+	      </if>
+	      <if test="cityName != null" >
+	        city_name=#{cityName},
+	      </if>
+	      <if test="provinceId != null" >
+	        province_id=#{provinceId},
+	      </if>
+	      <if test="provinceName != null" >
+	        province_name=#{provinceName},
+	      </if>
+	      <if test="salenum != null" >
+	        salenum = salenum + #{salenum},
+	      </if>
+	      <if test="pointsGoodsCollect != null" >
+	        points_goods_collect = points_goods_collect + #{pointsGoodsCollect},
+	      </if>
+	      <if test="pointsGoodsTransfeeCharge != null" >
+	        points_goods_transfee_charge=#{pointsGoodsTransfeeCharge},
+	      </if>
+	      <if test="pointsNums != null" >
+	        pointsnums=#{pointsNums},
+	      </if>
+	      <if test="memberGradeId != null" >
+	        member_grade_id=#{memberGradeId},
+	      </if>
+	      <if test="exchangeCount != null" >
+	        exchange_count=#{exchangeCount},
+	      </if>
+	      <if test="pointsGoodsStorage != null" >
+	        points_goods_storage=#{pointsGoodsStorage},
+	      </if>
+	    </set>
+    	where points_goods_id = #{pointsGoodsId}
+  </update>
+  
+     <update id="deletePointsGoods" parameterType="java.lang.Integer">
+    	update shop_points_goods set is_del = 1 where points_goods_id = #{pointsGoodsId,jdbcType=INTEGER} 
+    </update>
+
+</mapper>

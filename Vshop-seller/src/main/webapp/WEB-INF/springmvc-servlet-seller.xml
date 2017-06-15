@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd">
+
+    <context:annotation-config/>
+
+    <bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer"
+          lazy-init="false">
+        <property name="locations">
+            <list>
+                <value>classpath*:conf/jdbc.properties</value>
+                <value>classpath*:conf/Vshop.properties</value>
+                <!-- value>classpath*:conf/redis.properties</value> -->
+            </list>
+        </property>
+    </bean>
+    <!-- 自动扫描且只扫描@Controller -->
+    <context:component-scan base-package="com.Vshop.seller.module" use-default-filters="false">
+        <context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+        <context:include-filter type="annotation" expression="org.springframework.web.bind.annotation.ControllerAdvice"/>
+    </context:component-scan>
+
+    <!-- 静态资源的访问 -->
+    <mvc:resources mapping="/js/**" location="/res/js/" cache-period="0"/>
+    <mvc:resources mapping="/css/**" location="/res/css/"  cache-period="0"/>
+    <mvc:resources mapping="/images/**" location="/res/images/" cache-period="0"/>
+
+   <!-- <bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping">
+        <property name = "alwaysUseFullPath" value = "true" />
+    </bean>-->
+    <!-- <bean id="test" class="com.Vshop.seller.utils.freemarker.directive.Test"/> -->
+     <bean id="shiroTags" class="com.Vshop.core.freemarker.shiro.ShiroTags" />
+    <!-- freemarker -->
+    <bean id="freemarkerConfig" class="org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer">
+        <!-- 指定FreeMarker模板文件目录 -->
+        <property name="templateLoaderPath" value="/WEB-INF/views/" />
+        <property name="freemarkerSettings">
+            <props>
+                <prop key="template_update_delay">0</prop>
+                <prop key="defaultEncoding">UTF-8</prop>
+                <prop key="url_escaping_charset">UTF-8</prop>
+                <prop key="locale">zh_CN</prop>
+                <prop key="boolean_format">true,false</prop>
+                <prop key="datetime_format">yyyy-MM-dd HH:mm:ss</prop>
+                <prop key="date_format">yyyy-MM-dd</prop>
+                <prop key="time_format">HH:mm:ss</prop>
+                <prop key="number_format">0.######</prop>
+                <prop key="whitespace_stripping">true</prop>
+                <prop key="classic_compatible">true</prop>
+                <prop key="auto_import">/commons/header.ftl as p</prop>
+            </props>
+        </property>
+        <property name="freemarkerVariables">
+            <map>
+                <!-- <entry key="test" value-ref="test"/> -->
+                <entry key="shiro" value-ref="shiroTags"/>
+                   <!--  <entry key="imgServer" value="${img.server}"/>-->
+                <entry key="imgServer" value="${access.Url}"/>
+                <entry key="imgOssServer" value="${access.Url}"/>
+                <entry key="adminServer" value="${admin.server}"/>
+                <entry key="frontServer" value="${front.server}"/>
+                <entry key="sellerServer" value="${seller.server}"/>
+            </map>
+        </property>
+    </bean>
+
+    <bean id="freeMarkerViewResolver" class="org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver">
+        <property name="cache" value="true" />
+        <property name="viewClass" value="com.Vshop.seller.utils.freemarker.directive.StoreFreeMarkerView"/>
+        <property name="prefix" value=""/>
+        <property name="suffix" value=".ftl" />
+        <property name="contentType" value="text/html; charset=UTF-8" />
+          <property name="attributesMap">
+			<map>
+				<entry key="newTag">
+					<bean class="com.Vshop.core.freemarker.TagCreator" />
+				</entry>
+			</map>
+		</property>
+    </bean>
+
+    <mvc:annotation-driven>
+        <mvc:message-converters register-defaults="true">
+            <!-- 将StringHttpMessageConverter的默认编码设为UTF-8 -->
+            <bean class="org.springframework.http.converter.StringHttpMessageConverter">
+                <constructor-arg value="UTF-8" />
+            </bean>
+            <!-- fastJson -->
+            <!--<bean class="com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter">-->
+                <!--<constructor-arg value="UTF-8" />-->
+            <!--</bean>-->
+        </mvc:message-converters>
+    </mvc:annotation-driven>
+
+    <!-- 容器默认的DefaultServletHandler处理 所有静态内容与无RequestMapping处理的URL-->
+    <mvc:default-servlet-handler/>
+
+    <!-- 控制器异常处理 -->
+    <bean id="exceptionHandlerExceptionResolver" class="org.springframework.web.servlet.mvc.method.annotation.ExceptionHandlerExceptionResolver">
+    </bean>
+
+
+    <!--文件上传-->
+    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+        <!-- one of the properties available; the maximum file size in bytes -->
+        <property name="maxUploadSize" value="1000000"/>
+          <!-- 若文件小于次值就不会生成零时文件 -->
+       <property name="maxInMemorySize" value="100" /> 
+    </bean>
+
+</beans>

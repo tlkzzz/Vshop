@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.Vshop.service.module.goods.dao.mapper.GoodsAttrIndexMapper">
+    <resultMap id="BaseResultMap" type="com.Vshop.core.entity.base.GoodsAttrIndex" >
+        <result column="goods_id" property="goodsId" jdbcType="INTEGER" />
+        <result column="gc_id" property="gcId" jdbcType="INTEGER" />
+        <result column="type_id" property="typeId" jdbcType="INTEGER" />
+        <result column="attr_id" property="attrId" jdbcType="INTEGER" />
+        <result column="attr_value_id" property="attrValueId" jdbcType="INTEGER" />
+    </resultMap>
+
+    <sql id="Base_Column_List" >
+    	goods_id, gc_id, type_id, attr_id, attr_value_id
+    </sql>
+    <insert id="save" parameterType="com.Vshop.core.entity.base.GoodsAttrIndex">
+        INSERT INTO shop_goods_attr_index(<include refid="Base_Column_List"/>)
+        VALUES(#{goodsId},#{gcId},#{typeId},#{attrId},#{attrValueId})
+    </insert>
+
+    <delete id="deleteByGoodsId" parameterType="java.lang.Integer">
+        delete from  shop_goods_attr_index where goods_id=#{goodsId}
+    </delete>
+
+    <select id="findByGoodsId" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List" />
+        from shop_goods_attr_index where goods_id=#{goodsId}
+    </select>
+    
+</mapper>

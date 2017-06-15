@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.Vshop.service.module.store.dao.mapper.StoreExpandMapper">
+	<resultMap id="BaseResultMap" type="com.Vshop.core.entity.base.StoreExpand" >
+	    <id column="store_id" property="storeId" jdbcType="INTEGER" />
+	    <result column="short_name" property="shortName" jdbcType="VARCHAR" />
+	    <result column="store_no" property="storeNo" jdbcType="VARCHAR" />
+	    <result column="contacter" property="contacter" jdbcType="VARCHAR" />
+	    <result column="mobile" property="mobile" jdbcType="VARCHAR" />
+	    <result column="fixed_tel" property="fixedTel" jdbcType="VARCHAR" />
+	    <result column="fax" property="fax" jdbcType="VARCHAR" />
+	    <result column="bus_type" property="busType" jdbcType="INTEGER" />
+	    <result column="market_type" property="marketType" jdbcType="INTEGER" />
+	    <result column="bus_license_no" property="busLicenseNo" jdbcType="VARCHAR" />
+	    <result column="bus_licen_purl" property="busLicenPurl" jdbcType="VARCHAR" />
+	    <result column="dishui_regist_no" property="dishuiRegistNo" jdbcType="VARCHAR" />
+	    <result column="dishui_regist_purl" property="dishuiRegistPurl" jdbcType="VARCHAR" />
+	    <result column="guoshui_regist_no" property="guoshuiRegistNo" jdbcType="VARCHAR" />
+	    <result column="guoshui_regist_purl" property="guoshuiRegistPurl" jdbcType="VARCHAR" />
+	    <result column="zzshui_purl" property="zzshuiPurl" jdbcType="VARCHAR" />
+	    <result column="legaler" property="legaler" jdbcType="VARCHAR" />
+	    <result column="legaler_id" property="legalerId" jdbcType="VARCHAR" />
+	    <result column="legaler_purl" property="legalerPurl" jdbcType="VARCHAR" />
+	    <result column="account_bank" property="accountBank" jdbcType="VARCHAR" />
+	    <result column="account_method" property="accountMethod" jdbcType="INTEGER" />
+	    <result column="account_cycle" property="accountCycle" jdbcType="INTEGER" />
+	    <result column="acount_date" property="acountDate" jdbcType="TIMESTAMP" />
+	    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+	    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+	    
+	    <result column="store_logo" property="storeLogo" jdbcType="VARCHAR" />
+	    <result column="remark" property="remark" jdbcType="VARCHAR" />
+    </resultMap>
+  <sql id="Base_Column_List" >
+    store_id, short_name, store_no, contacter, mobile, fixed_tel, fax, bus_type, market_type, 
+    bus_license_no, bus_licen_purl, dishui_regist_no, dishui_regist_purl, guoshui_regist_no, 
+    guoshui_regist_purl, zzshui_purl, legaler, legaler_id, legaler_purl, account_bank, 
+    account_method, account_cycle, acount_date, create_time, update_time, store_logo, remark
+  </sql>
+  <insert id="save" parameterType="com.Vshop.core.entity.base.StoreExpand" useGeneratedKeys="true" keyProperty="storeId">
+    insert into shop_store_expand (store_id, short_name, store_no, 
+      contacter, mobile, fixed_tel, 
+      fax, bus_type, market_type, 
+      bus_license_no, bus_licen_purl, dishui_regist_no, 
+      dishui_regist_purl, guoshui_regist_no, guoshui_regist_purl, 
+      zzshui_purl, legaler, legaler_id, 
+      legaler_purl, account_bank, account_method, 
+      account_cycle, acount_date, create_time, 
+      update_time, store_logo, remark)
+    values (#{storeId,jdbcType=INTEGER}, #{shortName,jdbcType=VARCHAR}, #{storeNo,jdbcType=VARCHAR}, 
+      #{contacter,jdbcType=VARCHAR}, #{mobile,jdbcType=VARCHAR}, #{fixedTel,jdbcType=VARCHAR}, 
+      #{fax,jdbcType=VARCHAR}, #{busType,jdbcType=INTEGER}, #{marketType,jdbcType=INTEGER}, 
+      #{busLicenseNo,jdbcType=VARCHAR}, #{busLicenPurl,jdbcType=VARCHAR}, #{dishuiRegistNo,jdbcType=VARCHAR}, 
+      #{dishuiRegistPurl,jdbcType=VARCHAR}, #{guoshuiRegistNo,jdbcType=VARCHAR}, #{guoshuiRegistPurl,jdbcType=VARCHAR}, 
+      #{zzshuiPurl,jdbcType=VARCHAR}, #{legaler,jdbcType=VARCHAR}, #{legalerId,jdbcType=VARCHAR}, 
+      #{legalerPurl,jdbcType=VARCHAR}, #{accountBank,jdbcType=VARCHAR}, #{accountMethod,jdbcType=INTEGER}, 
+      #{accountCycle,jdbcType=INTEGER}, #{acountDate,jdbcType=TIMESTAMP}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{updateTime,jdbcType=TIMESTAMP}, #{storeLogo,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.Vshop.core.entity.base.StoreExpand" >
+    update shop_store_expand
+	    set short_name = #{shortName,jdbcType=VARCHAR},
+	      store_no = #{storeNo,jdbcType=VARCHAR},
+	      contacter = #{contacter,jdbcType=VARCHAR},
+	      mobile = #{mobile,jdbcType=VARCHAR},
+	      fixed_tel = #{fixedTel,jdbcType=VARCHAR},
+	      fax = #{fax,jdbcType=VARCHAR},
+	      bus_type = #{busType,jdbcType=INTEGER},
+	      market_type = #{marketType,jdbcType=INTEGER},
+	      bus_license_no = #{busLicenseNo,jdbcType=VARCHAR},
+	      bus_licen_purl = #{busLicenPurl,jdbcType=VARCHAR},
+	      dishui_regist_no = #{dishuiRegistNo,jdbcType=VARCHAR},
+	      dishui_regist_purl = #{dishuiRegistPurl,jdbcType=VARCHAR},
+	      guoshui_regist_no = #{guoshuiRegistNo,jdbcType=VARCHAR},
+	      guoshui_regist_purl = #{guoshuiRegistPurl,jdbcType=VARCHAR},
+	      zzshui_purl = #{zzshuiPurl,jdbcType=VARCHAR},
+	      legaler = #{legaler,jdbcType=VARCHAR},
+	      legaler_id = #{legalerId,jdbcType=VARCHAR},
+	      legaler_purl = #{legalerPurl,jdbcType=VARCHAR},
+	      account_bank = #{accountBank,jdbcType=VARCHAR},
+	      account_method = #{accountMethod,jdbcType=INTEGER},
+	      account_cycle = #{accountCycle,jdbcType=INTEGER},
+	      acount_date = #{acountDate,jdbcType=TIMESTAMP},
+	      create_time = #{createTime,jdbcType=TIMESTAMP},
+	      update_time = #{updateTime,jdbcType=TIMESTAMP},
+	      store_logo = #{storeLogo,jdbcType=VARCHAR}, 
+	      remark = #{remark,jdbcType=VARCHAR}
+	    where store_id = #{storeId,jdbcType=INTEGER}
+  </update>
+  <update id="update" parameterType="com.Vshop.core.entity.base.StoreExpand" >
+    update shop_store_expand
+    <set >
+      <if test="shortName != null" >
+        short_name = #{shortName,jdbcType=VARCHAR},
+      </if>
+      <if test="storeNo != null" >
+        store_no = #{storeNo,jdbcType=VARCHAR},
+      </if>
+      <if test="contacter != null" >
+        contacter = #{contacter,jdbcType=VARCHAR},
+      </if>
+      <if test="mobile != null" >
+        mobile = #{mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="fixedTel != null" >
+        fixed_tel = #{fixedTel,jdbcType=VARCHAR},
+      </if>
+      <if test="fax != null" >
+        fax = #{fax,jdbcType=VARCHAR},
+      </if>
+      <if test="busType != null" >
+        bus_type = #{busType,jdbcType=INTEGER},
+      </if>
+      <if test="marketType != null" >
+        market_type = #{marketType,jdbcType=INTEGER},
+      </if>
+      <if test="busLicenseNo != null" >
+        bus_license_no = #{busLicenseNo,jdbcType=VARCHAR},
+      </if>
+      <if test="busLicenPurl != null" >
+        bus_licen_purl = #{busLicenPurl,jdbcType=VARCHAR},
+      </if>
+      <if test="dishuiRegistNo != null" >
+        dishui_regist_no = #{dishuiRegistNo,jdbcType=VARCHAR},
+      </if>
+      <if test="dishuiRegistPurl != null" >
+        dishui_regist_purl = #{dishuiRegistPurl,jdbcType=VARCHAR},
+      </if>
+      <if test="guoshuiRegistNo != null" >
+        guoshui_regist_no = #{guoshuiRegistNo,jdbcType=VARCHAR},
+      </if>
+      <if test="guoshuiRegistPurl != null" >
+        guoshui_regist_purl = #{guoshuiRegistPurl,jdbcType=VARCHAR},
+      </if>
+      <if test="zzshuiPurl != null" >
+        zzshui_purl = #{zzshuiPurl,jdbcType=VARCHAR},
+      </if>
+      <if test="legaler != null" >
+        legaler = #{legaler,jdbcType=VARCHAR},
+      </if>
+      <if test="legalerId != null" >
+        legaler_id = #{legalerId,jdbcType=VARCHAR},
+      </if>
+      <if test="legalerPurl != null" >
+        legaler_purl = #{legalerPurl,jdbcType=VARCHAR},
+      </if>
+      <if test="accountBank != null" >
+        account_bank = #{accountBank,jdbcType=VARCHAR},
+      </if>
+      <if test="accountMethod != null" >
+        account_method = #{accountMethod,jdbcType=INTEGER},
+      </if>
+      <if test="accountCycle != null" >
+        account_cycle = #{accountCycle,jdbcType=INTEGER},
+      </if>
+      <if test="acountDate != null" >
+        acount_date = #{acountDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="storeLogo != null" >
+        store_logo = #{storeLogo,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=VARCHAR}
+      </if>
+    </set>
+    where store_id = #{storeId,jdbcType=INTEGER}
+  </update>
+  <select id="findByStoreId" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from shop_store_expand
+    where store_id = #{storeId,jdbcType=INTEGER}
+  </select>
+</mapper>

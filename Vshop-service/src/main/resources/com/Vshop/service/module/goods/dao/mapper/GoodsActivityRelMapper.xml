@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper	namespace="com.Vshop.service.module.goods.dao.mapper.GoodsActivityRelMapper">
+
+<resultMap id="BaseResultMap" type="com.Vshop.core.entity.base.GoodsActivityRel" >
+	<id column="rel_id" property="relId" jdbcType="INTEGER" />
+	<result column="activity_id" property="activityId" jdbcType="INTEGER" />
+	<result column="create_time" property="createTime" jdbcType="BIGINT" />
+	<result column="goods_id" property="goodsId" jdbcType="INTEGER" />
+	<result column="activity_type" property="activityType" jdbcType="INTEGER" />
+	<result column="store_id" property="storeId" jdbcType="INTEGER" />
+	<association property="goods" column="goodsid"   resultMap="com.Vshop.service.module.goods.dao.mapper.GoodsMapper.BaseResultMap"/>
+</resultMap>
+
+<resultMap id="BaseResultMoreMap" type="com.Vshop.core.entity.base.GoodsActivityRel" >
+	<id column="rel_id" property="relId" jdbcType="INTEGER" />
+	<result column="activity_id" property="activityId" jdbcType="INTEGER" />
+	<result column="create_time" property="createTime" jdbcType="BIGINT" />
+	<result column="goods_id" property="goodsId" jdbcType="INTEGER" />
+	<result column="activity_type" property="activityType" jdbcType="INTEGER" />
+	<result column="store_id" property="storeId" jdbcType="INTEGER" />
+	<result column="activity_name" property="activityName" jdbcType="VARCHAR" />
+	<result column="activity_type_name" property="activityTypeName" jdbcType="VARCHAR" />
+	<result column="goods_name" property="goodsName" jdbcType="VARCHAR" />
+	<result column="store_name" property="storeName" jdbcType="VARCHAR" />
+</resultMap>
+
+<sql id="BaseWhereSql">
+	<where>
+		1=1
+		<if test="condition.activityId != null">
+			and activity_id=#{condition.activityId}
+		</if>
+		<if test="condition.createTime != null">
+			and create_time=#{condition.createTime}
+		</if>
+		<if test="condition.goodsId != null">
+			and goods_id=#{condition.goodsId}
+		</if>
+		<if test="condition.relId != null">
+			and rel_id=#{condition.relId}
+		</if>
+		<if test="condition.activityType != null">
+			and activity_type=#{condition.activityType}
+		</if>
+		<if test="condition.storeId != null">
+			and store_id=#{condition.storeId}
+		</if>
+	</where>
+</sql>
+
+
+
+<sql id="Base_Column_List" >
+	activity_id,create_time,goods_id,rel_id,activity_type,store_id
+</sql>
+
+<insert id="save" parameterType="com.Vshop.core.entity.base.GoodsActivityRel" >
+	INSERT INTO shop_rel_goods_activity (activity_id,create_time,goods_id,activity_type,store_id)
+	 VALUES (#{activityId},#{createTime},#{goodsId},#{activityType},#{storeId});
+</insert>
+
+
+<select id="findPageList" resultMap="BaseResultMap" parameterType="com.Vshop.service.utils.page.Pager" >
+	select a.* from (
+	SELECT
+	<include refid="Base_Column_List" />
+	 FROM shop_rel_goods_activity
+	<include refid="BaseWhereSql" />
+	order by rel_id desc
+	) a 
+</select>
+
+
+<select id="findPageListMore" resultMap="BaseResultMoreMap" parameterType="com.Vshop.service.utils.page.Pager" >
+	SELECT r.*, s.activity_name, a.dictionary_name AS activity_type_name, g.goods_name, g.store_name
+	FROM shop_rel_goods_activity r, shop_goods_activity s, shop_dictionary a, shop_goods g 
+	
+	<where>
+		r.activity_id = s.activity_id 
+		AND r.activity_type = a.dictionary_id
+		AND r.goods_id = g.goods_id
+		AND a.dictionary_code = 'activity_type'
+	
+		<if test="condition.activityId != null">
+			and r.activity_id=#{condition.activityId}
+		</if>
+		<if test="condition.createTime != null">
+			and r.create_time=#{condition.createTime}
+		</if>
+		<if test="condition.goodsId != null">
+			and r.goods_id=#{condition.goodsId}
+		</if>
+		<if test="condition.relId != null">
+			and r.rel_id=#{condition.relId}
+		</if>
+		<if test="condition.activityType != null">
+			and r.activity_type=#{condition.activityType}
+		</if>
+		<if test="condition.storeId != null">
+			and r.store_id=#{condition.storeId}
+		</if>
+	</where>
+	
+	order by rel_id desc
+</select>
+
+<update id="update" parameterType="com.Vshop.core.entity.base.GoodsActivityRel" >
+	update shop_rel_goods_activity
+	<set>
+		<if test="activityId != null ">
+			activity_id = #{activityId},
+		</if>
+		<if test="goodsId != null ">
+			goods_id = #{goodsId},
+		</if>
+		<if test="activityType != null ">
+			activity_type = #{activityType},
+		</if>
+		<if test="storeId != null ">
+			store_id = #{storeId},
+		</if>
+	</set>
+	where rel_id = #{relId}
+</update>
+
+<delete id="deleteById" parameterType="java.lang.Integer">
+	delete from shop_rel_goods_activity where rel_id=#{relId}
+</delete>
+
+<select id="findById" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+	select
+	<include refid="Base_Column_List" />
+	 from shop_rel_goods_activity where rel_id=#{relId}
+</select>
+
+
+ <!-- 获取商品的关联数据-->
+    <select id="findgoodsList" resultMap="BaseResultMap">
+       select sr.*,sg.* from shop_rel_goods_activity sr left join shop_goods sg on 
+       sr.goods_id=sg.goods_id where 
+       
+           sr.activity_id=#{0} AND sr.activity_type=#{1}
+    		
+      
+    </select>
+    
+    
+    
+</mapper>

@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.Vshop.service.module.cart.dao.mapper.CartMapper">
+    <resultMap id="BaseResultMap" type="com.Vshop.core.entity.base.Cart">
+        <result column="cart_id" property="cartId" jdbcType="INTEGER" />
+        <result column="member_id" property="memberId" jdbcType="INTEGER" />
+        <result column="store_id" property="storeId" jdbcType="INTEGER" />
+        <result column="store_name" property="storeName" jdbcType="VARCHAR" />
+        <result column="goods_id" property="goodsId" jdbcType="INTEGER" />
+        <result column="goods_name" property="goodsName" jdbcType="VARCHAR" />
+        <result column="goods_store_price" property="goodsPrice" jdbcType="DOUBLE" />
+        <result column="goods_num" property="goodsNum" jdbcType="DOUBLE" />
+        <result column="goods_images" property="goodsImages" jdbcType="VARCHAR" />
+        <result column="spec_id" property="specId" jdbcType="INTEGER" />
+        <result column="spec_info" property="specInfo" jdbcType="VARCHAR" />
+    </resultMap>
+    
+    <sql id="Base_Column_List">
+      	cart_id,member_id,store_id,store_name,goods_id,goods_name,goods_store_price,goods_num,
+      	goods_images,spec_id,spec_info
+    </sql>
+    
+    <!-- 通过用户id查询购物车,同时可以传入商品的id和规格id查询存在相同商品 -->
+    <select id="queryBuyCart" resultMap="BaseResultMap" parameterType="com.Vshop.core.entity.base.Cart">
+        select
+        <include refid="Base_Column_List" />
+        from shop_cart
+         where 1=1
+         and member_id=#{memberId,jdbcType=INTEGER}
+        <if test="goodsId != null">
+			and goods_id = #{goodsId,jdbcType=INTEGER}
+		</if>
+		<if test="specId != null">
+			and spec_id = #{specId,jdbcType=INTEGER}
+		</if>
+    </select>
+    
+    <!-- 保存购物车 -->
+    <insert id="saveCart" parameterType="com.Vshop.core.entity.base.Cart" useGeneratedKeys="true" keyProperty="cartId">
+		INSERT INTO shop_cart
+		( member_id,store_id,store_name,goods_id,goods_name,goods_store_price,goods_num,
+      	goods_images,spec_id,spec_info)
+		VALUES
+		(#{memberId,jdbcType=INTEGER},#{storeId,jdbcType=INTEGER},
+		#{storeName,jdbcType=VARCHAR},#{goodsId,jdbcType=INTEGER},
+		#{goodsName,jdbcType=VARCHAR},#{goodsPrice,jdbcType=DOUBLE},
+		#{goodsNum,jdbcType=INTEGER},#{goodsImages,jdbcType=VARCHAR},
+		#{specId,jdbcType=INTEGER},#{specInfo,jdbcType=VARCHAR});
+	</insert>
+	
+	<!-- 修改购物车 -->
+    <select id="updateCart" parameterType="com.Vshop.core.entity.base.Cart">
+		update shop_cart
+		set 
+		 	member_id = #{memberId,jdbcType=INTEGER},
+	       	store_id = #{storeId,jdbcType=INTEGER},
+	       	store_name =  #{storeName,jdbcType=VARCHAR},
+	       	goods_id =  #{goodsId,jdbcType=INTEGER},
+	       	goods_name =  #{goodsName,jdbcType=VARCHAR},
+	       	goods_store_price =  #{goodsPrice,jdbcType=DOUBLE},
+	       	goods_num =  #{goodsNum,jdbcType=INTEGER},
+	       	goods_images =  #{goodsImages,jdbcType=VARCHAR},
+	       	spec_id = #{specId,jdbcType=INTEGER},
+	       	spec_info = #{specInfo,jdbcType=VARCHAR}
+	     where cart_id = #{cartId,jdbcType=INTEGER}
+	</select>
+    
+    <!-- 删除购物车 -->
+    <delete id="deleteCart" parameterType="java.lang.Integer">
+    	delete from shop_cart 
+    	where cart_id = #{cartId,jdbcType=INTEGER} 
+    </delete>
+    
+    <!-- 根据用户id,商品id,商品规格id删除购物车 -->
+    <delete id="deleteByMGS">
+    	delete from shop_cart 
+    	where member_id = #{0}
+    		and goods_id = #{1}
+    		and spec_id = #{2}
+    </delete>
+    
+    <!-- 清空购物车 -->
+    <delete id="deleteAllCartByMemberId" parameterType="int">
+    	delete from shop_cart where member_id = #{memberId}
+    </delete>
+ 
+    <!-- 修改购物车数量 -->
+    <select id="updateCartNum" parameterType="com.Vshop.core.entity.base.Cart">
+		update shop_cart 
+		set 
+			goods_num =  #{goodsNum,jdbcType=INTEGER}
+	     where cart_id = #{cartId,jdbcType=INTEGER}
+	</select>
+    
+    <!-- 购物车下单  根据cartid 查询商品 -->
+    <select id="queryByCartIds" resultMap="BaseResultMap" parameterType="com.Vshop.core.entity.base.Cart">
+        select
+        <include refid="Base_Column_List" />
+        from shop_cart where member_id=#{memberId}
+        <if test="cartIds != null">
+			and cart_id in (${cartIds})  
+		</if>
+    </select>
+    
+    <!-- 根据cartid 查询商品 -->
+    <select id="queryCartById" resultMap="BaseResultMap" parameterType="int">
+    	select
+        <include refid="Base_Column_List" />
+        from shop_cart where cart_id=#{cartId}
+    </select>
+    
+    <!-- 根据用户id和店铺id查询购物车 -->
+    <select id="queryCartByStoreId" resultMap="BaseResultMap">
+    	select
+        <include refid="Base_Column_List" />
+        from shop_cart where member_id = #{0}
+        and store_id = #{1}
+    </select>
+    
+    <!-- 查询用户购物车数量 -->
+    <select id="queryCountByMemberId" parameterType="int" resultType="Integer">
+    	select sum(goods_num) from shop_cart where member_id = #{memberId}
+    </select>
+    
+</mapper>

@@ -1,0 +1,1872 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>课程详细页－课程汇平台</title>
+    <meta name="keywords" content="商城系统演示站"/>
+    <meta name="description" content="商城系统演示站"/>
+    <meta name="author" content="商城系统演示站">
+    <meta name="copyright" content="商城系统演示站">
+    <link rel="shortcut icon" href="http://localhost:8080/leimingtech-front/res/css/favicon.ico"/>
+    <style type="text/css">
+        body {
+            _behavior: url("http://localhost:8080/leimingtech-front/res/css/new-csshover.htc");
+        }
+    </style>
+    <link href="http://localhost:8080/leimingtech-front/res/css/base.css" rel="stylesheet" type="text/css">
+    <link href="http://localhost:8080/leimingtech-front/res/css/home_header.css" rel="stylesheet" type="text/css">
+    <link href="http://localhost:8080/leimingtech-front/res/css/home_login.css" rel="stylesheet" type="text/css">
+    <link href="http://localhost:8080/leimingtech-front/res/css/font-icons/style.css" rel="stylesheet"/>
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+    <script src="res/js/html5shiv.js"></script>
+    <script src="res/js/respond.min.js"></script>
+    <![endif]-->
+    <script>
+        COOKIE_PRE = '5C83_';
+        _CHARSET = 'utf-8';
+        SITEURL = '';
+    </script>
+    <script src="http://localhost:8080/leimingtech-front/res/js/jquery.js"></script>
+    <script src="http://localhost:8080/leimingtech-front/res/js/jquery.SuperSlide.2.1.1.js"></script>
+    <script src="http://localhost:8080/leimingtech-front/res/js/common.js" charset="utf-8"></script>
+    <script src="http://localhost:8080/leimingtech-front/res/js/jquery-ui/jquery.ui.js" type="text/javascript"></script>
+    <script src="http://localhost:8080/leimingtech-front/res/js/jquery.validation.min.js"></script>
+    <script src="http://localhost:8080/leimingtech-front/res/js/jquery.masonry.js"></script>
+    <!--[if IE 6]>
+    <script src="http://localhost:8080/leimingtech-front/res/js/IE6_PNG.js"></script>
+    <script>
+        DD_belatedPNG.fix('.pngFix');
+    </script>
+    <script>
+        // <![CDATA[
+        if((window.navigator.appName.toUpperCase().indexOf("MICROSOFT")>=0)&&(document.execCommand))
+        try{
+        document.execCommand("BackgroundImageCache", false, true);
+           }
+        catch(e){}
+        // ]]>
+        </script>
+        <script type="text/javascript" src="http://localhost:8080/leimingtech-front/res/js/IE6_MAXMIX.js"></script>
+    <![endif]-->
+   <!--  <script type="text/javascript">
+        var PRICE_FORMAT = '&yen;%s';
+        $(function () {
+            //search
+            $("#search").children('ul').children('li').click(function () {
+                $(this).parent().children('li').removeClass("current");
+                $(this).addClass("current");
+                $('#search_act').attr("value", $(this).attr("act"));
+                $('#keyword').attr("value", $(this).attr("title"));
+            });
+            var search_act = $("#search").find("li[class='current']").attr("act");
+            $('#search_act').attr("value", search_act);
+            $("#keyword").blur();
+        });
+    </script> -->
+</head>
+<body>
+<script type="text/javascript" src="http://localhost:8080/leimingtech-front/res/js/common2.2.js" charset="utf-8"></script>
+<div id="append_parent"></div>
+<div id="ajaxwaitid"></div>
+<div class="public-top-layout w">
+    <div class="topbar wrapper">
+        <div class="user-entry">
+            您好，欢迎来到<a href="http://localhost:8080/leimingtech-front" title="首页" alt="首页">课程汇商城系统演示站</a>
+            <span>[<a href="http://localhost:8080/leimingtech-front/login">登录</a>]</span>
+            <span>[<a href="http://localhost:8080/leimingtech-front/signUp">注册</a>]</span>
+		  	<span class="seller-login">
+				<a href="" title="商家中心" target="_blank">
+					<i class="icon-signin"></i>学院管理中心
+				</a>
+			</span>
+        </div>
+
+        <div class="quick-menu">
+            <dl>
+                <dt><a href="http://localhost:8080/leimingtech-front/user/index">我的订单</a><i></i></dt>
+                <dd>
+                    <ul>
+                        <li><a href="#?act=member&op=order&state_type=order_pay">待付款订单</a>
+                        </li>
+                        <li>
+                            <a href="#?act=member&op=order&state_type=order_shipping">待确认收货</a>
+                        </li>
+                        <li><a href="http://localhost:8080/leimingtech-front/myReviews/index">待评价交易</a>
+                        </li>
+                    </ul>
+                </dd>
+            </dl>
+            <dl>
+                <dt><a href="http://localhost:8080/leimingtech-front/myuser/index" title="我的收藏" target="_top">我的收藏</a><i></i>
+                </dt>
+                <dd>
+                    <ul>
+                        <li><a href="http://localhost:8080/leimingtech-front/myuser/goodsFavIndex" target="_top"
+                               title="收藏的课程">收藏的课程</a></li>
+                        <li><a href="http://localhost:8080/leimingtech-front/myuser/storeindex" target="_top"
+                               title="/">收藏的学院</a></li>
+                    </ul>
+                </dd>
+            </dl>
+            <dl>
+                <dt>客户服务<i></i></dt>
+                <dd>
+                    <ul>
+                        <li><a href="http://localhost:8080/leimingtech-front/myReviews/index">帮助中心</a></li>
+                        <li><a href="#?act=article&ac_id=5">售后服务</a></li>
+                        <li><a href="http://localhost:8080/leimingtech-front/myconsult/index">客服中心</a></li>
+                    </ul>
+                </dd>
+            </dl>
+
+            <dl>
+                <dt>站点导航<i></i></dt>
+                <dd>
+                    <ul>
+                        <li><a target="_blank" href="http://localhost:8080/leimingtech-front">商城首页</a></li>
+                    </ul>
+                </dd>
+            </dl>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    $(function () {
+        $(".quick-menu dl").hover(function () {
+                    $(this).addClass("hover");
+                },
+                function () {
+                    $(this).removeClass("hover");
+                });
+
+    });
+</script>
+<div class="header-wrap">
+    <header class="public-head-layout wrapper">
+        <!--LOGO-->
+        <h1 class="site-logo"><a href="http://localhost:8080/leimingtech-front"><img
+                src="http://localhost:8080/leimingtech-front/res/images/common/690ea902fe2708381da2cabff4ee46c8.png" class="pngFix"></a></h1>
+        <!--搜索-->
+        <div class="head-search-bar" id="search">
+            <!--课程和学院-->
+            <ul class="tab">
+                <li searchModel="goodsSearch" class="current" act="keywordSearch" title=" 请输入您要搜索的课程关键字">课程</li>
+                <li searchModel="storeSearch" act="shop_search" title=" 请输入您要搜索的学院关键字">学院</li>
+            </ul>
+            <form action="http://localhost:8080/leimingtech-front/search/goodsSearch" method="get" class="search-form">
+                <input name="searchType" id="search_act" value="keywordSearch" type="hidden">
+                <input name="keyword" id="keyword" type="text" class="input-text" value=" 请输入您要搜索的课程关键字"
+                       onFocus="searchFocus(this)" onBlur="searchBlur(this)" maxlength="60" x-webkit-speech lang="zh-CN"
+                       onwebkitspeechchange="foo()" x-webkit-grammar="builtin:search"/>
+                <input type="submit" id="button" value="搜索" class="input-submit">
+            </form>
+            <!--搜索关键字-->
+            <div class="keyword">热门搜索：
+                <ul>
+                    <li><a href="#">李宁</a></li>
+                    <li><a href="#">耐克</a></li>
+                    <li><a href="#">Kappa</a></li>
+                    <li><a href="#">双肩包</a></li>
+                    <li><a href="#">手提包</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="head-user-menu">
+            <dl class="my-mall">
+                <!---我的商城--->
+                <dt><span class="icon-user"></span>我的商城<i class="arrow"></i></dt>
+                <dd>
+                    <div class="sub-title">
+                        <h4></h4>
+                        <!----学员首页---->
+                        <a href="http://localhost:8080/leimingtech-front/user/setting/index" class="arrow">我的用户中心<i></i></a>
+                    </div>
+                    <div class="user-centent-menu">
+                        <ul>
+                            <!----站内信--->
+                            <li><a href="#?act=home&op=message" title="站内消息" target="_top">
+                                站内消息 (<span>0</span>) </a></li>
+                            <li><a href="#?act=member&op=order&state_type=order_pay"
+                                   class="arrow">我的订单<i></i></a></li>
+                            <li><a href="http://localhost:8080/leimingtech-front/myconsult/index">咨询回复(<span
+                                    id="member_consult">0</span>)</a></li>
+                            <li><a href="http://localhost:8080/leimingtech-front/myuser/index" class="arrow">我的收藏<i></i></a>
+                            </li>
+                            <li><a href="#?act=member_voucher">代金券<span
+                                    id="member_voucher">(<span>0</span>)</span></a></li>
+                            <li><a href="#?act=member_points" class="arrow">我的积分<i></i></a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="browse-history">
+                        <div class="part-title">
+                            <h4>最近浏览的课程</h4>
+                        </div>
+                        <ul>
+                        </ul>
+                    </div>
+                </dd>
+            </dl>
+            <dl class="my-cart">
+                <div class="addcart-goods-num">0</div>
+                <dt><span class="icon-cart"></span><a href="http://localhost:8080/leimingtech-front/cart/index">购物车结算</a><i class="arrow"></i></dt>
+                <dd>
+                    <div class="sub-title">
+                        <h4>最新加入的课程</h4>
+                    </div>
+                    <div class="incart-goods-box">
+                        <img class="loading" src="http://localhost:8080/leimingtech-front/res/images/loading.gif"/>
+
+                        <div class="checkout"><a href="http://localhost:8080/leimingtech-front/cart/index" class="btn-cart">结算购物车中的课程</a>
+                        </div>
+                    </div>
+
+                </dd>
+            </dl>
+            <script type="text/javascript">
+				$(function(){
+					$.ajax({
+	                    url: 'http://localhost:8080/leimingtech-front/cart/cart',
+	                    async: false,
+	                    type: 'POST',
+	                    dataType: 'json',
+	                    success: function (data) {
+	                    	var result = data.result;
+	                     	if (result.goodsNum > 0){
+	                     		$(".addcart-goods-num").html(result.goodsNum);
+	                     	}
+	                    }
+	                });
+				});
+			</script>
+			<script type="text/javascript">
+				//课程搜索以及学院搜索
+				$(function(){
+					$("[searchModel]").click(function(){
+						var url = $(this).attr("searchModel");
+						$(".search-form").attr("action",'http://localhost:8080/leimingtech-front/search/'+url);
+						$("[searchModel]").each(function(){
+							$(this).attr("class","");
+						});
+						$(this).attr("class","current");
+						return false;
+					});
+				});
+			</script>
+        </div>
+    </header>
+</div>
+<!-- PublicHeadLayout End -->
+<!-- publicNavLayout Begin -->
+<nav class="public-nav-layout">
+    <div class="wrapper">
+        <div class="all-category">
+            <div class="title">
+                <h3><a href="#?act=category&op=index">所有课程分类</a></h3>
+                <i class="arrow"></i>
+            </div>
+            <!--左侧菜单-->
+            <div class="category">
+                <ul class="menu">
+							<li cat_id="21" class="odd">
+								<div class="class">
+									<span class="ico">
+										<img src="http://localhost/upload/img/brand/6e9379ae20ae185672d256ef3ec83df4.jpg">
+									</span>
+									<h4>
+										<a href="http://localhost:8080/leimingtech-front/search/goodsSearch?searchType=gcIdSearch&keyword=21" title="手机、数码">手机、数码</a>
+									</h4>
+									<span class="recommend-class" id="recommend-class-21">
+										
+									</span>
+									<span class="arrow"></span>
+								</div>
+								<div class="sub-class" cat_menu_id="21">
+									<dl>
+		                                <dt>
+		                                	<h3>
+		                                		<a href="http://localhost:8080/leimingtech-front/search/goodsSearch?searchType=gcIdSearch&keyword=22" title="手机通讯">手机通讯</a>
+		                                	</h3>
+		                                </dt>
+		                                <dd class="goods-class">	
+		                                			<script>
+		                                				var h = "<a href='http://localhost:8080/leimingtech-front/search/goodsSearch?searchType=gcIdSearch&keyword=24' title='数码配件'>数码配件</a>";
+		                                				$("#recommend-class-21").append(h);
+		                                			</script>
+		                                		<a href="http://localhost:8080/leimingtech-front/search/goodsSearch?searchType=gcIdSearch&keyword=24" title="数码配件">数码配件</a>
+                                    	</dd>
+		                            </dl>
+									<dl>
+		                                <dt>
+		                                	<h3>
+		                                		<a href="http://localhost:8080/leimingtech-front/search/goodsSearch?searchType=gcIdSearch&keyword=23" title="手机配件">手机配件</a>
+		                                	</h3>
+		                                </dt>
+		                                <dd class="goods-class">	
+                                    	</dd>
+		                            </dl>
+								</div>
+							</li>
+							<li cat_id="25" class="even">
+								<div class="class">
+									<span class="ico">
+										<img src="http://localhost/upload/img/brand/6e9379ae20ae185672d256ef3ec83df4.jpg">
+									</span>
+									<h4>
+										<a href="http://localhost:8080/leimingtech-front/search/goodsSearch?searchType=gcIdSearch&keyword=25" title="电脑、办公">电脑、办公</a>
+									</h4>
+									<span class="recommend-class" id="recommend-class-25">
+										
+									</span>
+									<span class="arrow"></span>
+								</div>
+								<div class="sub-class" cat_menu_id="25">
+									<dl>
+		                                <dt>
+		                                	<h3>
+		                                		<a href="http://localhost:8080/leimingtech-front/search/goodsSearch?searchType=gcIdSearch&keyword=26" title="电脑整机">电脑整机</a>
+		                                	</h3>
+		                                </dt>
+		                                <dd class="goods-class">	
+		                                			<script>
+		                                				var h = "<a href='http://localhost:8080/leimingtech-front/search/goodsSearch?searchType=gcIdSearch&keyword=27' title='超薄本'>超薄本</a>";
+		                                				$("#recommend-class-25").append(h);
+		                                			</script>
+		                                		<a href="http://localhost:8080/leimingtech-front/search/goodsSearch?searchType=gcIdSearch&keyword=27" title="超薄本">超薄本</a>
+                                    	</dd>
+		                            </dl>
+								</div>
+							</li>
+							<li cat_id="28" class="odd">
+								<div class="class">
+									<span class="ico">
+										<img src="http://localhost/upload/img/brand/6e9379ae20ae185672d256ef3ec83df4.jpg">
+									</span>
+									<h4>
+										<a href="http://localhost:8080/leimingtech-front/search/goodsSearch?searchType=gcIdSearch&keyword=28" title="家用电器">家用电器</a>
+									</h4>
+									<span class="recommend-class" id="recommend-class-28">
+										
+									</span>
+									<span class="arrow"></span>
+								</div>
+								<div class="sub-class" cat_menu_id="28">
+									<dl>
+		                                <dt>
+		                                	<h3>
+		                                		<a href="http://localhost:8080/leimingtech-front/search/goodsSearch?searchType=gcIdSearch&keyword=29" title="大家电">大家电</a>
+		                                	</h3>
+		                                </dt>
+		                                <dd class="goods-class">	
+                                    	</dd>
+		                            </dl>
+								</div>
+							</li>
+							<li cat_id="30" class="even">
+								<div class="class">
+									<span class="ico">
+										<img src="http://localhost/upload/img/brand/6e9379ae20ae185672d256ef3ec83df4.jpg">
+									</span>
+									<h4>
+										<a href="http://localhost:8080/leimingtech-front/search/goodsSearch?searchType=gcIdSearch&keyword=30" title="家居、家具、家装、厨具">家居、家具、家装、厨具</a>
+									</h4>
+									<span class="recommend-class" id="recommend-class-30">
+										
+									</span>
+									<span class="arrow"></span>
+								</div>
+								<div class="sub-class" cat_menu_id="30">
+									<dl>
+		                                <dt>
+		                                	<h3>
+		                                		<a href="http://localhost:8080/leimingtech-front/search/goodsSearch?searchType=gcIdSearch&keyword=31" title="厨具">厨具</a>
+		                                	</h3>
+		                                </dt>
+		                                <dd class="goods-class">	
+                                    	</dd>
+		                            </dl>
+								</div>
+							</li>
+							<li cat_id="32" class="odd">
+								<div class="class">
+									<span class="ico">
+										<img src="http://localhost/upload/img/brand/6e9379ae20ae185672d256ef3ec83df4.jpg">
+									</span>
+									<h4>
+										<a href="http://localhost:8080/leimingtech-front/search/goodsSearch?searchType=gcIdSearch&keyword=32" title=" 男装、女装、内衣、珠宝"> 男装、女装、内衣、珠宝</a>
+									</h4>
+									<span class="recommend-class" id="recommend-class-32">
+										
+									</span>
+									<span class="arrow"></span>
+								</div>
+								<div class="sub-class" cat_menu_id="32">
+									<dl>
+		                                <dt>
+		                                	<h3>
+		                                		<a href="http://localhost:8080/leimingtech-front/search/goodsSearch?searchType=gcIdSearch&keyword=33" title="女装">女装</a>
+		                                	</h3>
+		                                </dt>
+		                                <dd class="goods-class">	
+                                    	</dd>
+		                            </dl>
+								</div>
+							</li>
+							<li cat_id="34" class="even">
+								<div class="class">
+									<span class="ico">
+										<img src="http://localhost/upload/img/brand/6e9379ae20ae185672d256ef3ec83df4.jpg">
+									</span>
+									<h4>
+										<a href="http://localhost:8080/leimingtech-front/search/goodsSearch?searchType=gcIdSearch&keyword=34" title=" 个护化妆"> 个护化妆</a>
+									</h4>
+									<span class="recommend-class" id="recommend-class-34">
+										
+									</span>
+									<span class="arrow"></span>
+								</div>
+								<div class="sub-class" cat_menu_id="34">
+									<dl>
+		                                <dt>
+		                                	<h3>
+		                                		<a href="http://localhost:8080/leimingtech-front/search/goodsSearch?searchType=gcIdSearch&keyword=35" title="面部护肤">面部护肤</a>
+		                                	</h3>
+		                                </dt>
+		                                <dd class="goods-class">	
+                                    	</dd>
+		                            </dl>
+								</div>
+							</li>
+							<li cat_id="36" class="odd">
+								<div class="class">
+									<span class="ico">
+										<img src="http://localhost/upload/img/brand/6e9379ae20ae185672d256ef3ec83df4.jpg">
+									</span>
+									<h4>
+										<a href="http://localhost:8080/leimingtech-front/search/goodsSearch?searchType=gcIdSearch&keyword=36" title=" 鞋靴、箱包、钟表、奢侈品"> 鞋靴、箱包、钟表、奢侈品</a>
+									</h4>
+									<span class="recommend-class" id="recommend-class-36">
+										
+									</span>
+									<span class="arrow"></span>
+								</div>
+								<div class="sub-class" cat_menu_id="36">
+									<dl>
+		                                <dt>
+		                                	<h3>
+		                                		<a href="http://localhost:8080/leimingtech-front/search/goodsSearch?searchType=gcIdSearch&keyword=37" title="时尚女鞋">时尚女鞋</a>
+		                                	</h3>
+		                                </dt>
+		                                <dd class="goods-class">	
+                                    	</dd>
+		                            </dl>
+								</div>
+							</li>
+							<li cat_id="38" class="even">
+								<div class="class">
+									<span class="ico">
+										<img src="http://localhost/upload/img/brand/6e9379ae20ae185672d256ef3ec83df4.jpg">
+									</span>
+									<h4>
+										<a href="http://localhost:8080/leimingtech-front/search/goodsSearch?searchType=gcIdSearch&keyword=38" title=" 运动户外"> 运动户外</a>
+									</h4>
+									<span class="recommend-class" id="recommend-class-38">
+										
+									</span>
+									<span class="arrow"></span>
+								</div>
+								<div class="sub-class" cat_menu_id="38">
+									<dl>
+		                                <dt>
+		                                	<h3>
+		                                		<a href="http://localhost:8080/leimingtech-front/search/goodsSearch?searchType=gcIdSearch&keyword=43" title="骑行运动">骑行运动</a>
+		                                	</h3>
+		                                </dt>
+		                                <dd class="goods-class">	
+                                    	</dd>
+		                            </dl>
+								</div>
+							</li>
+							<li cat_id="39" class="odd">
+								<div class="class">
+									<span class="ico">
+										<img src="http://localhost/upload/img/brand/6e9379ae20ae185672d256ef3ec83df4.jpg">
+									</span>
+									<h4>
+										<a href="http://localhost:8080/leimingtech-front/search/goodsSearch?searchType=gcIdSearch&keyword=39" title="汽车、汽车用品">汽车、汽车用品</a>
+									</h4>
+									<span class="recommend-class" id="recommend-class-39">
+										
+									</span>
+									<span class="arrow"></span>
+								</div>
+								<div class="sub-class" cat_menu_id="39">
+									<dl>
+		                                <dt>
+		                                	<h3>
+		                                		<a href="http://localhost:8080/leimingtech-front/search/goodsSearch?searchType=gcIdSearch&keyword=42" title="汽车车型">汽车车型</a>
+		                                	</h3>
+		                                </dt>
+		                                <dd class="goods-class">	
+                                    	</dd>
+		                            </dl>
+								</div>
+							</li>
+                </ul>
+            </div>
+        </div>
+        <!--分类树结束-->
+        <ul class="site-menu">
+            <li class="current"><a href="http://localhost:8080/leimingtech-front">首页</a></li>
+            <li class="link"><a href="#" class="pngFix">团购</a></li>
+            <li class="link"><a href="#">品牌</a></li>
+            <li class="link"><a href="#">优惠券</a></li>
+            <li class="link"><a href="#">积分中心</a></li>
+            <li class="link"><a href="#">运动专场</a></li>
+            <li class="link"><a target="_blank" href="#">微商城</a></li>
+        </ul>
+    </div>
+</nav>
+<!-- PublicNavLayout End-->
+<script type="text/javascript" src="http://localhost:8080/leimingtech-front/res/js/jquery.cookie.js" ></script>
+<link href="http://localhost:8080/leimingtech-front/res/css/shop.css"  rel="stylesheet" type="text/css">
+<link href="http://localhost:8080/leimingtech-front/res/css/style/default/style.css"  rel="stylesheet" type="text/css">
+<script type="text/javascript" src="http://localhost:8080/leimingtech-front/res/js/shop.js" charset="utf-8"></script>
+<script src="http://localhost:8080/leimingtech-front/res/js/jquery.js"></script>
+<style type="text/css">
+	body{background:0}#content{width:1200px}
+	.expanded .nc-goods-main.nc-goods-main{width:980px}
+	.expanded .nc-sidebar{width:210px}
+	.nc-goods-main{width:1200px}
+	.wrapper{width:1200px;}
+</style>
+<div class="background clearfix">
+<script type="text/javascript" src="http://localhost:8080/leimingtech-front/res/js/shopstatgoods/shopstatgoods.js" ></script>
+<article id="content">
+	<!-- 导航条 begin-->
+	<div class="nch-breadcrumb-layout">
+	  <div class="nch-breadcrumb wrapper">
+	  	<i class="icon-home"> </i>
+	 	 	<span><a href="javascript:void(0);">首页</a></span>
+			<span class="arrow">&gt;</span><span><a href="http://localhost:8080/leimingtech-front/search/goodsSearch?searchType=gcIdSearch&keyword=21">手机、数码</a></span><span class="arrow">&gt;</span><span><a href="http://localhost:8080/leimingtech-front/search/goodsSearch?searchType=gcIdSearch&keyword=22">手机通讯</a></span><span class="arrow">&gt;</span><span><a href="http://localhost:8080/leimingtech-front/search/goodsSearch?searchType=gcIdSearch&keyword=24">数码配件</a></span>
+			<span class="arrow">&gt;</span>
+			<span class="arrow"><a href="http://localhost:8080/leimingtech-front/product/detail?id=5">iphone6</a></span>
+		</div>
+	</div>  
+	<!-- 导航条 end-->  
+	<section class="nc-detail">
+	    <!-- <div class="nc-inform">
+	    	<span>举报中心<i></i></span>
+		    <ul>
+		      <li><a href="javascript:void(0);" title="举报该课程">举报该课程</a></li>
+		    </ul>
+	 	</div> -->
+        <div class="nc-detail-bd"> 
+        	
+        	<style type="text/css">
+			.preview{width:390px; height:400px;}
+			/* smallImg */
+			.smallImg{position:relative; height:52px; margin-top:1px; background-color:#F1F0F0; padding:6px 5px; width:380px; overflow:hidden;float:left;}
+			.scrollbutton{width:14px; height:50px; overflow:hidden; position:relative; float:left; cursor:pointer; }
+			.scrollbutton.smallImgUp , .scrollbutton.smallImgUp.disabled{background:url(http://localhost:8080/leimingtech-front/res/images/jaoben/images/d_08.png) no-repeat;}
+			.scrollbutton.smallImgDown , .scrollbutton.smallImgDown.disabled{background:url(http://localhost:8080/leimingtech-front/res/images/jaoben/images/d_09.png) no-repeat; margin-left:365px; margin-top:-50px;}
+			
+			#imageMenu {height:50px; width:360px; overflow:hidden; margin-left:0; float:left;}
+			#imageMenu li {height:50px; width:60px; overflow:hidden; float:left; text-align:center;}
+			#imageMenu li img{width:50px; height:50px;cursor:pointer;}
+			#imageMenu li#onlickImg img, #imageMenu li:hover img{ width:44px; height:44px; border:3px solid #959595;}
+			/* bigImg */
+			.bigImg{position:relative; float:left; width:390px; height:400px; overflow:hidden;}
+			.bigImg #midimg{width:390px; height:400px;}
+			.bigImg #winSelector{width:235px; height:210px;}
+			#winSelector{position:absolute; cursor:crosshair; filter:alpha(opacity=15); -moz-opacity:0.15; opacity:0.15; background-color:#000; border:1px solid #fff;}
+			/* bigView */
+			#bigView{position:absolute;border: 1px solid #959595; overflow: hidden; z-index:999;}
+			#bigView img{position:absolute;}
+			</style>
+			<aside class="nc-gallery">
+        	<!-- S 课程图片及收藏分享 -->
+			<div class="preview">
+				<div id="vertical" class="bigImg">
+					<img src="http://localhost/upload/img/store/10/1439173254458.jpg" width="380" height="400" alt="" id="midimg" />
+					<div style="display:none;" id="winSelector"></div>
+				</div><!--bigImg end-->	
+				<div class="smallImg">
+					<div class="scrollbutton smallImgUp disabled"></div>
+					<div id="imageMenu">
+						<ul>
+					                	<li id="onlickImg"><img src="http://localhost/upload/img/store/10/1439173254458.jpg" width="68" height="68" alt=""/></li>
+						</ul>
+					</div>
+					<div class="scrollbutton smallImgDown"></div>
+				</div><!--smallImg end-->	
+				<div id="bigView" style="display:none;"><img width="800" height="800" alt="" src="" /></div>
+			</div>
+			</aside>
+			<script type="text/javascript">
+			$(document).ready(function(){
+				// 图片上下滚动
+				var count = $("#imageMenu li").length - 5; /* 显示 6 个 li标签内容 */
+				var interval = $("#imageMenu li:first").width();
+				var curIndex = 0;
+				
+				$('.scrollbutton').click(function(){
+					if( $(this).hasClass('disabled') ) return false;
+					
+					if ($(this).hasClass('smallImgUp')) --curIndex;
+					else ++curIndex;
+					
+					$('.scrollbutton').removeClass('disabled');
+					if (curIndex == 0) $('.smallImgUp').addClass('disabled');
+					if (curIndex == count-1) $('.smallImgDown').addClass('disabled');
+					
+					$("#imageMenu ul").stop(false, true).animate({"marginLeft" : -curIndex*interval + "px"}, 600);
+				});	
+				// 解决 ie6 select框 问题
+				$.fn.decorateIframe = function(options) {
+			        if ($.browser.msie && $.browser.version < 7) {
+			            var opts = $.extend({}, $.fn.decorateIframe.defaults, options);
+			            $(this).each(function() {
+			                var $myThis = $(this);
+			                //创建一个IFRAME
+			                var divIframe = $("<iframe />");
+			                divIframe.attr("id", opts.iframeId);
+			                divIframe.css("position", "absolute");
+			                divIframe.css("display", "none");
+			                divIframe.css("display", "block");
+			                divIframe.css("z-index", opts.iframeZIndex);
+			                divIframe.css("border");
+			                divIframe.css("top", "0");
+			                divIframe.css("left", "0");
+			                if (opts.width == 0) {
+			                    divIframe.css("width", $myThis.width() + parseInt($myThis.css("padding")) * 2 + "px");
+			                }
+			                if (opts.height == 0) {
+			                    divIframe.css("height", $myThis.height() + parseInt($myThis.css("padding")) * 2 + "px");
+			                }
+			                divIframe.css("filter", "mask(color=#fff)");
+			                $myThis.append(divIframe);
+			            });
+			        }
+			    }
+			    $.fn.decorateIframe.defaults = {
+			        iframeId: "decorateIframe1",
+			        iframeZIndex: -1,
+			        width: 0,
+			        height: 0
+			    }
+			    //放大镜视窗
+			    $("#bigView").decorateIframe();
+			    //点击到中图
+			    var midChangeHandler = null;
+				
+			    $("#imageMenu li img").bind("click", function(){
+					if ($(this).attr("id") != "onlickImg") {
+						midChange($(this).attr("src").replace("small", "mid"));
+						$("#imageMenu li").removeAttr("id");
+						$(this).parent().attr("id", "onlickImg");
+					}
+				}).bind("mouseover", function(){
+					if ($(this).attr("id") != "onlickImg") {
+						window.clearTimeout(midChangeHandler);
+						midChange($(this).attr("src").replace("small", "mid"));
+						$(this).css({ "border": "3px solid #959595" });
+					}
+				}).bind("mouseout", function(){
+					if($(this).attr("id") != "onlickImg"){
+						$(this).removeAttr("style");
+						midChangeHandler = window.setTimeout(function(){
+							midChange($("#onlickImg img").attr("src").replace("small", "mid"));
+						}, 1000);
+					}
+				});
+			    function midChange(src) {
+			        $("#midimg").attr("src", src).load(function() {
+			            changeViewImg();
+			        });
+			    }
+			    //大视窗看图
+			    function mouseover(e) {
+			        if ($("#winSelector").css("display") == "none") {
+			            $("#winSelector,#bigView").show();
+			        }
+			        $("#winSelector").css(fixedPosition(e));
+			        e.stopPropagation();
+			    }
+			    function mouseOut(e) {
+			        if ($("#winSelector").css("display") != "none") {
+			            $("#winSelector,#bigView").hide();
+			        }
+			        e.stopPropagation();
+			    }
+			    $("#midimg").mouseover(mouseover); //中图事件
+			    $("#midimg,#winSelector").mousemove(mouseover).mouseout(mouseOut); //选择器事件
+			
+			    var $divWidth = $("#winSelector").width(); //选择器宽度
+			    var $divHeight = $("#winSelector").height(); //选择器高度
+			    var $imgWidth = $("#midimg").width(); //中图宽度
+			    var $imgHeight = $("#midimg").height(); //中图高度
+			    var $viewImgWidth = $viewImgHeight = $height = null; //IE加载后才能得到 大图宽度 大图高度 大图视窗高度
+			
+			    function changeViewImg() {
+			        $("#bigView img").attr("src", $("#midimg").attr("src").replace("mid", "big"));
+			    }
+			    changeViewImg();
+			    $("#bigView").scrollLeft(0).scrollTop(0);
+			    function fixedPosition(e) {
+			        if (e == null) {
+			            return;
+			        }
+			        var $imgLeft = $("#midimg").offset().left; //中图左边距
+			        var $imgTop = $("#midimg").offset().top; //中图上边距
+			        X = e.pageX - $imgLeft - $divWidth / 2; //selector顶点坐标 X
+			        Y = e.pageY - $imgTop - $divHeight / 2; //selector顶点坐标 Y
+			        X = X < 0 ? 0 : X;
+			        Y = Y < 0 ? 0 : Y;
+			        X = X + $divWidth > $imgWidth ? $imgWidth - $divWidth : X;
+			        Y = Y + $divHeight > $imgHeight ? $imgHeight - $divHeight : Y;
+			
+			        if ($viewImgWidth == null) {
+			            $viewImgWidth = $("#bigView img").outerWidth();
+			            $viewImgHeight = $("#bigView img").height();
+			            if ($viewImgWidth < 200 || $viewImgHeight < 200) {
+			                $viewImgWidth = $viewImgHeight = 800;
+			            }
+			            $height = $divHeight * $viewImgHeight / $imgHeight;
+			            $("#bigView").width($divWidth * $viewImgWidth / $imgWidth);
+			            $("#bigView").height($height);
+			        }
+			        var scrollX = X * $viewImgWidth / $imgWidth;
+			        var scrollY = Y * $viewImgHeight / $imgHeight;
+			        $("#bigView img").css({ "left": scrollX * -1, "top": scrollY * -1 });
+			        $("#bigView").css({ "top": 10, "left": $(".preview").width() + 15 });
+			
+			        return { left: X, top: Y };
+			    }
+			    saveshopstatgoods('5','iphone6','10');
+			});
+			
+			  //修改学院或课程收藏数量
+			  function collect_storeorgoods(goodsId,favType,storeId){
+			       $.ajax({
+					    	url : "http://localhost:8080/leimingtech-front/Favorite/SaveFavorite",
+					        type : 'post',
+					        data : {'goodsId':goodsId,'favType':favType,'storeId':storeId},
+					        dataType : 'json',
+					        success : function(data){
+			                if(data.success){
+			            	    layer.msg(data.msg,{icon:1});
+			            	}else{
+			            		layer.msg(data.msg,{icon:2});
+			            	}
+			            }
+					 }); 
+			  } 
+			</script>
+			
+        	<!-- E 课程图片及收藏分享 --> 
+        	<!-- S 课程基本信息 -->
+        
+	        <article class="ncs-goods-summary">
+				<div class="name">
+					<input type="hidden" id="goodsId" value="5"/>
+					<input type="hidden" id="goodsSpecId" value=""/>
+			        <h1>iphone6</h1>
+			        <strong>iphone6打折促销</strong>
+		        </div>
+	          	<div class="nc-meta"> 
+		            <!-- S 课程发布价格 -->
+		            <dl class="nc-detail-price ">
+		              <dt>价&#12288;&#12288;格：</dt>
+		              <dd><strong nctype="goods_price">&yen;6,888</strong></dd>
+		            </dl>
+		            <!-- E 课程发布价格 --> 
+		            <!-- S 物流运费 -->
+		            <dl class="ncs-freight">
+		              <dt>运&#12288;&#12288;费：</dt>
+		              <dd id="transport_price">
+		              		学员承担运费
+		              
+		              </dd>
+		              <dd style="color:red;display:none" id="loading_price">loading.....</dd>
+		            </dl>
+		            <!-- E 物流运费 ---> 
+					<ul class="tm-ind-panel">
+						<!-- S 累计售出数量 -->
+						<li class="tm-ind-item tm-ind-sellCount">
+							<p class="tm-count">
+								<em><a href="#ncGoodsTraded">7</a></em>
+							</p>
+							<p class="tm-label">累计售出</p>
+						</li>
+						<!-- E 累计售出数量 -->
+						<!-- S 描述相符评分及评价数量 -->
+						<li class="tm-ind-item tm-ind-reviewCount tm-line3" id="J_ItemRates">
+							<p class="tm-count" id="comment_num"><em>0</em></p>
+							<p class="tm-label">条评论</p>
+							<p class="raty ra" data-score="0"></p>
+						</li>
+						<!-- E 描述相符评分及评价数量 --> 
+						<!-- S 课程类型及浏览数-->
+						<li class="tm-ind-item tm-ind-emPointCount">
+							<a target="_blank">
+								<p class="tm-count">
+									<em>
+						              全新
+									</em>
+								</p>
+								<p class="tm-label">课程类型</p>
+							</a>
+						</li>
+					</ul>
+		            <!-- E 课程类型及浏览数-->
+				</div>
+				<div class="nc-key"> 
+		          	<div class="nc-spec">
+		            <!-- S 课程规格值-->
+					 <!--S 学院信息-->
+					
+		            
+					            <dl>
+						            <dt>屏幕尺寸：</dt>
+						            <dd>
+							            <ul nctyle="ul_sign">
+								            <!-- 文字类型规格-->
+									            	<li class="sp-txt">
+											            	<a href="javascript:void(0)" spId="3" spValueId="10" onClick="selectSpec('3', this, '10')" class="">
+											            	4.7
+											            	<i></i>
+										            	   </a>
+									            	</li>
+							            </ul>
+						            </dd>
+					            </dl>
+					            <dl>
+						            <dt>颜色：</dt>
+						            <dd>
+							            <ul nctyle="ul_sign">
+								            <!-- 文字类型规格-->
+									            	<li class="sp-txt">
+											            	<a href="javascript:void(0)" spId="1" spValueId="8" onClick="selectSpec('1', this, '8')" class="">
+											            	黑色
+											            	<i></i>
+										            	   </a>
+									            	</li>
+							            </ul>
+						            </dd>
+					            </dl>
+		            <!-- E 课程规格值--> 
+		            </div>
+		            <!-- S 购买数量及库存 -->
+		            <dl>
+		           	<dt>购买数量：</dt>
+					<dd class="nc-figure-input">
+						<a href="javascript:void(0)" onclick="caculate('cut');">
+							<i class="icon-minus decrease fl text-hidden"></i>
+						</a>
+						<input type="text" name="" id="quantity" value="1" size="3" maxlength="6" class="fl" style="border-radius:0;">
+						<a href="javascript:void(0)" onclick="caculate('add');">
+							<i class="icon-plus increase fl text-hidden"></i>
+						</a> 
+		                <em class="fl ml20">
+			                (当前库存<strong nctype="goods_stock">22</strong>件)
+		                </em> 
+					</dd>
+					<div class="clear"></div>
+		            </dl>
+		            <!-- E 购买数量及库存 --> 
+		            <!-- S 提示已选规格及库存不足无法购买 -->
+		            <dl class="nc-point" nctype="goods_prompt" style="display:none;"></dl>
+		            <!-- E 提示已选规格及库存不足无法购买 -->
+					<div class="clear"></div>
+		            <!-- S 购买按钮 -->
+		            <div class="nc-btn clearfix">
+						<a href="javascript:buy('buynow');" class="buynow fl text-hidden" title="立即购买">立即购买</a><!-- 立即购买--> 
+						<a href="javascript:buy('');" class="addcart fl ml10 text-hidden" title="添加到购物车">添加到购物车<!-- 加入购物车--></a> 
+		              	<!-- S 加入购物车弹出提示框 -->
+		              	<div class="ncs_cart_popup">
+		                	<dl>
+		                  		<dt>
+				                    <h3>成功添加到购物车</h3>
+				                    <a title="关闭" onClick="$('.ncs_cart_popup').css({'display':'none'});">关闭</a>
+								</dt>
+		                  		<dd>
+		                    		<p class="mb5">购物车共有 <strong id="bold_num"></strong> 种课程 总金额为：<em id="bold_mly" class="price"></em></p>
+				                    <p>
+				                      <input type="submit" class="btn1" name="" value="查看购物车" onClick="javascript:void(0);"/>
+				                      <input type="submit" class="btn2" name="" value="继续购物" onClick="$('.ncs_cart_popup').css({'display':'none'});"/>
+				                    </p>
+		                  		</dd>
+		                	</dl>
+						</div>
+		              	<!-- E 加入购物车弹出提示框 -->
+					</div>
+					<!-- E 购买按钮 -->
+					<div class="clear"></div>
+				</div>
+				<!-- S 收藏与分享 -->
+				<div class="ncs_share">
+				  <div class="ncs-goods-handle fl" >
+				    <div class="handle-left"><i class="snslike-goods"></i><a href="javascript:void(0);" data-param='{"gid":"95"}' nc_type="likebtn">喜欢</a><em nc_type="likecount_95">0</em></div>
+				    <div class="handle-right" id="handle-l"><span></span>
+				      <ul >
+				        <li class="tab"><span></span></li>
+				        <li><i class="snsshare-goods"></i><a href="javascript:void(0);" nc_type="sharegoods" data-param='{"gid":"95"}'>分享<em nc_type="sharecount_95">0</em></a></li>
+				      </ul>
+				    </div>
+				  </div>
+				  <div class="ncs-goods-handle fl ml10">
+				    <div class="handle-left"><i class="share-goods"></i><a href="javascript:void(0)" onclick="collect_storeorgoods('5','1','10');">收藏课程</a><em nctype="goods_collect">0</em></div>
+				    <div class="handle-right" id="handle-r"><span></span>
+				      <ul >
+				        <li class="tab"><span></span></li>
+				        <li><i class="share-store"></i><a href="javascript:void(0)" onclick="collect_storeorgoods('-9','2','10');" >收藏学院<em nctype="store_collect">1</em></a></li>
+				      </ul>
+				    </div>
+				  </div>
+				   <div class="clear"></div>
+				</div>
+				<!-- E 收藏与分享 --> 
+	        </article>
+	        <!--E 课程信息 --> 
+        	
+			<div class="ncg-store"style=" position: absolute; z-index: 1; top: 60px; right: 0;">
+				<div class="title">学院信息</div>
+			    <div class="content">
+			        <div class="ncg-store-info">
+			          <dl class="name">
+			            <dt>商　　家：</dt>
+			            <dd>西域驼铃</dd>
+			          </dl>
+			          <dl class="all-rate">
+			            <dt>综合评分：</dt>
+			            <dd>
+			              <div class="rating"><span style="width:0%;"></span></div>
+			              <em>0</em>分 </dd>
+			          </dl>
+					  
+			          <div class="detail-rate">
+			            <h5><strong>学院动态评分</strong></h5>
+			            <ul class="rate">
+			              <li>描述相符：<span class="credit ra" data-score="0"></span></li>
+			              <li>服务态度：<span class="credit ra"data-score="0"></span></li>
+			              <li>发货速度：<span class="credit ra"data-score="0"></span></li>
+			            </ul>
+			          </div>
+			          <!-- <dl class="messenger">
+			            <dt>在线客服：</dt>
+						<dd>     <a target="_blank" href="http://wpa.qq.com/msgrd?v=3&amp;uin=1234567&amp;Site=1234567&amp;Menu=yes" title="1234567"><img border="0" src="http://wpa.qq.com/pa?p=2:1234567:52" style=" vertical-align: middle;"></a> 
+			      			 </dd>
+			          </dl> -->
+			          <div class="goto" id="shop-other"> <a href="http://localhost:8080/leimingtech-front/store/shop?storeId=10" target="_blank">进入商家学院</a></div>
+			        </div>
+				</div>
+		    </div>
+		    <!--E 学院信息 --> 
+		</div>
+    	<div class="clear"></div>
+	</section>
+
+    <section class="layout expanded nc-main" >
+		<article class="nc-goods-main">
+			<section class="nc-promotion"style="display:none;">
+	  			<nav class="tabbar pngFix">
+          			<div class="pr">
+			            <ul>
+			              <li class="current"><a href=""><span>组合销售</span></a></li>
+			            </ul>
+					</div>
+        		</nav>
+			    <!--S 组合销售 -->
+			    <div class="nc-bundling" id="nc-bundling" style="display:none;"></div>
+			    <!--E 组合销售 -->
+			</section>
+    
+			<div  id="main-nav-holder">
+				<nav class="tabbar pngFix" id="main-nav">
+					<div class="pr" style="z-index: 70;">
+					  <ul id="categorymenu">
+					    <li class="current"><a name="table" toAction="goodsBody" toTable="#table1" href="javascript:void(0);" ><span>课程详情</span></a></li>
+					    <li><a name="table" toAction="evaluateGoods" toTable="#table2" href="javascript:void(0);"><span>课程评论</span></a></li>
+					    <li><a name="table" toAction="saleRecord" toTable="#table3" href="javascript:void(0);"><span>销售记录</span></a></li>
+					    <li><a name="table" toAction="consult" toTable="#table4" href="javascript:void(0);"><span>课程咨询</span></a></li>
+					  </ul>
+					  <div class="switch-bar"><a href="javascript:void(0)" id="abc">&nbsp;</a></div>
+					  <div class="gotop"><a href="#header">&nbsp;</a></div>
+					</div>
+		        </nav>
+		        <section class="nc-s-c-s4 ncg-intro" name="goodsTable" id="table1">
+		        </section>
+		        
+		       	<section class="nc-s-c-s4 ncg-comment" name="goodsTable" id="table2">
+		        </section>
+		        
+		       	<section class="nc-s-c-s4 ncg-salelog" name="goodsTable" id="table3">
+		        </section> 
+		        
+		       	<section class="nc-s-c-s4 ncg-guestbook" name="goodsTable" id="table4">
+		        </section> 
+		        
+		        <section class="nc-s-c-s2 ncg-com-list">
+		          <div class="title">
+		            <h4>推荐课程</h4>
+		          </div>
+		          <div class="content">
+		            <ul>
+			                <li>
+							<dl>
+								<dt class="goods-name">
+									<a href="http://localhost:8080/leimingtech-front/product/detail?id=4" target="_blank" title="iphone6" target="_blank">
+										iphone6<em></em>
+									</a>
+								</dt>
+								<dd class="goods-pic">
+									<a href="javascript:void(0);" target="_blank" title="">
+										<img src="http://localhost/upload/img/store/10/1439173254458.jpg" alt="iphone6">
+									</a>
+								</dd>
+								<dd class="goods-price">
+									商&nbsp;城&nbsp;价：<em class="price">&yen;0.02</em>
+								</dd>
+									
+							</dl>
+						   	</li>
+		             </ul>
+		            <div class="clear"></div>
+		          </div>
+		        </section>
+			  </div>
+		</article>
+		<aside class="nc-sidebar">
+			<!-- <div class="nc-s-c-s1">
+		        <div class="title">
+		          <h4>课程二维码</h4>
+		        </div>
+		        <div class="content">
+		          <div class="ncs-goods-code">
+			          <p><img src="" width='150' height='150' alt='李宁运动cgl'></p> 
+					  <span class="ncs-goods-code-note"><i></i>扫描二维码，手机查看分享</span> 
+					</div>         
+			    </div>
+			</div> -->
+	        
+			<!-- <div class="nc-s-c-s1 ncs-message-bar">
+				<div class="title">
+					<h4>客服中心</h4>
+				</div>
+			  	<div class="content">
+				</div>
+			</div> -->        
+			
+			
+			<!-- 店内搜索，课程分类，课程排行 -->  
+
+<div class="nc-s-c-s1 ncs-class-bar mt10">
+  <div class="title">
+    <h4>课程分类</h4>
+  </div>
+     <div class="content">
+         <!--  <p> <span><a href="#">按新品</a></span><span><a href="#">按价格</a></span><span><a href="#">按销量</a></span><span><a href="#">按人气</a></span></p> -->
+                <!-- 根据学院id获取学院详情 start -->
+                <!-- 根据学院id获取学院详情 end -->
+			     <ul class="ncs-submenu">
+						     <li><span class="ico-none"><em>-</em></span><a href="http://localhost:8080/leimingtech-front/store/shop?storeId=10&storeClassId=20">帽子</a></li>
+						     <li>
+						     	  <span class="ico-none" onclick="class_list(this);" span_id="19" style="cursor: pointer;"><em>-</em></span><a href="http://localhost:8080/leimingtech-front/store/shop?storeId=10&storeClassId=19">鞋</a>
+							       <ul id="stc_19" style="display: block;">
+						                  <li><span class="ico-sub">&nbsp;</span><a href="http://localhost:8080/leimingtech-front/store/shop?storeId=10&storeClassId=21">跑步鞋</a></li>
+						           </ul>
+					         </li>
+			   </ul>
+    <div class="clear mb10"></div>
+  </div>
+</div>
+
+<div class="nc-s-c-s1 ncs-top-bar mt10">
+	<div class="title">
+		<h4>课程排行</h4>
+	</div>
+	<div class="content">
+		<ul class="ncs-top-tab pngFix">
+			<li class="current"><a
+				href="#?act=show_store&op=goods_all&id=2&key=sale&order=desc">热销课程排行</a></li>
+			<li><a
+				href="#?act=show_store&op=goods_all&id=2&key=collect&order=desc">热门收藏排行</a></li>
+		</ul>
+		<div class="ncs-top-panel">
+			<ol>
+				<li>
+					<dl>
+						<dt>
+							<a href="http://localhost:8080/leimingtech-front/product/detail?id=4">拜亚动力耳机</a>
+						</dt>
+						<dd class="goods-pic">
+							<a href="#">
+								<span class="thumb size40">
+									<i></i>
+									<img src="http://localhost/upload/img/store/10/1439173112772.jpg" 
+										title="拜亚动力耳机" onload="javascript:DrawImage(this,40,40);">
+								</span>
+							</a>
+							<p>
+								<span class="thumb size100">
+									<i></i>
+									<img src="http://localhost/upload/img/store/10/1439173112772.jpg" onload="javascript:DrawImage(this,100,100);">
+									<big></big>
+									<small></small>
+								</span>
+							</p>
+						</dd>
+						<dd class="price pngFix">0.02</dd>
+						<dd class="selled pngFix">
+							售出：<strong>8</strong>笔
+						</dd>
+					</dl>
+				</li>
+				<li>
+					<dl>
+						<dt>
+							<a href="http://localhost:8080/leimingtech-front/product/detail?id=5">iphone6</a>
+						</dt>
+						<dd class="goods-pic">
+							<a href="#">
+								<span class="thumb size40">
+									<i></i>
+									<img src="http://localhost/upload/img/store/10/1439173254458.jpg" 
+										title="iphone6" onload="javascript:DrawImage(this,40,40);">
+								</span>
+							</a>
+							<p>
+								<span class="thumb size100">
+									<i></i>
+									<img src="http://localhost/upload/img/store/10/1439173254458.jpg" onload="javascript:DrawImage(this,100,100);">
+									<big></big>
+									<small></small>
+								</span>
+							</p>
+						</dd>
+						<dd class="price pngFix">6,888</dd>
+						<dd class="selled pngFix">
+							售出：<strong>7</strong>笔
+						</dd>
+					</dl>
+				</li>
+			</ol>
+		</div>
+		<div class="ncs-top-panel hide">
+			<ol>
+				<li>
+					<dl>
+						<dt>
+							<a href="http://localhost:8080/leimingtech-front/product/detail?id="></a>
+						</dt>
+						<dd class="goods-pic">
+							<a href="#">
+								<span class="thumb size40">
+									<i></i>
+									<img src=""http://localhost:8080/leimingtech-front/res/images/common/default_goods_image.gif_small.gif" title="" alt=""">
+								</span>
+							</a>
+							<p>
+								<span class="thumb size100">
+									<i></i>
+									<img src="http://localhost:8080/leimingtech-front/res/images/common/default_goods_image.gif_small.gif">
+									<big></big>
+									<small></small>
+								</span>
+							</p>
+						</dd>
+						<dd class="price pngFix"></dd>
+						<dd class="selled pngFix">
+							售出：<strong></strong>笔
+						</dd>
+					</dl>
+				</li>
+			</ol>
+		</div>
+		<p>
+			<a href="http://localhost:8080/leimingtech-front/store/shop?storeId=10" target="_blank">查看本店其他课程</a>
+		</p>
+	</div>
+</div>
+			
+		</aside>
+  		<div class="clear"></div>
+   	</section>
+</article>
+<div class="clear"></div>
+<!-----footer------>
+<div class="footer">
+    <div class="wrapper">
+        <div id="footer-top">
+            <ul>
+                <li class="one"><strong>正品行货<em>100%正品保证</em></strong></li>
+                <li class="two"><strong>正品行货<em>100%正品保证</em></strong></li>
+                <li class="three"><strong>正品行货<em>100%正品保证</em></strong></li>
+                <li class="four"><strong>正品行货<em>100%正品保证</em></strong></li>
+                <li class="five"><strong>正品行货<em>100%正品保证</em></strong></li>
+            </ul>
+        </div>
+    </div>
+    <!--帮助中心-->
+    <div id="faq">
+        <div class="wrapper">
+            <ul>
+	                <li>
+	                    <dl class="s1">
+	                        <dt>
+	                        关于我们
+	                        </dt>
+	                            <dd><i></i><a href="http://localhost:8080/leimingtech-front/help/index?acId=7" title="关于我们" target="_blank">关于我们</a></dd>
+	                    </dl>
+	                </li>
+	                <li>
+	                    <dl class="s2">
+	                        <dt>
+	                        售后服务
+	                        </dt>
+	                            <dd><i></i><a href="http://localhost:8080/leimingtech-front/help/index?acId=5" title="退换货政策及办理" target="_blank">退换货政策及办理</a></dd>
+	                            <dd><i></i><a href="http://localhost:8080/leimingtech-front/help/index?acId=5" title="自助退换货" target="_blank">自助退换货</a></dd>
+	                            <dd><i></i><a href="http://localhost:8080/leimingtech-front/help/index?acId=5" title="订单跟踪" target="_blank">订单跟踪</a></dd>
+	                    </dl>
+	                </li>
+	                <li>
+	                    <dl class="s3">
+	                        <dt>
+	                        新手课堂
+	                        </dt>
+	                            <dd><i></i><a href="http://localhost:8080/leimingtech-front/help/index?acId=2" title="新用户注册" target="_blank">新用户注册</a></dd>
+	                            <dd><i></i><a href="http://localhost:8080/leimingtech-front/help/index?acId=2" title="如何购买" target="_blank">如何购买</a></dd>
+	                    </dl>
+	                </li>
+	                <li>
+	                    <dl class="s4">
+	                        <dt>
+	                        支付方式
+	                        </dt>
+	                            <dd><i></i><a href="http://localhost:8080/leimingtech-front/help/index?acId=3" title="在线支付" target="_blank">在线支付</a></dd>
+	                            <dd><i></i><a href="http://localhost:8080/leimingtech-front/help/index?acId=3" title="银行汇款" target="_blank">银行汇款</a></dd>
+	                            <dd><i></i><a href="http://localhost:8080/leimingtech-front/help/index?acId=3" title="发票制度" target="_blank">发票制度</a></dd>
+	                    </dl>
+	                </li>
+	                <li>
+	                    <dl class="s5">
+	                        <dt>
+	                        店主之家
+	                        </dt>
+	                            <dd><i></i><a href="http://localhost:8080/leimingtech-front/help/index?acId=1" title="诚聘英才" target="_blank">诚聘英才</a></dd>
+	                            <dd><i></i><a href="http://localhost:8080/leimingtech-front/help/index?acId=1" title="品牌入驻" target="_blank">品牌入驻</a></dd>
+	                            <dd><i></i><a href="http://localhost:8080/leimingtech-front/help/index?acId=1" title="友情链接" target="_blank">友情链接</a></dd>
+	                    </dl>
+	                </li>
+	                <li>
+	                    <dl class="s6">
+	                        <dt>
+	                        配送方式
+	                        </dt>
+	                            <dd><i></i><a href="http://localhost:8080/leimingtech-front/help/index?acId=4" title="配送运费及时效" target="_blank">配送运费及时效</a></dd>
+	                            <dd><i></i><a href="http://localhost:8080/leimingtech-front/help/index?acId=4" title="货到付款范围" target="_blank">货到付款范围</a></dd>
+	                    </dl>
+	                </li>
+                <div class="clear"></div>
+            </ul>
+        </div>
+    </div>
+    <!--底部版权，调用footer-->
+    <div id="footer">
+        <div class="wrapper">
+            <p>
+            		<a href="http://localhost:8080/leimingtech-front" target="_blank" >首页</a>
+                	|
+            		<a href="http://www.baidu.com" target="_blank" >招聘英才</a>
+                	|
+            		<a href="http://www.baidu.com" target="_blank" >广告合作</a>
+                	|
+            		<a href="http://www.baidu.com" target="_blank" >联系我们</a>
+                	|
+            		<a href="http://www.baidu.com" target="_blank" >关于我们</a>
+                	
+            </p>
+            Copyright 2016-2017 磁石世纪（北京）投资管理有限公司 版权所有  京ICP备16011767号.&nbsp;&nbsp;
+            ICP证：<br/>
+
+            <div class="footer-logo">
+                <ul>
+                    <li class="caifutong"></li>
+                    <li class="caifubao"></li>
+                    <li class="beifen"></li>
+                    <li class="kexin"></li>
+                    <li class="shiming"></li>
+                    <li class="wangzhan360"></li>
+                    <li class="anquanlianmeng"></li>
+                    <div class="clear"></div>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- youce -->
+<!-- youce -->
+<script type="text/javascript" src="http://localhost:8080/leimingtech-front/res/js/jquery.cookie.js"></script>
+<script type="text/javascript" src="http://localhost:8080/leimingtech-front/res/js/perfect-scrollbar.min.js"></script>
+<script type="text/javascript" src="http://localhost:8080/leimingtech-front/res/js/jquery.mousewheel.js"></script>
+<script type="text/javascript" src="http://localhost:8080/leimingtech-front/res/js/jquery.masonry.js"></script>
+<script type="text/javascript" src="http://localhost:8080/leimingtech-front/res/js/jquery.scrollLoading-min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        //实现图片慢慢浮现出来的效果
+        $("img").load(function () {
+            //图片默认隐藏
+            $(this).hide();
+            //使用fadeIn特效
+            $(this).fadeIn("5000");
+        });
+        // 异步加载图片，实现逐屏加载图片
+        $(".scrollLoading").scrollLoading();
+    });
+</script>
+<script type="text/javascript">
+    var PRICE_FORMAT = '&yen;%s';
+    $(function () {
+        //首页左侧分类菜单
+        $(".category ul.menu").find("li").each(
+                function () {
+                    $(this).hover(
+                            function () {
+                                var cat_id = $(this).attr("cat_id");
+                                var menu = $(this).find("div[cat_menu_id='" + cat_id + "']");
+                                menu.show();
+                                $(this).addClass("hover");
+                                if (menu.attr("hover") > 0) return;
+                                menu.masonry({itemSelector: 'dl'});
+                                var menu_height = menu.height();
+                                if (menu_height < 60) menu.height(80);
+                                menu_height = menu.height();
+                                var li_top = $(this).position().top;
+                                if ((li_top > 60) && (menu_height >= li_top)) $(menu).css("top", -li_top + 50);
+                                if ((li_top > 150) && (menu_height >= li_top)) $(menu).css("top", -li_top + 90);
+                                if ((li_top > 240) && (li_top > menu_height)) $(menu).css("top", menu_height - li_top + 90);
+                                if (li_top > 300 && (li_top > menu_height)) $(menu).css("top", 60 - menu_height);
+                                if ((li_top > 40) && (menu_height <= 120)) $(menu).css("top", -5);
+                                menu.attr("hover", 1);
+                            },
+                            function () {
+                                $(this).removeClass("hover");
+                                var cat_id = $(this).attr("cat_id");
+                                $(this).find("div[cat_menu_id='" + cat_id + "']").hide();
+                            }
+                    );
+                }
+        );
+        $(".head-user-menu dl").hover(function () {
+                    $(this).addClass("hover");
+                },
+                function () {
+                    $(this).removeClass("hover");
+                });
+        $('.head-user-menu .my-mall').mouseover(function () {// 最近浏览的课程
+            load_history_information();
+            $(this).unbind('mouseover');
+        });
+        $('.head-user-menu .my-cart').hover(function () {// 运行加载购物车
+            	load_cart_information();
+        	},function(){
+        		$(this).unbind('cart-hover');
+        	}
+        );
+    });
+
+</script>
+<script language="javascript">
+    var searchTxt = ' 请输入您要搜索的课程关键字';
+    function searchFocus(e) {
+        if (e.value == searchTxt) {
+            e.value = '';
+            $('#keyword').css("color", "");
+        }
+    }
+    function searchBlur(e) {
+        if (e.value == '') {
+            e.value = searchTxt;
+            $('#keyword').css("color", "#999999");
+        }
+    }
+    function searchInput() {
+        if ($('#keyword').val() == searchTxt)
+            $('#keyword').attr("value", "");
+        return true;
+    }
+    $('#keyword').css("color", "#999999");
+</script>
+<script language="javascript">
+    // 加载购物车信息
+    function load_cart_information() {
+        $.post('http://localhost:8080/leimingtech-front/cart/cart', function (data) {
+            if (data.success) {
+                var result = data.result;
+                $('.addcart-goods-num').html(result.goodsNum);
+                var html = '';
+                if (result.goodsNum > 0) {
+                    html += "<div class='incart-goods'>";
+                    var i = 0;
+                    var data = result['list'];
+                    for (i = 0; i < data.length; i++) {
+                        html += "<dl id='cart_item_" + data[i]['specId'] + "' count='" + data[i]['goodsNum'] + "'>";
+                        html += "<dd class='goods-thumb'><span class='thumb size40'><i></i><img src='http://localhost" + data[i]['goodsImages'] + "' title='" + data[i]['goodsName'] + "'  ></span></dd>";
+                        //onload='javascript:DrawImage('this',40,40);'     图片缩放
+                        html += "<dt class='goods-name'><a href='http://localhost:8080/leimingtech-front/product/detail?id=" + data[i]['goodsId'] + "' title='" + data[i]['goodsName'] + "' target='_top'>" + data[i]['goodsName'] + "</a></dt>";
+
+                        html += "<dd class='goods-price'><p>&yen;" + number_format(data[i]['goodsPrice'],2) + "×" + data[i]['goodsNum'] + "</p><dd class='handle'><a  href='javascript:void(0)' onClick='deleteTopCart(" + data[i]['goodsId'] + "," + data[i]['specId'] + ");'>删除</a></dd>";
+                        html += "</dl>";
+                    }
+                    html += "<div colspan='3' class='checkout'><span class='total-price'>共<i>" + result.goodsNum + "</i>种课程   金额总计：<em>&yen;" + number_format(result.goodsTotalPrice,2) + "</em></span><span class='btn-cart' ><a href='http://localhost:8080/leimingtech-front/cart/index' target='_top' title='结算课程' style='color: #FFF;' >结算购物车中的课程</a></span></div>";
+                } else {
+                    html = "<div class='incart-goods'><div class='no-order'><span>您的购物车中暂无课程，赶快选择心爱的课程吧！</span></div><div class='checkout' ></div></div>";
+                }
+                $(".incart-goods-box").html(html);
+            } 
+        });
+    }
+    
+    //导航删除购物车信息
+    function deleteTopCart(goodsId,specId){
+    	var tr = $('#cart_item_' + specId);
+    	var amount_span = $('#cart_amount');
+        var cart_goods_kinds = $('.addcart-goods-num');
+    	$.ajax({
+            url: 'http://localhost:8080/leimingtech-front/cart/deleteCart',
+            type: 'POST',
+            data: {'goodsId': goodsId, 'specId': specId},
+            dataType: "json",
+            success: function (data) {
+            	if(data.success){
+            		var result = data.result;
+            		if (result.goodsNum == 0) {
+	                    $('.addcart-goods-num').html('0');
+	                    var html = '';
+	                    html = "<div class='incart-goods'><div class='no-order'><span>您的购物车中暂无课程，赶快选择心爱的课程吧！</span></div><div class='checkout' ><a href='#?act=cart'  title='结算课程' class='btn-cart' >结算购物车中的课程</a></div></div>";
+	                    $(".incart-goods-box").html(html);
+	                    html = "<div class='addcart-goods-num'>0</div>";
+	                }
+	                else {
+	            		tr.remove();
+	            		amount_span.html(price_format(result.goodsTotalPrice));  //刷新总费用
+	                    cart_goods_kinds.html(result.goodsNum);  //刷新课程种类
+                    }
+            	}
+            }
+        });
+    } 
+
+    //头部删除购物车信息
+    /* function drop_topcart_item(store_id, spec_id) {
+        var tr = $('#cart_item_' + spec_id);
+        var amount_span = $('#cart_amount');
+        var cart_goods_kinds = $('.addcart-goods-num');
+        $.getJSON('#?act=cart&op=drop&specid=' + spec_id + '&storeid=' + store_id, function (result) {
+            if (result.done) {
+                //删除成功
+                if (result.quantity == 0) {
+                    $('.addcart-goods-num').html('0');
+                    var html = '';
+                    html = "<div class='incart-goods'><div class='no-order'><span>您的购物车中暂无课程，赶快选择心爱的课程吧！</span></div><div class='checkout' ><a href='#?act=cart'  title='结算课程' class='btn-cart' >结算购物车中的课程</a></div></div>";
+                    $(".incart-goods-box").html(html);
+                    html = "<div class='addcart-goods-num'>0</div>";
+                }
+                else {
+                    dl.remove();        //移除
+                    amount_span.html(price_format(result.amount));  //刷新总费用
+                    cart_goods_kinds.html(result.quantity);       //刷新课程种类
+                }
+            } else {
+                alert(result.msg);
+            }
+        });
+    } */
+</script>
+</body>
+</html>
+
+<script type="text/javascript">
+/* spec对象 */
+function spec(id, spec, price, stock){
+    this.id    = id;
+    this.spec  = spec;
+    this.price = price;
+    this.stock = stock;
+}
+/* goodsspec对象 */
+function goodsspec(specs, specQty, defSpec){
+    this.specs = specs;
+    this.specQty = specQty;
+    this.defSpec = defSpec;
+    this.spec1 = null;
+    this.spec2 = null;
+    this.spec3 = null;
+    this.spec4 = null;
+    if (this.specQty >= 1){
+        for(var i = 0; i < this.specs.length; i++){
+            if (this.specs[i].id == this.defSpec){
+                  this.spec1 = this.specs[i].id;
+                  this.spec2 = this.specs[i].spec;
+                  this.spec3 = this.specs[i].price;
+                  this.spec4 = this.specs[i].stock;
+                  break;
+            }
+        }
+    }
+
+
+    // 取得选中的spec
+    this.getSpec = function(){
+        for (var i = 0; i < this.specs.length; i++){
+              if (this.specs[i].spec != this.spec2) continue;
+              return this.specs[i];
+        }
+        return null;
+    }
+
+}
+
+var specs = new Array();
+var source_goods_price = '6,888';
+			specs.push(new spec('9', 
+					'10,8'.split(","), 
+					'6,888', 
+					'5'));
+	var specQty = '1';
+	var defSpec = '9';
+	var goodsspec = new goodsspec(specs, specQty, defSpec);
+function init(){
+	//异步地址
+	var url = 'http://localhost:8080/leimingtech-front/product/goodsBody';
+	//参数
+	var agrs = {
+			"goodsId":$("#goodsId").val()
+	};
+	//异步加载table
+	$.post(url, agrs, function(data){
+		$("#table1").append(data);
+	});
+	
+	//计算总库存
+	var tatolStorage = 0;
+	for(var i = 0; i < specs.length; i++){
+		tatolStorage += parseInt(specs[i].stock);
+	}
+	$("[nctype=goods_stock]").html(tatolStorage);
+}
+//切换table
+function changeTable(obj,pageNo){
+	var tableId = $(obj).attr("toTable");
+	var toAction = $(obj).attr("toAction");
+	//清空所有table
+	$("[name=goodsTable]").each(function(){
+		//取消所有table标题按钮颜色
+		$("#categorymenu").find("li").each(function(){
+			$(this).removeClass("current");
+		});
+		$(this).empty();
+	});
+	
+	//设置当前table标题按钮class
+	$(obj).parent().attr("class", "current");
+	
+	//异步地址
+	var url = 'http://localhost:8080/leimingtech-front/product/' + toAction;
+	//参数
+	if(pageNo !=''){
+		var agrs = {
+				"goodsId":$("#goodsId").val(),
+				"pageNo":pageNo
+		};
+	}else{
+		var agrs = {
+				"goodsId":$("#goodsId").val()
+		};
+	}
+	//异步加载table
+	$.post(url, agrs, function(data){
+		$(tableId).append(data);
+	});
+}
+$(function(){
+	//初始化
+	init();
+	//当点击table需要切换的时候
+	$("[name=table]").click(function(){
+		changeTable(this);
+	});
+	saveGoodsCookie();//调用保存cookie的方法
+});
+
+
+/* 选中某规格 num=1,2 */
+function selectSpec(num, liObj, SID){
+	//选择颜色规格的时候,颜色图片会再左边的图片框改变
+	if($(liObj).attr("spId") == "1"){
+		$("#bigImage").attr("src",$(liObj).children().attr("src"));
+	}
+    $(liObj).addClass("hovered");
+    $(liObj).parents('li').siblings().find('a').removeClass("hovered");
+    var sign = 't';
+    var spValueId = "";
+    $('ul[nctyle="ul_sign"]').each(function(){
+		if($(this).find('.hovered').html() == null ){
+			sign = 'f';
+		}
+		spValueId += $(this).find('.hovered').attr("spValueId") +",";
+    });
+	spValueId = spValueId.substring(0, spValueId.length-1);
+	goodsspec['spec2'] = spValueId;
+	var spec = goodsspec.getSpec();
+    if (spec != null && sign == 't'){
+        $('[nctype="goods_price"]').html("&yen;"+spec.price);
+        //限时折扣价格
+                $('[nctype="goods_stock"]').html(spec.stock);
+        if(parseInt(spec.stock) == 0){
+        	$('[nctype="goods_prompt"]').show().html('<dt>提示：</dt><dd><em class="no fl">所选规格库存量不足，请选择其它规格购买。</em></dd>');
+        }else{
+            SP_V = '';
+            $('ul[nctyle="ul_sign"]').find('li > .hovered').each(function(i){
+				SP_V += $(this).text()+'，';
+            });
+            SP_V = SP_V.substr(0,SP_V.length-1);
+        	$('[nctype="goods_prompt"]').show().html('<dt>提示：</dt><dd><em class="yes fl">您选择了：'+SP_V+'</em></dd>');
+        	$("#goodsSpecId").attr("value", spec.id);
+        }
+     }
+}
+
+
+function saveGoodsCookie(){
+      //保存课程的cookie信息
+	 var goodsId='5';
+	 var goodsName='iphone6';
+	 var goodsImage='/upload/img/store/10/1439173254458.jpg';
+	 var goodsStorePrice='6,888';
+	 
+	 
+	 //获取用户历史浏览记录，如果已经存在浏览历史，则分析历史记录的cookie信息（JSON数据格式），获取记录长度。
+	 var canAdd = true; //初始可以插入cookie信息 
+	 var hisGoods = $.cookie("hisGoods"); 
+	 var len = 0; 
+	 if(hisGoods){ 
+	    hisGoods = eval("("+hisGoods+")"); 
+	    len = hisGoods.length; 
+	 } 
+	 
+	 //如果浏览历史cookie信息已经存在，则遍历cookie信息，对比当前文章标题，如果cookie信息中已经存在当前文章标题，则中止程序，不做任何操作
+	 $(hisGoods).each(function(){
+	    if(this.goodsId == goodsId){
+	        canAdd = false; //已经存在，不能插入
+	        return false;
+	    } 
+      });
+	// 如果浏览历史cookie中不存在当前文章，则可以像浏览历史cookie中插入当前文章的cookie信息。
+	//此时需要构建json数据，将已有的浏览记录cookie和当前页面的cookie信息已经组合成JSON数据，然后通过$.cookie()方法写入到浏览历史记录中
+	if(canAdd==true){ 
+		var json = "["; 
+		var start = 0; 
+	    if(len>4){start = 1;} 
+	    for(var i=start;i<len;i++){ 
+	        json = json + "{\"goodsId\":\""+hisGoods[i].goodsId+"\",\"goodsName\":\""+hisGoods[i].goodsName+"\",\"goodsImage\":\""+hisGoods[i].goodsImage+"\",\"goodsStorePrice\":\""+hisGoods[i].goodsStorePrice+"\"},"; 
+	    } 
+	    json = json + "{\"goodsId\":\""+goodsId+"\",\"goodsName\":\""+goodsName+"\",\"goodsImage\":\""+goodsImage+"\",\"goodsStorePrice\":\""+goodsStorePrice+"\"}]";
+	    $.cookie("hisGoods",json,{expires:15,path:'/'});
+	}
+	
+	//5、接下来，我们就要在需要展示用户浏览历史记录的cookie信息。在本例对应的demo页面，首先要获取浏览历史cookie：
+	//hisArt的值，然后分析，遍历，组合成字符串输出到页面，代码如下：
+}
+
+$("#quantity").change(function(){
+	var num = $(this).val();
+	if(isNaN(num)){
+		$(this).attr("value",1);
+	}else{
+		var count = parseInt(num);
+		var stock = parseInt($("[nctype=goods_stock]").html());
+		if(count > stock){
+			$(this).attr("value",stock);
+		}else if(count <= 0){
+			$(this).attr("value",1);
+		}
+	}
+});
+
+//加减
+function caculate(fun){
+	var num = $("#quantity").val();
+	if(isNaN(num)){
+		$("#quantity").attr("value","1");
+	}else{
+		var count = parseInt(num);
+		if(fun == "add"){
+			if(parseInt($("[nctype=goods_stock]").html()) == count){
+				
+			}else{
+				$("#quantity").attr("value",count);
+			}
+		}else if(fun == "cut"){
+			if(count == 1){
+			}else{
+				$("#quantity").attr("value",count);
+			}
+		}
+	}
+
+}
+function isPositiveNum(s){//是否为正整数  
+   var re = /^[0-9]*[1-9][0-9]*$/ ;  
+   return re.test(s)  
+} 
+// 课程规格选择js部分
+var SITE_URL = "http://localhost:8080/leimingtech-front";
+function buy(type){
+    var goodsId = $("#goodsId").val(); //课程id
+    var goodsNum = parseInt($("#quantity").val()); //课程数量
+    var specId = $("#goodsSpecId").val(); //课程规格id
+    if(!isPositiveNum(goodsNum)){
+    	layer.msg("请填写正确的购买数量" , {icon:2,time:1000});
+        $("#quantity").val('1');
+        return;
+    }
+    max = parseInt($('[nctype="goods_stock"]').text());
+    if(goodsNum > max){
+    	layer.msg("库存不足,请您重新选择课程数量" , {icon:2,time:1000});
+    	return;
+    }
+    if(specId != ''){
+    	$.ajax({
+	    	url : "http://localhost:8080/leimingtech-front/cart/saveCart",
+	        type : 'post',
+	        data : {'goodsId' : goodsId,'count' : goodsNum, 'specId' : specId},
+	        dataType : 'json',
+	        success : function(data){
+	        	if(data.success){
+	        		layer.msg("加入购物车成功",{icon:1,time:1000});
+	        		$(".addcart-goods-num").html(goodsNum);
+	        	}else{
+	        		layer.msg("加入购物车失败",{icon:2,time:1000});
+	        	}
+	        }
+	    });
+    }else{
+    	layer.msg("请选择课程规格",{icon:2,time:1000});
+    }
+   	
+}
+
+function class_list(obj){
+	var stc_id=$(obj).attr('span_id');
+	var span_class=$(obj).attr('class');
+	if(span_class=='ico-block') {
+		$("#stc_"+stc_id).show();
+		$(obj).html('<em>-</em>');
+		$(obj).attr('class','ico-none');
+	}else{
+		$("#stc_"+stc_id).hide();
+		$(obj).html('<em>+</em>');
+		$(obj).attr('class','ico-block');
+	}
+}
+    //浮动导航  waypoints.js
+    $('#main-nav-holder').waypoint(function(event, direction) {
+        $(this).parent().toggleClass('sticky', direction === "down");
+        event.stopPropagation();
+    }); 
+    
+// 立即购买js
+function buynow(spec_id,quantity,type){
+	login_dialog();
+}
+/* $(function(){
+    //选择地区查看运费
+    $('#transport_pannel>a').click(function(){
+    	var id = $(this).attr('nctype');
+    	if (id=='undefined') return false;
+    	var _self = this,tpl_id = '0';
+	    var url = 'index.php?act=goods&op=calc&rand='+Math.random();
+	    $('#transport_price').css('display','none');
+	    $('#loading_price').css('display','');
+	    $.getJSON(url, {'id':id,'tid':tpl_id}, function(data){
+	    	if (data == null) return false;
+	        if(data.kd != 'undefined') {$('#nc_kd').html(data.kd);}else{$('#nc_kd').html('');}
+	        if(data.py != 'undefined') {$('#nc_py').html(data.py);}else{$('#nc_py').html('');}
+	        if(data.es != 'undefined') {$('#nc_es').html(data.es);}else{$('#nc_es').html('');}
+	        $('#transport_price').css('display','');
+	    	$('#loading_price').css('display','none');
+	        $('#ncrecive').html($(_self).html());
+	    });
+    });
+   	$("#nc-bundling").load('index.php?act=goods&op=get_bundling&goods_id=95&id=3');
+  	$("#goodseval").load('index.php?act=goods&op=comments&goods_id=95&id=3');
+	$("#salelog_demo").load('index.php?act=goods&op=salelog&goods_id=95&id=3');
+	$("#cosulting_demo").load('index.php?act=goods&op=cosulting&goods_id=95&id=3');
+}); */
+</script> 
+<script type="text/javascript" src="http://localhost:8080/leimingtech-front/res/js/jquery.raty/jquery.raty.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function(){
+        $('#raty').raty({
+            path: "http://localhost:8080/leimingtech-front/res/js/jquery.raty/img",
+			readOnly: true,
+            width: 80,
+            score: function() {
+          return $(this).attr('data-score');
+        }
+        });
+    });
+</script>
+<script>
+    //收藏分享处下拉操作
+    jQuery.divselect = function(divselectid,inputselectid) {
+      var inputselect = $(inputselectid);
+      $(divselectid).mouseover(function(){
+          var ul = $(divselectid+" ul");
+          ul.slideDown("fast");
+          if(ul.css("display")=="none"){
+              ul.slideDown("fast");
+          }
+      });
+      $(divselectid).live('mouseleave',function(){
+          $(divselectid+" ul").hide();
+      });
+    };
+	$(function(){
+	    // 加入购物车
+	    $('a[nctype="addcart_submit"]').click(function(){
+	        addcart(146, checkQuantity());
+	    });
+	    // 立即购买
+	    $('a[nctype="buynow_submit"]').click(function(){
+	        buynow(146,checkQuantity());
+	    });
+	
+	    //浮动导航  waypoints.js
+	    $('#main-nav').waypoint(function(event, direction) {
+	        $(this).parent().parent().parent().toggleClass('sticky', direction === "down");
+	        event.stopPropagation();
+	    });
+	
+	    // 分享收藏下拉操作
+	    $.divselect("#handle-l");
+	    $.divselect("#handle-r");
+	
+	    // 规格选择
+	    $('dl[nctype="nc-spec"]').find('a').each(function(){
+	        $(this).click(function(){
+	            if ($(this).hasClass('hovered')) {
+	                return false;
+	            }
+	            $(this).parents('ul:first').find('a').removeClass('hovered');
+	            $(this).addClass('hovered');
+	            checkSpec();
+	        });
+	    });
+	});
+</script>
+<script type="text/javascript" src="http://localhost:8080/leimingtech-front/res/js/waypoints.js"></script> 
+<script src="http://localhost:8080/leimingtech-front/res/js/layer/layer.js"></script>

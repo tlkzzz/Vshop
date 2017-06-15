@@ -1,0 +1,283 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.Vshop.service.module.trade.dao.mapper.RefundLogMapper">
+	<resultMap id="BaseResultMap" type="com.Vshop.core.entity.base.RefundLog" >
+		<id column="log_id" property="logId" jdbcType="INTEGER" />
+		<result column="order_id" property="orderId" jdbcType="INTEGER" />
+		<result column="refund_sn" property="refundSn" jdbcType="VARCHAR" />
+		<result column="order_sn" property="orderSn" jdbcType="VARCHAR" />
+		<result column="store_id" property="storeId" jdbcType="INTEGER" />
+		<result column="store_name" property="storeName" jdbcType="VARCHAR" />
+		<result column="buyer_id" property="buyerId" jdbcType="INTEGER" />
+		<result column="buyer_name" property="buyerName" jdbcType="VARCHAR" />
+		<result column="order_amount" property="orderAmount" jdbcType="DECIMAL" />
+		<result column="order_refund" property="orderRefund" jdbcType="DECIMAL" />
+		<result column="refund_paymentname" property="refundPaymentName" jdbcType="VARCHAR" />
+		<result column="refund_paymentcode" property="refundPaymentCode" jdbcType="VARCHAR" />
+		<result column="refund_message" property="refundMessage" jdbcType="VARCHAR" />
+		<result column="buyer_message" property="buyerMessage" jdbcType="VARCHAR" />
+		<result column="admin_message" property="adminMessage" jdbcType="VARCHAR" />
+		<result column="seller_time" property="sellerTime" jdbcType="BIGINT" />
+		<result column="admin_time" property="adminTime" jdbcType="BIGINT" />
+		<result column="confirm_time" property="confirmTime" jdbcType="BIGINT" />
+		<result column="refund_type" property="refundType" jdbcType="INTEGER" />
+		<result column="refund_state" property="refundState" jdbcType="INTEGER" />
+		<result column="buyer_confirm" property="buyerConfirm" jdbcType="INTEGER" />
+		<result column="create_time" property="createTime" jdbcType="BIGINT" />
+	</resultMap>
+	
+	<sql id="Base_Column_List">
+		log_id,order_id,refund_sn,order_sn,store_id,store_name,buyer_id,buyer_name,
+		order_amount,order_refund,refund_paymentname,refund_paymentcode,refund_message,
+		buyer_message,admin_message,seller_time,admin_time,confirm_time,refund_type,refund_state,
+		buyer_confirm,create_time
+	</sql>
+	
+	<!-- 查询条件 -->
+	<sql id="whereStatement">
+		<if test="condition.refundSn != null and condition.refundSn != '' ">
+			and shop_refund_log.refund_sn like CONCAT('%',#{condition.refundSn, jdbcType=VARCHAR},'%')
+		</if>
+		<if test="condition.orderSn != null and condition.orderSn != '' ">
+          	and shop_refund_log.order_sn like CONCAT('%',#{condition.orderSn, jdbcType=VARCHAR},'%')
+        </if>
+        <if test="condition.storeName != null and condition.storeName != '' ">
+			and shop_refund_log.store_name like CONCAT('%',#{condition.storeName, jdbcType=VARCHAR},'%')
+		</if>
+		<if test="condition.buyerName != null and condition.buyerName != '' ">
+			and shop_refund_log.buyer_name like CONCAT('%',#{condition.buyerName,jdbcType=VARCHAR} ,'%')
+		</if>
+		<if test="condition.startTime != null and condition.startTime != '' ">
+			and shop_refund_log.create_time &gt;= #{condition.startTime}   
+		</if>
+		<if test="condition.endTime != null and condition.endTime != '' ">
+			and shop_refund_log.create_time &lt; #{condition.endTime} 
+		</if>
+		<if test="condition.storeId != null">
+			and shop_refund_log.store_id = #{condition.storeId}
+		</if>
+		<if test="condition.buyerId != null">
+			and shop_refund_log.buyer_id = #{condition.buyerId}
+		</if>
+		
+		<if test="condition.supplierId != null">
+			and  EXISTS 
+			(
+			select * from shop_order_goods sog 
+			where shop_refund_log.order_id=sog.order_id
+			and EXISTS 
+			(select * from shop_goods sg where sog.goods_id = sg.goods_id
+			and sg.supplier_id = #{condition.supplierId})
+			)
+		</if>
+		
+	</sql>
+	
+	<!-- 查询条件 -->
+	<sql id="whereStatement2">
+		<if test="refundSn != null and refundSn != '' ">
+			and shop_refund_log.refund_sn like CONCAT('%',#{refundSn, jdbcType=VARCHAR},'%')
+		</if>
+		<if test="orderSn != null and orderSn != '' ">
+          	and shop_refund_log.order_sn like CONCAT('%',#{orderSn, jdbcType=VARCHAR},'%')
+        </if>
+        <if test="storeName != null and storeName != '' ">
+			and shop_refund_log.store_name like CONCAT('%',#{storeName, jdbcType=VARCHAR},'%')
+		</if>
+		<if test="buyerName != null and buyerName != '' ">
+			and shop_refund_log.buyer_name like CONCAT('%',#{buyerName,jdbcType=VARCHAR} ,'%')
+		</if>
+		<if test="startTime != null and startTime != '' ">
+			and shop_refund_log.create_time &gt;= #{startTime}   
+		</if>
+		<if test="endTime != null and endTime != '' ">
+			and shop_refund_log.create_time &lt; #{endTime} 
+		</if>
+		<if test="storeId != null">
+			and shop_refund_log.store_id = #{storeId}
+		</if>
+		<if test="buyerId != null">
+			and shop_refund_log.buyer_id = #{buyerId}
+		</if>
+	</sql>
+	
+	<!-- 保存退款表 -->
+	<insert id="saveRefundLog" parameterType="com.Vshop.core.entity.base.RefundLog" useGeneratedKeys="true" keyProperty="logId">
+		insert into shop_refund_log
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			order_id,refund_sn,order_sn,store_id,store_name,buyer_id,buyer_name,
+			order_amount,order_refund,refund_paymentname,refund_paymentcode,create_time,
+			<if test="refundMessage != null and refundMessage != '' ">
+				refund_message,
+			</if>
+			<if test="buyerMessage != null and buyerMessage != '' ">
+				buyer_message,
+			</if>
+			<if test="adminMessage != null and adminMessage != '' ">
+				admin_message,
+			</if>
+			<if test="sellerTime != null ">
+				seller_time,
+			</if>
+			<if test="adminTime != null ">
+				admin_time,
+			</if>
+			<if test="confirmTime != null ">
+				confirm_time,
+			</if>
+			<if test="refundType != null ">
+				refund_type,
+			</if>
+			<if test="refundState != null ">
+				refund_state,
+			</if>
+			<if test="buyerConfirm != null ">
+				buyer_confirm,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			#{orderId}, #{refundSn}, #{orderSn}, #{storeId}, #{storeName}, #{buyerId}, #{buyerName},
+			#{orderAmount}, #{orderRefund}, #{refundPaymentName}, #{refundPaymentCode},#{createTime},
+			<if test="refundMessage != null and refundMessage != '' ">
+				#{refundMessage},
+			</if>
+			<if test="buyerMessage != null and buyerMessage != '' ">
+				#{buyerMessage},
+			</if>
+			<if test="adminMessage != null and adminMessage != '' ">
+				#{adminMessage},
+			</if>
+			<if test="sellerTime != null ">
+				#{sellerTime},
+			</if>
+			<if test="adminTime != null ">
+				#{adminTime},
+			</if>
+			<if test="confirmTime != null ">
+				#{confirmTime},
+			</if>
+			<if test="refundType != null ">
+				#{refundType},
+			</if>
+			<if test="refundState != null ">
+				#{refundState},
+			</if>
+			<if test="buyerConfirm != null ">
+				#{buyerConfirm},
+			</if>
+		</trim>
+	</insert>
+	
+	<!-- 修改退款表 -->
+	<update id="updateRefundLog" parameterType="com.Vshop.core.entity.base.RefundLog">
+		update shop_refund_log
+		<set>
+			<if test="orderId != null ">
+				order_id = #{orderId},
+			</if>
+			<if test="refundSn != null and refundSn != '' ">
+				refund_sn = #{refundSn},
+			</if>
+			<if test="orderSn != null and orderSn != '' ">
+				order_sn = #{orderSn},
+			</if>
+			<if test="storeId != null ">
+				store_id = #{storeId},
+			</if>
+			<if test="storeName != null and storeName != '' ">
+				store_name = #{storeName},
+			</if>
+			<if test="buyerId != null ">
+				buyer_id = #{buyerId},
+			</if>
+			<if test="buyerName != null and buyerName != '' ">
+				buyer_name = #{buyerName},
+			</if>
+			<if test="orderAmount != null ">
+				order_amount = #{orderAmount},
+			</if>
+			<if test="orderRefund != null ">
+				order_refund = #{orderRefund},
+			</if>
+			<if test="refundPaymentName != null and refundPaymentName != '' ">
+				refund_paymentname = #{refundPaymentName},
+			</if>
+			<if test="refundPaymentCode != null and refundPaymentCode != '' ">
+				refund_paymentcode = #{refundPaymentCode},
+			</if>
+			<if test="refundMessage != null and refundMessage != '' ">
+				refund_message = #{refundMessage},
+			</if>
+			<if test="buyerMessage != null and buyerMessage != '' ">
+				buyer_message = #{buyerMessage},
+			</if>
+			<if test="adminMessage != null and adminMessage != '' ">
+				admin_message = #{adminMessage},
+			</if>
+			<if test="sellerTime != null ">
+				seller_time = #{sellerTime},
+			</if>
+			<if test="adminTime != null ">
+				admin_time = #{adminTime},
+			</if>
+			<if test="confirmTime != null ">
+				confirm_time = #{confirmTime},
+			</if>
+			<if test="refundType != null ">
+				refund_type = #{refundType},
+			</if>
+			<if test="refundState != null ">
+				refund_state = #{refundState},
+			</if>
+			<if test="buyerConfirm != null ">
+				buyer_confirm = #{buyerConfirm},
+			</if>
+			<if test="createTime != null ">
+				create_time = #{createTime},
+			</if>
+		</set>
+		where log_id = #{logId}
+	</update>
+	
+	<update id="updateRefundLogSeller">
+		update shop_refund_log
+		<set>
+			refund_state = #{1},
+			refund_message = #{2},
+			seller_time = #{3}
+		</set>
+		where log_id = #{0}
+	</update>
+	
+	<!-- 删除退款表 -->
+	<delete id="deleteRefundLog" parameterType="int" >
+		delete from shop_refund_log where log_id = #{logId}
+	</delete>
+	
+	<!-- 分页查询退款总条数 -->
+	<select id="findRefundLogCount" parameterType="com.Vshop.core.entity.base.RefundLog" resultType="int">
+		select count(1)	from shop_refund_log where 1=1
+		<include refid="whereStatement2"/>
+	</select>
+	
+	<!-- 分页查询退款表 -->
+	<select id="findRefundLogList" parameterType="com.Vshop.service.utils.page.Pager" resultMap="BaseResultMap">
+		select <include refid="Base_Column_List" /> from shop_refund_log where 1=1 
+		<include refid="whereStatement"/> order by create_time desc <!-- limit #{start}, #{pageSize} -->
+	</select>
+	
+	<!-- 通过id主键查询 -->
+	<select id="findRefundLogByLogId" parameterType="int" resultMap="BaseResultMap">
+		select <include refid="Base_Column_List" /> from shop_refund_log where log_id = #{logId} 
+	</select>
+	
+	<!-- 通过订单id查询退款信息 -->
+	<select id="findRefundLogByOrderId" parameterType="int" resultMap="BaseResultMap">
+		select <include refid="Base_Column_List" /> from shop_refund_log where order_id = #{orderId} 
+	</select>
+	
+	<!-- 通过订单id查询退款信息记录数 -->
+	<select id="findRefundLogCountByOrderId" parameterType="int" resultType="int">
+		select count(1)	from shop_refund_log where order_id = #{orderId}
+	</select>
+</mapper>

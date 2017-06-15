@@ -1,0 +1,23 @@
+/*正品验证*/
+#zp{position: relative; width: 720px; height: 1142px; margin: 0 auto; background: url(../img/bg.jpg) no-repeat; background-size: 100%;}
+
+#content{position: absolute; top: 478px; left: 126px; width:468px; height: 222px;}
+#content ul{width: 254px; margin: 10px auto 0;}
+#content ul li,
+#content ul li span{font: bold 24px "宋体"; color: #FFFFFF; line-height: 50px;}
+#content p{width: 100%; font: bold 24px "宋体"; color: #FFFFFF; text-align: center; padding-top: 10px;}
+
+#footer{position: absolute; top: 738px; width: 100%; height: 294px;}
+#footer .f-l{float:left; width: 420px; padding:20px 0 0 30px;}
+#footer .f-l h4{font: bold 24px "宋体"; color: #eada09; line-height: 60px;}
+#footer .f-l .size24{font-size: 24px;}
+#footer .f-l .size34{font-size: 34px;}
+#footer .f-l .size36{font-size: 36px;}
+#footer .f-l p,
+#footer .f-l p i,
+#footer .f-l p em,
+#footer .f-l span{font: normal 20px "宋体"; color: #EADA09; height: 36px; line-height: 36px;}
+#footer .f-l span{color: #FFFFFF;}
+#footer .f-r{width: 258px; float: right;}
+#footer .f-r img{width: 186px; height: 186px; padding: 21px 36px 0;}
+#footer .f-r .f-r-p p{font:bold 15px "宋体"; color: #FFFFFF; text-align: center; height: 28px; line-height: 28px;}

@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.Vshop.service.module.coupon.dao.mapper.CouponClassMapper">
+	<resultMap id="BaseResultMap" type="com.Vshop.core.entity.base.CouponClass">
+        <result column="class_id" property="classId" jdbcType="INTEGER"/>
+        <result column="class_parent_id" property="classParentId" jdbcType="INTEGER"/>
+        <result column="class_name" property="className" jdbcType="VARCHAR"/>
+        <result column="class_sort" property="classSort" jdbcType="INTEGER"/>
+        <result column="class_show" property="classShow" jdbcType="INTEGER"/>
+    </resultMap>
+    
+    <sql id="Base_Column_List">
+        class_id,class_parent_id,class_name,class_sort,class_show
+    </sql>
+    
+    <!-- 插入优惠券类型 -->
+    <insert id="saveCoupon" parameterType="com.Vshop.core.entity.base.CouponClass" >
+	    insert into shop_coupon_class (
+    	<if test="classParentId != null">
+	    	class_parent_id, 
+	    </if>
+    	class_name, class_sort, class_show)
+	    values(
+		    <if test="classParentId != null">
+		    	#{classParentId}, 
+		    </if>
+		    #{className},
+		    #{classSort},
+		    #{classShow}
+	    );
+   </insert>
+   
+   <!-- 删除优惠券类型 -->
+   <delete id="deleteCoupon" parameterType="java.lang.Integer" >
+   		delete from shop_coupon_class where class_id = #{classId}
+   </delete>
+   
+   <!-- 更新优惠券类型 -->
+   <update id="updateCoupon" parameterType="com.Vshop.core.entity.base.CouponClass" >
+    update shop_coupon_class 
+	    set 
+	    <if test="className != null">
+	    	class_name = #{className}, 
+	    </if>
+	    <if test="classParentId != null">
+	    	class_parent_id = #{classParentId},
+	    </if>
+	   	<if test="classSort != null">
+	   		class_sort = #{classSort},
+	   	</if>
+	   	<if test="classShow != null">
+	   		class_show = #{classShow}
+	   	</if>
+	   	where class_id = #{classId}
+   </update>
+   
+   <!-- 优惠券类型总数 -->
+   <select id="findCouponCount" resultType="java.lang.Integer" parameterType="com.Vshop.core.entity.base.CouponClass">
+		select count(1) from shop_coupon_class a
+	</select>
+	
+	<!-- 优惠券类型分页列表 -->
+	<select id="findCouponPageList" resultMap="BaseResultMap" parameterType="com.Vshop.service.utils.page.Pager">
+		SELECT s.* from (select a.* from shop_coupon_class a order by a.class_sort ) s
+	</select>
+
+	<!-- 优惠券类型列表 -->
+	<select id="findAllCouponList" resultMap="BaseResultMap">
+		select a.* from shop_coupon_class a
+	</select>
+	
+	<!--根据id获取数据-->
+    <select id="getCouponById" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List" />
+        from shop_coupon_class where class_id = #{id}
+    </select>
+    
+</mapper>

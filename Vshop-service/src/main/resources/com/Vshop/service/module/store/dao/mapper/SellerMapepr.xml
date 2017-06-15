@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.Vshop.service.module.store.dao.mapper.SellerMapepr">
+	<resultMap id="BaseResultMap" type="com.Vshop.core.entity.Seller">
+		<id column="seller_id" jdbcType="INTEGER" property="sellerId" />
+		<result column="seller_name" jdbcType="VARCHAR" property="sellerName" />
+		<result column="member_id" jdbcType="INTEGER" property="memberId" />
+		<result column="seller_group_id" jdbcType="INTEGER" property="sellerGroupId" />
+		<result column="store_id" jdbcType="INTEGER" property="storeId" />
+		<result column="is_admin" jdbcType="TINYINT" property="isAdmin" />
+		<result column="seller_quicklink" jdbcType="VARCHAR" property="sellerQuicklink" />
+		<result column="last_login_time" jdbcType="DATE" property="lastLoginTime" />
+		<result column="is_del" jdbcType="TINYINT" property="isDel" />
+		<result column="created_time" jdbcType="DATE" property="createdTime" />
+		<result column="updated_time" jdbcType="DATE" property="updatedTime" />
+	</resultMap>
+
+	<sql id="Base_Column_List">
+		seller_id, seller_name, member_id, seller_group_id, store_id, is_admin,
+		seller_quicklink,last_login_time,is_del,created_time,updated_time
+	</sql>
+
+	<insert id="save" parameterType="com.Vshop.core.entity.Seller"
+		useGeneratedKeys="true">
+		insert into shop_seller (seller_name, member_id,
+		seller_group_id, store_id, is_admin,
+		seller_quicklink, last_login_time,
+		is_del,
+		created_time)
+		values (#{sellerName,jdbcType=VARCHAR},
+		#{memberId,jdbcType=INTEGER},
+		#{sellerGroupId,jdbcType=INTEGER},
+		#{storeId,jdbcType=INTEGER},
+		#{isAdmin,jdbcType=TINYINT},
+		#{sellerQuicklink,jdbcType=VARCHAR},
+		#{lastLoginTime,jdbcType=INTEGER}, 0 , now())
+	</insert>
+
+	<update id="updateLastLoginTime" parameterType="string">
+		UPDATE
+		shop_seller SET last_login_time = now() WHERE seller_name =
+		#{sellerName}
+	</update>
+
+	<select id="findBySellerName" resultMap="BaseResultMap"
+		parameterType="string">
+		select
+		<include refid="Base_Column_List" />
+		from shop_seller where seller_name =#{sellerName} and is_del=0
+	</select>
+</mapper>

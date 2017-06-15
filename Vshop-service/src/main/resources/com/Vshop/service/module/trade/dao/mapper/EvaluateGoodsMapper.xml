@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.Vshop.service.module.trade.dao.mapper.EvaluateGoodsMapper">
+
+    <resultMap id="BaseResultMap" type="com.Vshop.core.entity.base.EvaluateGoods">
+        <result column="geval_id" property="gevalId" jdbcType="INTEGER" />
+        <result column="geval_orderid" property="gevalOrderId" jdbcType="INTEGER" />
+        <result column="geval_orderno" property="gevalOrderNo" jdbcType="BIGINT" />
+        <result column="geval_ordergoodsid" property="gevalOrderGoodsId" jdbcType="INTEGER" />
+        <result column="geval_goodsid" property="gevalGoodsId" jdbcType="INTEGER" />
+        <result column="geval_goodsname" property="gevalGoodsName" jdbcType="VARCHAR" />
+        <result column="geval_goodsprice" property="gevalGoodsPrice" jdbcType="DOUBLE" />
+        <result column="geval_scores" property="gevalScore" jdbcType="TINYINT" />
+        <result column="geval_content" property="gevalContent" jdbcType="VARCHAR" />
+        <result column="geval_isanonymous" property="gevalIsAnonymous" jdbcType="INTEGER" />
+        <result column="geval_addtime" property="gevalAddTime" jdbcType="BIGINT" />
+        <result column="geval_storeid" property="gevalStoreId" jdbcType="INTEGER" />
+        <result column="geval_storename" property="gevalStorename" jdbcType="VARCHAR" />
+        <result column="geval_frommemberid" property="gevalFrommemberid" jdbcType="INTEGER" />
+        <result column="geval_frommembername" property="gevalFrommembername" jdbcType="DOUBLE" />
+        <result column="geval_state" property="gevalState" jdbcType="TINYINT" />
+        <result column="geval_remark" property="gevalRemark" jdbcType="VARCHAR" />
+        <result column="geval_explain" property="gevalExplain" jdbcType="VARCHAR" />
+        <result column="geval_image" property="gevalImage" jdbcType="VARCHAR" />
+        <result column="is_del" property="isDel" jdbcType="TINYINT" />
+        <result column="create_time" property="createTime" jdbcType="BIGINT" />
+        <result column="update_time" property="updateTime" jdbcType="BIGINT" />
+        <result column="spec_info" property="specInfo" jdbcType="VARCHAR" />
+    </resultMap>
+
+	<resultMap id="BaseResultMap2" extends="BaseResultMap" type="com.Vshop.core.entity.base.EvaluateGoods">
+    	<result column="member_avatar" property="memberAvatar" jdbcType="VARCHAR"/>
+    	<result column="gc_name" property="gcName" jdbcType="VARCHAR"/>
+    </resultMap>
+	
+    <sql id="Base_Column_List">
+        geval_id, geval_orderid,geval_orderno, geval_ordergoodsid,geval_goodsid, geval_goodsname
+        ,geval_goodsprice,geval_scores, geval_content, geval_isanonymous, geval_addtime,geval_storeid
+        ,geval_storename,geval_frommemberid, geval_frommembername, geval_state,geval_remark, geval_explain
+        ,geval_image ,is_del,create_time,update_time
+    </sql>
+    <delete id="delete" parameterType="int">
+        update shop_evaluate_goods set is_del = 1 where geval_id=#{id}
+    </delete>
+
+<!-- ljm -->
+<!--     <select id="findPageList" resultMap="BaseResultMap" parameterType="java.util.Map">
+        <![CDATA[  select a.* from(
+        SELECT ]]>
+         <include refid="Base_Column_List" />
+        <![CDATA[FROM shop_evaluate_goods
+        where  is_del=0]]>
+        <if test=" eval.gevalStoreId != null ">
+            <![CDATA[ AND geval_storeid = #{eval.gevalStoreId}]]>
+        </if>
+        <if test="eval.gevalGoodsName != null and eval.gevalGoodsName != ''">
+        <![CDATA[ AND geval_goodsname like CONCAT('%','${eval.gevalGoodsName}','%' )]]>
+        </if>
+        <if test="eval.gevalStorename != null and eval.gevalStorename != ''">
+            <![CDATA[AND geval_storename like CONCAT('%','${eval.gevalStorename}','%' )]]>
+        </if>
+        <if test="eval.gevalFrommembername != null and eval.gevalFrommembername != ''">
+            <![CDATA[AND geval_frommembername like CONCAT('%','${eval.gevalFrommembername}','%' )]]>
+        </if>
+        <if test="eval.startTime != null and eval.startTime != '' ">
+           <![CDATA[ AND DATE_FORMAT(geval_addtime,'%Y-%m-%d') >= #{eval.startTime}]]>
+        </if>
+        <if test="eval.endTime != null and eval.endTime != '' ">
+           <![CDATA[ AND DATE_FORMAT(geval_addtime,'%Y-%m-%d') <= #{eval.endTime}]]>
+        </if>
+       <![CDATA[ order by geval_id desc) a limit #{page.start}, #{page.pageSize}]]>
+    </select> -->
+    
+    <sql id="wherePageSql">
+    	<if test="condition.gevalGoodsId != null">
+            AND e.geval_goodsid = ${condition.gevalGoodsId}
+        </if>
+        <if test="condition.gevalStoreId != null">
+            AND e.geval_storeid = ${condition.gevalStoreId}
+        </if>
+        <if test="condition.gevalFrommemberid != null">
+            AND e.geval_frommemberid = #{condition.gevalFrommemberid}
+        </if>
+        <if test="condition.gevalScore != null and condition.gevalScore == 5">
+            AND e.geval_scores in (4,5)
+        </if>
+        <if test="condition.gevalScore != null and condition.gevalScore == 3">
+            AND e.geval_scores in (2,3)
+        </if>
+        <if test="condition.gevalScore != null and condition.gevalScore == 1">
+            AND e.geval_scores = 1
+        </if>
+        <if test="condition.startTime != null and condition.startTime != ''">
+            AND e.geval_addtime &gt;= #{condition.startTime}
+        </if>
+        <if test="condition.endTime != null and condition.endTime != ''">
+            AND e.geval_addtime &lt; #{condition.endTime}
+        </if>
+        <!-- dwb -->
+        <if test="condition.gevalStorename != null and condition.gevalStorename != ''">
+            AND e.geval_storename like CONCAT('%','${condition.gevalStorename}','%' )
+        </if>
+        <if test="condition.gevalGoodsName != null and condition.gevalGoodsName != ''">
+            AND e.geval_goodsname like CONCAT('%','${condition.gevalGoodsName}','%' )
+        </if>
+        <if test="condition.haveContent != null and condition.haveContent == 1">
+            AND e.geval_content != ""
+        </if>
+        <if test="condition.haveContent != null and condition.haveContent == 2">
+            AND e.geval_content = ""
+        </if>
+    </sql>
+    
+    <sql id="whereStatment">
+    	<if test="gevalGoodsId != null">
+            AND e.geval_goodsid = ${gevalGoodsId}
+        </if>
+        <if test="gevalStoreId != null">
+            AND e.geval_storeid = ${gevalStoreId}
+        </if>
+        <if test="gevalFrommemberid != null">
+            AND e.geval_frommemberid = #{gevalFrommemberid}
+        </if>
+        <if test="gevalScore != null and gevalScore == 5">
+            AND e.geval_scores in (4,5)
+        </if>
+        <if test="gevalScore != null and gevalScore == 3">
+            AND e.geval_scores in (2,3)
+        </if>
+        <if test="gevalScore != null and gevalScore == 1">
+            AND e.geval_scores = 1
+        </if>
+        <if test="startTime != null and startTime != ''">
+            AND e.geval_addtime &gt;= #{startTime}
+        </if>
+        <if test="endTime != null and endTime != ''">
+            AND e.geval_addtime &lt; #{endTime}
+        </if>
+        <!-- dwb -->
+        <if test="gevalStorename != null and gevalStorename != ''">
+            AND e.geval_storename like CONCAT('%','${gevalStorename}','%' )
+        </if>
+        <if test="gevalGoodsName != null and gevalGoodsName != ''">
+            AND e.geval_goodsname like CONCAT('%','${gevalGoodsName}','%' )
+        </if>
+    </sql>
+    
+     <select id="findPageList" resultMap="BaseResultMap2" parameterType="com.Vshop.service.utils.page.Pager">
+        select a.* from(
+        SELECT
+        e.geval_id, e.geval_orderid, e.geval_orderno, e.geval_ordergoodsid, e.geval_goodsid, e.geval_goodsname,
+        e.geval_goodsprice, e.geval_scores, e.geval_content, e.geval_isanonymous, e.geval_addtime, e.geval_storeid,
+        e.geval_storename, e.geval_frommemberid, e.geval_frommembername, e.geval_state, e.geval_remark, e.geval_explain,
+        e.geval_image ,e.is_del,e.create_time,e.update_time,e.spec_info,
+        s.goods_id,s.goods_image,
+        m.member_avatar, s.gc_name
+        FROM shop_evaluate_goods e, shop_goods s, shop_member m
+        where 1=1 
+        AND e.geval_goodsid = s.goods_id
+        AND m.member_id = e.geval_frommemberid
+        AND e.is_del=0 
+        <include refid="wherePageSql"/>
+       order by e.geval_id desc) a
+    </select>
+    
+    <!--  <select id="findPageListByMemberId" resultMap="BaseResultMap" parameterType="com.Vshop.service.utils.page.Pager">
+        SELECT * 
+        FROM shop_evaluate_goods e
+        where  e.is_del=0 and e.geval_frommemberid = #{goodsId} 
+        <include refid="wherePageSql"/>
+        order by e.geval_id desc
+    </select> -->
+    
+     <select id="findCount" resultType="int" parameterType="com.Vshop.core.entity.base.EvaluateGoods">
+        select count(*)
+        from shop_evaluate_goods e,shop_goods s 
+        where  e.is_del=0 and e.geval_goodsid = s.goods_id 
+        <include refid="whereStatment"/>
+    </select>
+    
+    <select id="getAverageScoreByGooodsId" parameterType="int" resultType="java.math.BigDecimal">
+    	select round(avg(e.geval_scores),1) from shop_evaluate_goods e where e.geval_goodsid=#{goodsId} group by e.geval_goodsid
+    </select>
+    
+    <update id="updateById" parameterType="com.Vshop.core.entity.base.EvaluateGoods">
+		update shop_evaluate_goods
+		<set>
+			<if test="gevalExplain != null">
+				geval_explain = #{gevalExplain,jdbcType=VARCHAR},
+			</if>
+			
+			<if test="isDel != null">
+				is_del = #{isDel,jdbcType=BIT},
+			</if>
+			
+			<if test="updateTime != null">
+				update_time = #{updateTime,jdbcType=BIGINT},
+			</if>
+		</set>
+		where geval_id = #{gevalId,jdbcType=INTEGER}
+	</update>
+	
+	
+	<insert id="saveEvaluate" parameterType="com.Vshop.core.entity.base.EvaluateGoods" useGeneratedKeys="true">
+        insert into shop_evaluate_goods
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+        	geval_orderid,geval_orderno,geval_ordergoodsid,geval_goodsid,geval_goodsname,geval_goodsprice,
+        	geval_scores,geval_content,geval_isanonymous,geval_addtime,geval_storeid,geval_storename,geval_frommemberid,geval_frommembername,
+        	geval_state,is_del,create_time,spec_info,
+        	<if test="gevalImage != null">
+        	geval_image,
+        	</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+        	#{gevalOrderId},#{gevalOrderNo},#{gevalOrderGoodsId},#{gevalGoodsId},#{gevalGoodsName},
+        	#{gevalGoodsPrice},#{gevalScore},#{gevalContent},#{gevalIsAnonymous},#{gevalAddTime},#{gevalStoreId},#{gevalStorename},#{gevalFrommemberid},
+        	#{gevalFrommembername},#{gevalState},0,#{createTime},#{specInfo},
+        	<if test="gevalImage != null">
+        	#{gevalImage},
+        	</if>
+        </trim>
+    </insert>
+    
+</mapper>

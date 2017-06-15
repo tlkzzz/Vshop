@@ -1,0 +1,396 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.Vshop.union.dao.mapper.UnionGoodsMapper">
+
+	<resultMap id="BaseResultMap" type="com.Vshop.union.entity.UnionGoods">
+		<result column="id" property="id" jdbcType="INTEGER" />
+		<result column="class_id" property="classId" jdbcType="INTEGER" />
+		<result column="class_name" property="className" jdbcType="VARCHAR" />
+		<result column="class_ids" property="classIds" jdbcType="VARCHAR" />
+		<result column="class_names" property="classNames" jdbcType="VARCHAR" />
+		<result column="goodsName" property="goodsName" jdbcType="VARCHAR" />
+		<result column="image_url" property="imageUrl" jdbcType="VARCHAR" />
+		<result column="skuId" property="skuId" jdbcType="INTEGER" />
+		<result column="unitPrice" property="unitPrice" jdbcType="VARCHAR" />
+		<result column="commisionRatioPc" property="commisionRatioPc"
+			jdbcType="INTEGER" />
+		<result column="commisionRatioWl" property="commisionRatioWl"
+			jdbcType="INTEGER" />
+		<result column="shopId" property="shopId" jdbcType="INTEGER" />
+		<result column="materialUrl" property="materialUrl" jdbcType="VARCHAR" />
+		<result column="startDate" property="startDate" jdbcType="INTEGER" />
+		<result column="endDate" property="endDate" jdbcType="INTEGER" />
+		<result column="source" property="source" jdbcType="INTEGER" />
+		<result column="show_flag" property="showFlag" jdbcType="INTEGER" />
+		<result column="sort" property="sort" jdbcType="INTEGER" />
+		<result column="create_by" property="createBy" jdbcType="INTEGER" />
+		<result column="create_date" property="createDate" jdbcType="BIGINT" />
+		<result column="remarks" property="remarks" jdbcType="VARCHAR" />
+		<result column="del_flag" property="delFlag" jdbcType="INTEGER" />
+		<result column="update_by" property="updateBy" jdbcType="INTEGER" />
+		<result column="update_date" property="updateDate" jdbcType="BIGINT" />
+	</resultMap>
+
+	<sql id="Base_Column_List">
+		id,class_id,class_name,class_ids,class_names,goodsName,image_url,skuId,unitPrice,commisionRatioPc,commisionRatioWl,shopId,materialUrl,startDate,endDate,source,show_flag,sort,create_by,create_date,remarks,del_flag,update_by,update_date
+	</sql>
+
+	<sql id="whereStatement">
+		<where>
+			1 = 1
+			
+			<if test="condition.classId > 0">
+				and class_ids like CONCAT('%',#{condition.classId},'%')
+			</if>
+			
+			<if test="condition.skuId > 0">
+				and skuId = #{condition.skuId}
+			</if>
+			
+			<if test="condition.goodsName !=null and condition.goodsName!=''">
+				and goodsName like CONCAT('%',#{condition.goodsName},'%')
+			</if>
+
+			<if test="condition.minCommisionRatio > 0">
+				and commisionRatioWl &gt; #{condition.minCommisionRatio}
+			</if>
+
+			<if test="condition.maxCommisionRatio > 0">
+				and commisionRatioWl &lt; #{condition.maxCommisionRatio}
+			</if>
+
+		</where>
+	</sql>
+	
+	<sql id="frontWhereStatement">
+		<where>
+			1 = 1
+			and show_flag=1
+			and del_flag=0
+			
+			<if test="condition.classId > 0">
+				and class_ids like CONCAT('%',#{condition.classId},'%')
+			</if>
+			
+			<if test="condition.goodsName !=null and condition.goodsName!=''">
+				and goodsName like CONCAT('%',#{condition.goodsName},'%')
+			</if>
+
+			<if test="condition.minCommisionRatio > 0">
+				and commisionRatioWl &gt; #{condition.minCommisionRatio}
+			</if>
+
+			<if test="condition.maxCommisionRatio > 0">
+				and commisionRatioWl &lt; #{condition.maxCommisionRatio}
+			</if>
+
+		</where>
+	</sql>
+
+	<select id="findPagerList" resultMap="BaseResultMap"
+		parameterType="com.Vshop.service.utils.page.Pager">
+
+		SELECT s.* from( select g.* from union_goods g
+		<include refid="whereStatement" />
+
+		order by sort desc
+
+		<if test="orderBy == 0">
+			,id desc
+		</if>
+		<if test="orderBy == 1">
+			,id asc
+		</if>
+		) s
+
+	</select>
+	
+	<select id="findFrontPagerList" resultMap="BaseResultMap"
+		parameterType="com.Vshop.service.utils.page.Pager">
+
+		SELECT s.* from( select g.* from union_goods g
+		<include refid="frontWhereStatement" />
+
+		order by sort desc
+
+		<if test="orderBy == 0">
+			,id desc
+		</if>
+		<if test="orderBy == 1">
+			,id asc
+		</if>
+		) s
+
+	</select>
+
+	<select id="findById" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+
+		select
+		<include refid="Base_Column_List" />
+		from union_goods where id = #{id}
+
+	</select>
+
+	<delete id="deleteById" parameterType="java.lang.Integer">
+		delete from
+		union_goods
+		where id = #{id}
+	</delete>
+
+	<insert id="save" parameterType="com.Vshop.union.entity.UnionGoods" useGeneratedKeys="true" keyProperty="id">
+
+		insert into union_goods
+
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+
+			<if test="classId != null">
+				class_id,
+			</if>
+			<if test="className != null">
+				class_name,
+			</if>
+			<if test="classIds != null">
+				class_ids,
+			</if>
+			<if test="classNames != null">
+				class_names,
+			</if>
+			<if test="goodsName != null">
+				goodsName,
+			</if>
+			<if test="imageUrl != null">
+				image_url,
+			</if>
+			<if test="skuId != null">
+				skuId,
+			</if>
+			<if test="unitPrice != null">
+				unitPrice,
+			</if>
+			<if test="commisionRatioPc != null">
+				commisionRatioPc,
+			</if>
+			<if test="commisionRatioWl != null">
+				commisionRatioWl,
+			</if>
+			<if test="shopId != null">
+				shopId,
+			</if>
+			<if test="materialUrl != null">
+				materialUrl,
+			</if>
+			<if test="startDate != null">
+				startDate,
+			</if>
+			<if test="endDate != null">
+				endDate,
+			</if>
+			<if test="source != null">
+				source,
+			</if>
+			<if test="showFlag != null">
+				show_flag,
+			</if>
+			<if test="sort != null">
+				sort,
+			</if>
+			<if test="remarks != null">
+				remarks,
+			</if>
+			<if test="delFlag != null">
+				del_flag,
+			</if>
+			<if test="createBy != null">
+				create_by,
+			</if>
+			<if test="createDate != null">
+				create_date,
+			</if>
+
+		</trim>
+
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+
+			<if test="classId != null">
+				#{classId},
+			</if>
+			<if test="className != null">
+				#{className},
+			</if>
+			<if test="classIds != null">
+				#{classIds},
+			</if>
+			<if test="classNames != null">
+				#{classNames},
+			</if>
+			<if test="goodsName != null">
+				#{goodsName},
+			</if>
+			<if test="imageUrl != null">
+				#{imageUrl},
+			</if>
+			<if test="skuId != null">
+				#{skuId},
+			</if>
+			<if test="unitPrice != null">
+				#{unitPrice},
+			</if>
+			<if test="commisionRatioPc != null">
+				#{commisionRatioPc},
+			</if>
+			<if test="commisionRatioWl != null">
+				#{commisionRatioWl},
+			</if>
+			<if test="shopId != null">
+				#{shopId},
+			</if>
+			<if test="materialUrl != null">
+				#{materialUrl},
+			</if>
+			<if test="startDate != null">
+				#{startDate},
+			</if>
+			<if test="endDate != null">
+				#{endDate},
+			</if>
+			<if test="source != null">
+				#{source},
+			</if>
+			<if test="showFlag != null">
+				#{showFlag},
+			</if>
+			<if test="sort != null">
+				#{sort},
+			</if>
+			<if test="remarks != null">
+				#{remarks},
+			</if>
+			<if test="delFlag != null">
+				#{delFlag},
+			</if>
+			<if test="createBy != null">
+				#{createBy},
+			</if>
+			<if test="createDate != null">
+				#{createDate},
+			</if>
+
+		</trim>
+
+	</insert>
+
+	<update id="update" parameterType="com.Vshop.union.entity.UnionGoods">
+
+		update union_goods
+		set
+
+		<trim suffixOverrides=",">
+			<if test="classId != null">
+				class_id=#{classId},
+			</if>
+			<if test="className != null">
+				class_name=#{className},
+			</if>
+			<if test="classIds != null">
+				class_ids=#{classIds},
+			</if>
+			<if test="classNames != null">
+				class_names=#{classNames},
+			</if>
+			<if test="goodsName != null">
+				goodsName=#{goodsName},
+			</if>
+			<if test="imageUrl != null">
+				image_url=#{imageUrl},
+			</if>
+			<if test="skuId != null">
+				skuId=#{skuId},
+			</if>
+			<if test="unitPrice != null">
+				unitPrice=#{unitPrice},
+			</if>
+			<if test="commisionRatioPc != null">
+				commisionRatioPc=#{commisionRatioPc},
+			</if>
+			<if test="commisionRatioWl != null">
+				commisionRatioWl=#{commisionRatioWl},
+			</if>
+			<if test="shopId != null">
+				shopId=#{shopId},
+			</if>
+			<if test="materialUrl != null">
+				materialUrl=#{materialUrl},
+			</if>
+			<if test="startDate != null">
+				startDate=#{startDate},
+			</if>
+			<if test="endDate != null">
+				endDate=#{endDate},
+			</if>
+			<if test="source != null">
+				source=#{source},
+			</if>
+			<if test="showFlag != null">
+				show_flag=#{showFlag},
+			</if>
+			<if test="sort != null">
+				sort=#{sort},
+			</if>
+			<if test="remarks != null">
+				remarks=#{remarks},
+			</if>
+			<if test="delFlag != null">
+				del_flag=#{delFlag},
+			</if>
+			<if test="updateBy != null">
+				update_by=#{updateBy},
+			</if>
+			<if test="updateDate != null">
+				update_date=#{updateDate},
+			</if>
+		</trim>
+
+		where id = #{id}
+
+	</update>
+
+	<select id="findAll" resultMap="BaseResultMap"
+		parameterType="com.Vshop.union.entity.UnionGoods">
+
+		SELECT
+
+		<include refid="Base_Column_List" />
+
+		from union_goods
+
+		<include refid="whereStatement" />
+
+		order by sort desc,id desc
+
+	</select>
+	
+	<update id="updateClassIds">
+
+		update union_goods
+		set class_ids=#{classIds},
+		class_names=#{classNames}
+		where class_id = #{classId}
+
+	</update>
+	
+	<update id="updateClassNames">
+
+		update union_goods
+		set class_names=REPLACE(class_names,#{oldName},#{newName}),
+		class_name=REPLACE(class_name,#{oldName},#{newName})
+		where class_id = #{classId}
+
+	</update>
+	
+	<delete id="deleteByClassId" parameterType="java.lang.Integer">
+		delete from
+		union_goods
+		where class_id = #{classId}
+	</delete>
+
+</mapper>

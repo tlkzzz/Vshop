@@ -1,0 +1,99 @@
+*{
+	margin: 0;
+	padding: 0;
+}
+.wrap{
+	width: 100%;
+	height: 100%;
+	overflow: auto;
+}
+header{
+	width: 100%;
+	height: 44px;
+	margin-left: 2%;
+}
+.swiper-slide{
+	width: 25%;
+	line-height: 44px;
+	text-align: center;
+	float: left;
+	font-size: 12px;
+	overflow: hidden;
+}
+.banner img{
+	width: 100%;
+}
+.main{
+	width: 100%;
+	background: #f7f7f7;
+	display: -webkit-box;
+	-webkit-box-orient: vertical;
+}
+.m-top{
+	width: 96%;
+	-webkit-box-pack: justify;
+	display: -webkit-box;
+	height: 0.7rem;
+	line-height: 0.6rem;
+	margin: 0 auto;
+}
+.m-top h3{
+	line-height: 0.6rem;
+	font-size: 0.28rem;
+	background: url(../img/line.png) no-repeat left 0.10rem;
+	padding-left: 0.2rem;
+	font-weight: normal;
+}
+.m-top a{
+	line-height: 0.6rem;
+	font-size: 0.2rem;
+	color: #ff6200;
+	margin-right: 15px;
+}
+.m-bot{
+	width: 96%;
+	-webkit-box-orient: horizontal;
+	display: -webkit-box;
+	
+}
+.m-bot dl{
+	-webkit-box-flex: 1;
+	margin-left: 0.2rem;
+	padding-bottom: 0.5rem;
+}
+
+.m-bot dl dt{
+	width: 100%;
+	margin-bottom: 0.3rem;
+}
+.m-bot dl dt img{
+	width: 100%;
+}
+
+.m-bot dl dd p{
+	font-size: 0.2rem;
+	line-height: 0.3rem;
+}
+.m-bot dl dd div{
+	-webkit-box-pack: justify;
+	display: -webkit-box;
+	margin-top: 0.13rem;
+}
+.m-bot dl dd h5{
+	font-size: 16px;
+	color: #ff6200;
+	font-size: normal;
+}
+.m-bot dl dd a{
+	font-size: 0.2rem;
+	color: #999999;
+	display: block;
+	padding: 3px 5px;
+	text-decoration:line-through;
+}
+.m-bot dl dd span img{
+	width: 11px;
+	height: 11px;
+	float: left;
+	margin-top: 3px;
+}

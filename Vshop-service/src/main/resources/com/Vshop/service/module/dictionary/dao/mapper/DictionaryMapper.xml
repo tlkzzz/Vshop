@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.Vshop.service.module.dictionary.dao.mapper.DictionaryMapper">
+    <resultMap id="BaseResultMap" type="com.Vshop.core.entity.base.Dictionary" >
+        <id column="dictionary_id" property="dictionaryId" jdbcType="INTEGER" />
+        <result column="group_id" property="groupId" jdbcType="INTEGER" />
+        <result column="dictionary_code" property="dictionaryCode" jdbcType="VARCHAR" />
+        <result column="dictionary_name" property="dictionaryName" jdbcType="VARCHAR" />
+        <result column="dictionary_value" property="dictionaryValue" jdbcType="VARCHAR" />
+    </resultMap>
+
+    <sql id="Base_Column_List" >
+        dictionary_id,group_id,dictionary_code,dictionary_name,dictionary_value
+    </sql>
+    
+    <sql id="whereStatement">
+		<where>
+			1 = 1 
+			<if test="condition.groupId!=null">
+				and group_id = #{condition.groupId}
+			</if>
+		</where>
+	</sql>
+	
+	<sql id="whereStatement2">
+		<where>
+			1 = 1 
+			<if test="condition.groupId!=null">
+				and group_id = #{groupId}
+			</if>
+		</where>
+	</sql>
+	
+    <insert id="save" parameterType="com.Vshop.core.entity.base.Dictionary" useGeneratedKeys="true" keyProperty="dictionaryId">
+        INSERT INTO shop_dictionary (group_id,dictionary_code,dictionary_name,dictionary_value)
+        VALUES (#{groupId},#{dictionaryCode},#{dictionaryName},#{dictionaryValue})
+    </insert>
+    
+    <update id="update" parameterType="com.Vshop.core.entity.base.Dictionary">
+        update shop_dictionary 
+		<set>
+			dictionary_name = #{dictionaryName}
+			<if test="dictionaryValue!=null">
+				,dictionary_value = #{dictionaryValue}
+			</if>
+			<if test="dictionaryCode!=null">
+				,dictionary_code = #{dictionaryCode}
+			</if>
+		</set>
+		where dictionary_id = #{dictionaryId}
+    </update>
+    
+    <update id="updateAllDictionaryCodeByGroupId" parameterType="com.Vshop.core.entity.base.Dictionary">
+    	update shop_dictionary set dictionary_code=#{dictionaryCode} where group_id=#{groupId}
+    </update>
+    
+	<delete id="delete" parameterType="java.lang.Integer">
+        delete from shop_dictionary where dictionary_id = #{dictionaryId}
+    </delete>
+    
+    <select id="findByDictionaryId" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+    	select 
+    	<include refid="Base_Column_List" />
+    	from shop_dictionary
+    	where dictionary_id = #{dictionaryId}
+    </select>
+    
+    <select id="countDictionaryidList" resultType="int" parameterType="com.Vshop.core.entity.base.Dictionary">
+    	select count(dictionary_id) from shop_dictionary 
+    	<include refid="whereStatement2" />
+    </select>
+    
+    <select id="queryDictionaryidList" resultMap="BaseResultMap" parameterType="com.Vshop.service.utils.page.Pager">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM shop_dictionary
+        <include refid="whereStatement" />
+    </select>
+    
+     <select id="findDictionaryByCode" resultMap="BaseResultMap" parameterType="java.lang.String">
+    	select 
+    	<include refid="Base_Column_List" />
+    	from 
+    	shop_dictionary where dictionary_code=#{groupCode}
+    </select>
+    
+    <select id="findDictionaryByDictionaryId" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+   	 	select 
+    	<include refid="Base_Column_List" />
+    	from 
+    	shop_dictionary sd
+    	where sd.dictionary_id=#{dictionaryId}
+    </select>
+
+</mapper>

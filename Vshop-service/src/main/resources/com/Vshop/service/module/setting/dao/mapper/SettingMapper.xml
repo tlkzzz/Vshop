@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.Vshop.service.module.setting.dao.mapper.SettingMapper">
+	<resultMap id="BaseResultMap" type="com.Vshop.core.entity.base.Setting">
+		<result column="name" property="name" jdbcType="VARCHAR" />
+		<result column="value" property="value" jdbcType="VARCHAR" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		name,value
+	</sql>
+    
+    <!-- 根据店铺二级域名查询条件 -->
+	<sql id="whereStatement">
+		<where>
+			1 = 1
+		<if test="enabledSubdomain!= null">
+	         and name=#{enabledSubdomain}
+	    </if>
+	    <if test="subdomainEdit!= null">
+	         or name=#{subdomainEdit}
+	    </if>
+	    <if test="subdomainLength!= null">
+	         or name=#{subdomainLength}
+	    </if>
+	    <if test="subdomainReserved!= null">
+	         or name=#{subdomainReserved}
+	    </if>
+	    <if test="subdomainTimes!= null">
+	         or name=#{subdomainTimes}
+	    </if>
+		</where>
+	</sql>
+	
+	<!-- 保存系统设置 -->
+	<insert id="save" parameterType="com.Vshop.core.entity.base.Setting">
+		insert into shop_setting(name,value)values(#{name},#{value});
+	</insert>
+	
+	<delete id="delete" parameterType="java.lang.String">
+		delete from shop_setting where name = #{name}
+	</delete>
+	
+	<!-- 根据店铺二级域名查询List -->
+	<select id="queryClasssMap" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from shop_setting
+		<include refid="whereStatement" />
+	</select>
+	
+	 <!-- 根据名称修改值 -->
+    <update id="update" parameterType="com.Vshop.core.entity.base.Setting">
+        update shop_setting
+          set value = #{value,jdbcType=VARCHAR}
+        where name = #{name,jdbcType=VARCHAR}
+    </update>
+    
+    <!-- 根据名称查询 -->
+    <select id="queryByName" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select
+        <include refid="Base_Column_List" />
+        from shop_setting
+        where name = #{name}
+    </select>
+</mapper>

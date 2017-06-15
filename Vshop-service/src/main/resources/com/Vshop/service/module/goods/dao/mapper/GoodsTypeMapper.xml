@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.Vshop.service.module.goods.dao.mapper.GoodsTypeMapper">
+    <resultMap id="BaseResultMap" type="com.Vshop.core.entity.GoodsType" >
+        <id column="type_id" property="typeId" jdbcType="INTEGER" />
+        <result column="type_name" property="typeName" jdbcType="VARCHAR" />
+        <result column="type_sort" property="typeSort" jdbcType="INTEGER" />
+    </resultMap>
+    
+    <resultMap type="com.Vshop.core.entity.GoodsType" id="TypeResultMap">
+        <id column="type_id" property="typeId" jdbcType="INTEGER" />
+        <result column="type_name" property="typeName" jdbcType="VARCHAR" />
+        <result column="type_sort" property="typeSort" jdbcType="INTEGER" />
+        <collection property="attributes" ofType="com.Vshop.core.entity.GoodsAttribute"
+                    column="type_id" javaType="arraylist"
+                    select="com.Vshop.service.module.goods.dao.mapper.GoodsAttributeMapper.findListByType">
+        </collection>
+        <collection property="tbs" ofType="com.Vshop.core.entity.base.TypeBrand"
+                    column="type_id" javaType="arraylist"
+                    select="com.Vshop.service.module.goods.dao.mapper.TypeBrandMapper.findListByType">
+        </collection>
+        <collection property="tsList" ofType="com.Vshop.core.entity.base.TypeSpec"
+                    column="type_id" javaType="arraylist"
+                    select="com.Vshop.service.module.goods.dao.mapper.TypeSpecMapper.findListByType">
+        </collection>
+    </resultMap>
+    
+    <resultMap type="com.Vshop.core.entity.vo.GoodsTypeVO" id="BaseVOMap">
+    	<id column="type_id" property="typeId" jdbcType="INTEGER" />
+        <result column="type_name" property="typeName" jdbcType="VARCHAR" />
+        <result column="type_sort" property="typeSort" jdbcType="INTEGER" />
+        <collection property="attributes" ofType="com.Vshop.core.entity.GoodsAttribute"
+                    column="type_id" javaType="arraylist"
+                    select="com.Vshop.service.module.goods.dao.mapper.GoodsAttributeMapper.findListByType">
+        </collection>
+        <collection property="brandList" ofType="com.Vshop.core.entity.base.Brand"
+                    column="type_id" javaType="arraylist"
+                    select="com.Vshop.service.module.goods.dao.mapper.BrandMapper.findListByType">
+        </collection>
+        <collection property="specList" ofType="com.Vshop.core.entity.Spec"
+                    column="type_id" javaType="arraylist"
+                    select="com.Vshop.service.module.goods.dao.mapper.SpecMapper.findListByType">
+        </collection>
+    </resultMap>
+    
+
+    <sql id="Base_Column_List" >
+        type_id, type_name, type_sort
+    </sql>
+    <insert id="save" parameterType="com.Vshop.core.entity.GoodsType" useGeneratedKeys="true" keyProperty="typeId">
+        INSERT INTO shop_type(type_name, type_sort)
+        VALUES(#{typeName},#{typeSort});
+    </insert>
+    <update id="update" parameterType="com.Vshop.core.entity.GoodsType">
+        update shop_type
+        <set>
+            <if test="typeName != null">
+                type_name = #{typeName},
+            </if>
+            <if test="typeSort != null">
+                type_sort = #{typeSort},
+            </if>
+        </set>
+        where type_id=#{typeId}
+    </update>
+    <delete id="delete" parameterType="java.lang.Integer">
+        delete from shop_type where type_id = #{typeId}
+    </delete>
+
+    <select id="findById" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List" />
+        from shop_type where type_id=#{typeId}
+    </select>
+	
+	<!-- 查询所有的商品类型 -->
+    <select id="findList" resultMap="BaseResultMap" >
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM shop_type
+        order by type_sort
+    </select>
+
+    <!--关联查询-->
+    <select id="selectTypeFetchOther" parameterType="int" resultMap="BaseVOMap" >
+        SELECT
+          *
+        FROM
+          shop_type gt
+        WHERE
+           gt.type_id = #{typeId}
+    </select>
+
+    <select id="findCount" resultType="int" parameterType="com.Vshop.service.utils.page.Pager">
+        select count(*) from shop_type
+    </select>
+
+    <select id="findPageList" resultMap="BaseResultMap" parameterType="com.Vshop.service.utils.page.Pager">
+        select a.* from(
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM shop_type
+        order by type_sort) a
+    </select>
+    
+</mapper>

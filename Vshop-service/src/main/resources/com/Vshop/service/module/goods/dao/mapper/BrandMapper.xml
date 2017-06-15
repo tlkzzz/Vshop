@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.Vshop.service.module.goods.dao.mapper.BrandMapper">
+    <resultMap id="BaseResultMap" type="com.Vshop.core.entity.base.Brand" >
+        <id column="brand_id" property="brandId" jdbcType="INTEGER" />
+        <result column="brand_name" property="brandName" jdbcType="VARCHAR" />
+        <result column="brand_class" property="brandClass" jdbcType="VARCHAR" />
+        <result column="brand_pic" property="brandPic" jdbcType="VARCHAR" />
+        <result column="brand_sort" property="brandSort" jdbcType="INTEGER" />
+        <result column="brand_recommend" property="brandRecommend" jdbcType="INTEGER" />
+        <result column="store_id" property="storeId" jdbcType="INTEGER" />
+        <result column="brand_apply" property="brandApply" jdbcType="INTEGER" />
+        <result column="class_id" property="classId" jdbcType="INTEGER" />
+        <result column="is_del" property="isDel" jdbcType="TINYINT" />
+        <result column="create_time" property="createTime" jdbcType="BIGINT" />
+        <result column="update_time" property="updateTime" jdbcType="BIGINT" />
+    </resultMap>
+
+    <resultMap id="BaseResultMap1" type="com.Vshop.core.entity.vo.BrandVo" >
+        <result column="class_id" property="classId" jdbcType="INTEGER" />
+        <result column="brand_class" property="brandClass" jdbcType="VARCHAR" />
+        <collection property="list" ofType="com.Vshop.core.entity.base.Brand"
+                    column="class_id" javaType="arraylist"
+                    select="com.Vshop.service.module.goods.dao.mapper.BrandMapper.findByClassId">
+        </collection>
+    </resultMap>
+
+    <sql id="Base_Column_List" >
+        brand_id, brand_name, brand_class, brand_pic, brand_sort, brand_recommend, store_id,brand_apply,
+        class_id,is_del,create_time,update_time
+    </sql>
+    <!-- 保存品牌 -->
+    <insert id="save" parameterType="com.Vshop.core.entity.base.Brand" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO shop_brand(
+        	brand_name,brand_class,brand_pic,brand_sort,brand_recommend,store_id,brand_apply,
+        	<if test="classId != null">
+        	class_id,
+        	</if>
+        	is_del,create_time)
+        VALUES(#{brandName},#{brandClass},#{brandPic},#{brandSort},#{brandRecommend},#{storeId},#{brandApply},
+        	<if test="classId != null">
+        	#{classId},
+        	</if>
+        	0,#{createTime});
+    </insert>
+    
+     <sql id="whereStatement">
+		<where>
+			1 = 1 and is_del=0
+	    <if test="condition.storeId != null and condition.storeId!=0" >
+            and store_id = #{condition.storeId}
+        </if>
+        <if test="condition.brandName !=null and condition.brandName !='' ">
+            AND brand_name like CONCAT('%','${condition.brandName}','%' )
+        </if>
+        <if test="condition.brandClass != null and condition.brandClass != ''">
+            AND brand_class like CONCAT('%','${condition.brandClass}','%' )
+        </if>
+        <if test="condition.brandRecommend != null">
+            AND brand_recommend = #{condition.brandRecommend}
+        </if>
+        <if test="condition.brandId != null">
+            AND brand_id != #{condition.brandId}
+        </if>
+        <if test="condition.brandApply != null">
+            AND brand_apply = #{condition.brandApply}
+        </if> 
+		</where>
+	</sql>
+	
+	 <sql id="whereStatement2">
+		<where>
+			1 = 1 and is_del=0
+		    <if test="storeId != null and storeId!=0" >
+	            and store_id = #{storeId}
+	        </if>
+	        <if test="brandName !=null and brandName !='' ">
+	            AND brand_name like CONCAT('%','${brandName}','%' )
+	        </if>
+	        <if test="brandClass != null and brandClass != ''">
+	            AND brand_class like CONCAT('%','${brandClass}','%' )
+	        </if>
+	        <if test="brandRecommend != null">
+	            AND brand_recommend = #{brandRecommend}
+	        </if>
+	        <if test="brandId != null">
+	            AND brand_id != #{brandId}
+	        </if>
+	        <if test="brandApply != null">
+	            AND brand_apply = #{brandApply}
+	        </if> 
+		</where>
+	</sql>
+    
+    <!-- 删除品牌 -->
+    <delete id="delete" parameterType="java.lang.Integer">
+         update shop_brand set is_del = 1 where brand_id=#{id} 
+    </delete>
+    
+    
+    
+    <!-- 更新品牌 -->
+    <update id="update" parameterType="com.Vshop.core.entity.base.Brand">
+        update shop_brand
+        <set>
+            <if test="brandName != '' and brandName != null ">
+                brand_name = #{brandName},
+            </if>
+            <if test="brandClass != '' and brandClass != null">
+                brand_class = #{brandClass},
+            </if>
+            <if test="brandPic != '' and brandPic != null">
+                brand_pic = #{brandPic},
+            </if>
+            <if test="brandSort != null">
+                brand_sort = #{brandSort},
+            </if>
+            <if test="brandRecommend != null">
+                brand_recommend = #{brandRecommend},
+            </if>
+            <if test="storeId != null and storeId !=0">
+                store_id = #{storeId},
+            </if>
+            <if test="brandApply != null">
+                brand_apply = #{brandApply},
+            </if>
+            <if test="classId != null">
+                class_id = #{classId}
+            </if>
+        </set>
+        where brand_id=#{brandId}
+    </update>
+    
+    <!--查询分页列表-->
+    <select id="findPageList" parameterType="com.Vshop.service.utils.page.Pager" resultMap="BaseResultMap">
+        SELECT a.* FROM(
+        SELECT
+         <include refid="Base_Column_List" />
+        FROM shop_brand
+         <include refid="whereStatement" />
+        order by brand_sort desc, brand_id desc) a 
+    </select>
+    
+    <!-- 获取全部数据 -->
+    <select id="findList" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM shop_brand 
+        <include refid="whereStatement2"></include>
+        order by brand_sort desc
+    </select>
+
+	<!-- 根据id获取品牌 -->
+    <select id="findById" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List" />
+        from shop_brand where brand_id=#{id}
+    </select>
+
+	<!-- 根据分类id获取品牌 -->
+    <select id="findByClassId" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List" />
+        from shop_brand where class_id = #{classId} and is_del = 0 and brand_apply = 1 order by brand_sort desc
+    </select>
+    
+    <!-- 获取品牌的分类 -->
+    <select id="findBrandGroupByClassId" resultMap="BaseResultMap1">
+        SELECT
+        class_id,max(brand_class) brand_class
+        FROM shop_brand
+        where is_del = 0
+        GROUP BY class_id
+    </select>
+    
+    <!-- 根据店铺id获取店铺的品牌 -->
+    <select id="getBrandListByStoreId" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM shop_brand
+        where is_del = 0 and store_id = #{storeId} order by brand_sort desc
+    </select>
+    
+    <select id="findListByType" resultMap="BaseResultMap" parameterType="int">
+		select a.brand_id, a.brand_name, a.brand_class, a.brand_pic, a.brand_sort, a.brand_recommend, a.store_id,a.brand_apply,
+        a.class_id from shop_brand a join shop_type_brand b on a.brand_id=b.brand_id where b.type_id=#{typeId}	 
+	</select>
+    
+    <!-- 根据typeid获取品牌 -->
+    <select id="getBrandListByTypeId" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        SELECT
+        sb.brand_id, sb.brand_name 
+        FROM (select stb.brand_id from shop_type_brand stb where stb.type_id=#{typeId}) a 
+        join 
+        shop_brand sb 
+        on a.brand_id=sb.brand_id order by sb.brand_sort desc
+    </select>
+    
+    <!-- 根据获取总数 -->
+    <select id="countBrand" resultType="Integer" parameterType="com.Vshop.core.entity.base.Brand">
+        SELECT count(1) from shop_brand 
+        <include refid="whereStatement2" />
+    </select>
+   
+   <select id="queryBrandUseList" parameterType="List" resultType="Map">
+   		(SELECT
+		  	g.brand_id AS brandId,
+		  	CASE WHEN g.goods_id THEN COUNT(*) ELSE 0 END AS goodsNum,
+		  	0 AS supplierNum
+		 FROM shop_goods g WHERE g.brand_id IN 
+		 <foreach collection="list" item="brandId" index="index" open="(" close=")" separator=",">
+            #{brandId}
+         </foreach>
+		 GROUP BY g.brand_id)
+		UNION
+		(SELECT 
+		    s.brand_id AS brandId, 
+		    0 AS goodsNum,
+		    CASE WHEN s.supplier_id THEN COUNT(*) ELSE 0 END AS supplierNum
+		 FROM shop_supplier_brand s WHERE s.brand_id IN 
+		 <foreach collection="list" item="brandId" index="index" open="(" close=")" separator=",">
+            #{brandId}
+         </foreach>
+		 GROUP BY s.brand_id)
+   </select>
+</mapper>

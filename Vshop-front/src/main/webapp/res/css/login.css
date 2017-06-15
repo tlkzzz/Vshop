@@ -1,0 +1,36 @@
+.login_entry {
+	/* padding: 0px 41px;
+	margin-top: 20px; */
+}
+
+.login_entry .account_list_big {
+	width: 225px;
+	height:52px;
+}
+
+.login_entry .account_list_big li {
+	float: left;
+	padding: 0px 20px 10px 0px;
+	width:32px;
+	border:0px;
+}
+
+.login_entry .account_list_big a {
+	display: block;
+	width: 32px;
+	height:32px;
+	background: transparent url("../images/login_icon_bg.png") no-repeat
+		scroll 0% 0%;
+}
+
+.login_entry .account_list_big a.sina {
+	background-position: -52px 0px;
+}
+
+.login_entry .account_list_big a.qq {
+	background-position: 0px 0px;
+}
+
+.login_entry .account_list_big a.weixin {
+	background-position: -159px 0px;
+}

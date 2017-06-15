@@ -1,0 +1,78 @@
+*{padding: 0;margin: 0;}
+ul,ol,li{list-style: none;}
+a{text-decoration: none;display: block;}
+h1,h2,h3,h4,h5,h6{font-weight: normal;}
+em,i{font-style: normal;}
+img{display: block;}
+section,footer,nav,article,header{display: block;}
+input,button{display: block;border: none;background:transparent;outline: none;-webkit-tap-highlight-color: rgba(255,255,255,0);font-family: "Microsoft YaHei",Arial,"Helvetica";}
+html{width: 100%;height: 100%;background: #fff;font-family: "Microsoft YaHei",Arial,"Helvetica";font-size: 100px;}
+@media screen and (max-width: 640px) {
+	html {
+		font-size: 100px;
+	}
+}
+@media screen and (max-width: 610px) {
+	html {
+		font-size: 95px;
+	}
+}
+@media screen and (max-width: 580px) {
+	html {
+		font-size: 90px;
+	}
+}
+@media screen and (max-width: 540px) {
+	html {
+		font-size: 84px;
+	}
+}
+@media screen and (max-width: 510px) {
+	html {
+		font-size: 80px;
+	}
+}
+@media screen and (max-width: 480px) {
+	html {
+		font-size: 75px;
+	}
+}
+@media screen and (max-width: 450px) {
+	html {
+		font-size: 70px;
+	}
+}
+@media screen and (max-width: 428px) {
+	html {
+		font-size: 67px;
+	}
+}
+@media screen and (max-width: 414px) {
+	html {
+		font-size: 63px;
+	}
+}
+@media screen and (max-width: 375px) {
+	html {
+		font-size: 58.6px;
+	}
+}
+@media screen and (max-width: 360px) {
+	html {
+		font-size: 56px;
+	}
+}
+@media screen and (max-width: 320px) {
+	html {
+		font-size: 50px;
+	}
+}
+body {
+	width: 100%;
+	height: 100%;
+	font-size: 100px;
+	font-family: 'microsoft yahei', Verdana, Arial, Helvetica, sans-serif;
+	font-size: 0.4rem;
+	overflow: hidden;
+	-webkit-overflow-scrolling: touch;
+}

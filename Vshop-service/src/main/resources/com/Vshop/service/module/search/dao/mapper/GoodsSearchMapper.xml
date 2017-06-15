@@ -1,0 +1,313 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.Vshop.service.module.search.dao.mapper.GoodsSearchMapper">
+	    <resultMap id="BaseResultMap" type="com.Vshop.core.entity.base.Goods">
+        <result column="goods_id" property="goodsId" jdbcType="INTEGER"/>
+        <result column="goods_name" property="goodsName" jdbcType="VARCHAR"/>
+        <result column="goods_subtitle" property="goodsSubtitle" jdbcType="VARCHAR"/>
+        <result column="gc_id" property="gcId" jdbcType="INTEGER"/>
+        <result column="gc_name" property="gcName" jdbcType="VARCHAR"/>
+        <result column="brand_id" property="brandId" jdbcType="INTEGER"/>
+        <result column="brand_name" property="brandName" jdbcType="VARCHAR"/>
+        <result column="type_id" property="typeId" jdbcType="INTEGER"/>
+        <result column="store_id" property="storeId" jdbcType="INTEGER"/>
+        <result column="store_name" property="storeName" jdbcType="VARCHAR"/>
+        <result column="spec_open" property="specOpen" jdbcType="INTEGER"/>
+        <result column="spec_id" property="specId" jdbcType="INTEGER"/>
+        <result column="spec_name" property="specName" jdbcType="VARCHAR"/>
+        <result column="goods_image" property="goodsImage" jdbcType="VARCHAR"/>
+        <result column="goods_image_more" property="goodsImageMore" jdbcType="VARCHAR"/>
+        <result column="goods_store_price" property="goodsStorePrice" jdbcType="DECIMAL"/>
+        <result column="goods_serial" property="goodsSerial" jdbcType="VARCHAR"/>
+        <result column="goods_show" property="goodsShow" jdbcType="INTEGER"/>
+        <result column="goods_click" property="goodsClick" jdbcType="INTEGER"/>
+        <result column="goods_state" property="goodsState" jdbcType="INTEGER"/>
+        <result column="goods_commend" property="goodsCommend" jdbcType="INTEGER"/>
+        <result column="goods_add_time" property="goodsAddTime" jdbcType="BIGINT"/>
+        <result column="goods_keywords" property="goodsKeywords" jdbcType="VARCHAR"/>
+        <result column="goods_description" property="goodsDescription" jdbcType="VARCHAR"/>
+        <result column="goods_body" property="goodsBody" jdbcType="VARCHAR"/>
+        <result column="goods_attr" property="goodsAttr" jdbcType="VARCHAR"/>
+        <result column="goods_spec" property="goodsSpec" jdbcType="VARCHAR"/>
+        <result column="goods_col_img" property="goodsColImg" jdbcType="VARCHAR"/>
+        <result column="goods_starttime" property="goodsStarttime" jdbcType="BIGINT"/>
+        <result column="goods_endtime" property="goodsEndtime" jdbcType="BIGINT"/>
+        <result column="goods_form" property="goodsForm" jdbcType="INTEGER"/>
+        <result column="transport_id" property="transportId" jdbcType="INTEGER"/>
+        <result column="py_price" property="pyPrice" jdbcType="DECIMAL"/>
+        <result column="kd_price" property="kdPrice" jdbcType="DECIMAL"/>
+        <result column="es_price" property="esPrice" jdbcType="DECIMAL"/>
+        <result column="city_id" property="cityId" jdbcType="INTEGER"/>
+        <result column="city_name" property="cityName" jdbcType="VARCHAR"/>
+        <result column="province_id" property="provinceId" jdbcType="INTEGER"/>
+        <result column="province_name" property="provinceName" jdbcType="VARCHAR"/>
+        <result column="goods_close_reason" property="goodsCloseReason" jdbcType="VARCHAR"/>
+        <result column="goods_store_state" property="goodsStoreState" jdbcType="INTEGER"/>
+        <result column="commentnum" property="commentnum" jdbcType="INTEGER"/>
+        <result column="salenum" property="salenum" jdbcType="INTEGER"/>
+        <result column="goods_collect" property="goodsCollect" jdbcType="INTEGER"/>
+        <result column="goods_transfee_charge" property="goodsTransfeeCharge" jdbcType="INTEGER"/>
+        <result column="store_class_id" property="storeClassId" jdbcType="INTEGER"/>
+        <result column="gc_idpath" property="classPath" jdbcType="VARCHAR"/>
+        <result column="goodsTotalStorage" property="goodsTotalStorage" jdbcType="INTEGER"/>
+    </resultMap>
+    
+    <sql id="whereStatement">
+		<where>
+			1 = 1
+			<if test="condition.goodsName != null">
+				and goods_name like CONCAT('%',#{condition.goodsName},'%')
+			</if>
+			<if test="condition.storeId != null">
+				and store_id = #{condition.storeId}
+			</if>
+			<if test="condition.goodsState != null">
+				and goods_state = #{condition.goodsState}
+			</if>
+			<if test="condition.goodsShow != null">
+				and goods_show = #{condition.goodsShow}
+			</if>
+			<if test="condition.goodsStoreState != null">
+				and goods_store_state = #{condition.goodsStoreState}
+			</if>
+			<if test="condition.gcId != null">
+				and gc_id = #{condition.gcId}
+			</if>
+			<if test="condition.storeClassId != null">
+				and store_class_id = #{condition.storeClassId}
+			</if>
+			<if test="condition.typeId != null">
+				and type_id = #{condition.typeId}
+			</if>
+			<if test="condition.cityId != null">
+				and city_id = #{condition.cityId}
+			</if>
+			<if test="condition.provinceId != null">
+				and province_id = #{condition.provinceId}
+			</if>
+			<if test="condition.goodsCommend != null">
+				and goods_commend = #{condition.goodsCommend}
+			</if>
+			<if test="condition.goodsSerial != null">
+				and goods_serial like
+				CONCAT('%',CONCAT(',',#{condition.goodsSerial},','),'%')
+			</if>
+		</where>
+	</sql>
+	
+	<sql id="whereStatement2">
+		<where>
+			1 = 1
+			<if test="goodsName != null">
+				and goods_name like CONCAT('%',#{goodsName},'%')
+			</if>
+			<if test="storeId != null">
+				and store_id = #{storeId}
+			</if>
+			<if test="goodsState != null">
+				and goods_state = #{goodsState}
+			</if>
+			<if test="goodsShow != null">
+				and goods_show = #{goodsShow}
+			</if>
+			<if test="goodsStoreState != null">
+				and goods_store_state = #{goodsStoreState}
+			</if>
+			<if test="gcId != null">
+				and gc_id = #{gcId}
+			</if>
+			<if test="storeClassId != null">
+				and store_class_id = #{storeClassId}
+			</if>
+			<if test="typeId != null">
+				and type_id = #{typeId}
+			</if>
+			<if test="cityId != null">
+				and city_id = #{cityId}
+			</if>
+			<if test="provinceId != null">
+				and province_id = #{provinceId}
+			</if>
+			<if test="goodsCommend != null">
+				and goods_commend = #{goodsCommend}
+			</if>
+			<if test="goodsSerial != null">
+				and goods_serial like
+				CONCAT('%',CONCAT(',',#{goodsSerial},','),'%')
+			</if>
+		</where>
+	</sql>
+	
+	<sql id="orderBy">
+		<if test="condition.orderBy == 0">
+			order by sg.goods_add_time desc
+		</if>
+		<if test="condition.orderBy == 1">
+			order by sg.goods_add_time asc
+		</if>
+	</sql>
+    
+	<!-- 分页查询count -->
+	<select id="findGoodPagerListCount" resultType="int" parameterType="com.Vshop.core.entity.base.Goods">
+		select
+		count(goods_id)
+		from shop_goods
+		<include refid="whereStatement2" />
+	</select>
+	
+	<select id="findGoodPagerList" resultMap="BaseResultMap" parameterType="com.Vshop.service.utils.page.Pager">
+		select a.* from(
+			select
+			sg.*,sgs.goodsTotalStorage,sgc.gc_idpath 
+			from (
+				(select * from shop_goods <include refid="whereStatement" />) sg 
+				join 
+				(select sum(spec_goods_storage) goodsTotalStorage,goods_id from shop_goods_spec group by goods_id) sgs
+				on sg.goods_id=sgs.goods_id
+				join
+				shop_goods_class sgc
+				on sg.gc_id=sgc.gc_id
+				)
+				<include refid="orderBy"/>
+		) a 
+		<!-- limit #{start}, #{pageSize} -->
+	</select>
+	
+	    <!--
+     * 通过一定条件的条件,查找某个商品,
+	 * 这个方法只会返回一个商品,
+	 * 使用方法:
+	 * 新建一个goods对象,在这个对象中
+	 * 一定要设置goodsid这个属性
+	 * 可以选择set属性:storeId,goodsState
+	 * 使用这个方法会根据你所设置的条件去查询,
+	 * 如果没有返回null 
+	 -->
+    <select id="findOneGoodByCondition" resultMap="BaseResultMap" parameterType="com.Vshop.core.entity.base.Goods">
+        select
+        sg.*,sgc.gc_idpath 
+        from shop_goods sg
+			join
+		shop_goods_class sgc
+		on sg.gc_id=sgc.gc_id
+		WHERE goods_id = #{goodsId}
+		<if test="storeId != null">
+			and store_id = #{storeId}
+		</if>
+		<if test="goodsState != null">
+			and goods_state = #{goodsState}
+		</if>
+		<if test="goodsShow != null">
+			and goods_show = #{goodsShow}
+		</if>
+		<if test="goodsStoreState != null">
+			and goods_store_state = #{goodsStoreState}
+		</if>
+    </select>
+
+	<resultMap id="SpecResultMap" type="com.Vshop.core.entity.vo.SpecVo">
+        <result column="sp_id" property="spId"/>
+        <result column="sp_name" property="spName"/>
+        <collection property="specValueList" ofType="com.Vshop.core.entity.base.SpecValue">
+        	<result column="sp_value_id" property="spValueId"/>
+        	<result column="sp_value_name" property="spValueName"/>
+        </collection>
+	</resultMap>
+	
+	<select id="getSpecListByKeyword" parameterType="String" resultMap="SpecResultMap">
+		select ss.sp_id, ss.sp_name, ssv.sp_value_id, ssv.sp_value_name from 
+			(select count(sg.goods_id) goodsCount, sg.type_id from shop_goods sg where sg.goods_name like CONCAT('%',#{keyword},'%') group by sg.type_id order by goodsCount desc limit 1) a
+		join 
+			shop_type_spec sts
+		on a.type_id=sts.type_id
+		join 
+			shop_spec ss 
+		on sts.sp_id=ss.sp_id
+		join 
+			shop_spec_value ssv
+		on ss.sp_id=ssv.sp_id
+	</select>
+	
+	<select id="getSpecListByGcId" parameterType="int" resultMap="SpecResultMap">
+		select ss.sp_id, ss.sp_name, ssv.sp_value_id, ssv.sp_value_name from 
+			(select sgc.type_id from shop_goods_class sgc where sgc.gc_id=#{gcId}) a
+		join 
+			shop_type_spec sts
+		on a.type_id=sts.type_id
+		join 
+			shop_spec ss 
+		on sts.sp_id=ss.sp_id
+		join 
+			shop_spec_value ssv
+		on ss.sp_id=ssv.sp_id
+	</select>
+	
+	<select id="getSpecListByTypeId" parameterType="int" resultMap="SpecResultMap">
+		select ss.sp_id, ss.sp_name, ssv.sp_value_id, ssv.sp_value_name from 
+			(select stc.type_id,stc.sp_id from shop_type_spec stc where stc.type_id=#{typeId}) a
+		join 
+			shop_spec ss 
+		on a.sp_id=ss.sp_id
+		join 
+			shop_spec_value ssv
+		on ss.sp_id=ssv.sp_id
+	</select>
+	
+	<select id="getSpecListByBrandId" parameterType="int" resultMap="SpecResultMap">
+		select ss.sp_id, ss.sp_name, ssv.sp_value_id, ssv.sp_value_name from 
+			(select stb.type_id from shop_type_brand stb where stb.brand_id=#{brandId}) a
+		join 
+			shop_type_spec sts
+		on a.type_id=sts.type_id
+		join 
+			shop_spec ss 
+		on sts.sp_id=ss.sp_id
+		join 
+			shop_spec_value ssv
+		on ss.sp_id=ssv.sp_id
+	</select>
+	
+    <resultMap id="BrandResultMap" type="com.Vshop.core.entity.base.Brand" >
+        <id column="brand_id" property="brandId" jdbcType="INTEGER" />
+        <result column="brand_name" property="brandName" jdbcType="VARCHAR" />
+        <result column="brand_class" property="brandClass" jdbcType="VARCHAR" />
+        <result column="brand_pic" property="brandPic" jdbcType="VARCHAR" />
+        <result column="brand_sort" property="brandSort" jdbcType="INTEGER" />
+        <result column="brand_recommend" property="brandRecommend" jdbcType="INTEGER" />
+        <result column="store_id" property="storeId" jdbcType="INTEGER" />
+        <result column="brand_apply" property="brandApply" jdbcType="INTEGER" />
+        <result column="class_id" property="classId" jdbcType="INTEGER" />
+        <result column="is_del" property="isDel" jdbcType="TINYINT" />
+        <result column="created_time" property="createdTime" jdbcType="BIGINT" />
+        <result column="updated_time" property="updatedTime" jdbcType="BIGINT" />
+    </resultMap>
+		
+	<select id="getBrandListByKeyword" parameterType="String" resultMap="BrandResultMap">
+   		select sb.* from 
+			(select count(sg.goods_id) goodsCount, sg.type_id from shop_goods sg where sg.goods_name like CONCAT('%',#{keyword},'%') group by sg.type_id order by goodsCount desc limit 1) a
+		join 
+			shop_type_brand stb
+			on a.type_id=stb.type_id
+		join
+		    shop_brand sb 
+		    on stb.brand_id=sb.brand_id
+		where sb.is_del=0
+	</select>
+	
+	<select id="getBrandListByGcId" parameterType="int" resultMap="BrandResultMap">
+        select
+         *
+        from shop_brand where class_id = #{classId}
+        and brand_apply = 1 and is_del = 0
+	</select>
+	
+	<select id="getBrandListByTypeId" parameterType="int" resultMap="BrandResultMap">
+        SELECT
+        sb.*
+        FROM (select stb.brand_id from shop_type_brand stb where stb.type_id=#{typeId}) a 
+        join 
+        shop_brand sb 
+        on a.brand_id=sb.brand_id
+	</select>
+	
+</mapper>

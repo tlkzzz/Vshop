@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.Vshop.service.module.operation.dao.mapper.ActivityMapper">
+    <resultMap id="BaseResultMap" type="com.Vshop.core.entity.base.Activity" >
+        <id column="activity_id" property="activityId" jdbcType="INTEGER" />
+        <result column="activity_title" property="activityTitle" jdbcType="VARCHAR" />
+        <result column="activity_type" property="activityType" jdbcType="VARCHAR" />
+        <result column="activity_banner" property="activityBanner" jdbcType="VARCHAR" />
+        <result column="activity_style" property="activityStyle" jdbcType="VARCHAR" />
+        <result column="activity_desc" property="activityDes" jdbcType="VARCHAR" />
+        <result column="activity_start_date" property="activityStartDate" jdbcType="INTEGER" />
+        <result column="activity_end_date" property="activityEndDate" jdbcType="INTEGER" />
+        <result column="activity_sort" property="activitySort" jdbcType="TINYINT" />
+        <result column="activity_state" property="activityState" jdbcType="INTEGER" />
+        <result column="is_del" property="isDel" jdbcType="TINYINT" />
+        <result column="created_time" property="createdTime" jdbcType="BIGINT" />
+        <result column="updated_time" property="updatedTime" jdbcType="BIGINT" />
+    </resultMap>
+
+    <sql id="Base_Column_List" >
+        activity_id, activity_title,activity_type, activity_banner, activity_style,activity_desc,
+        activity_start_date,activity_end_date, activity_sort, activity_state,is_del,created_time,updated_time
+    </sql>
+
+   <select id="findList" resultMap="BaseResultMap">
+       SELECT
+       <include refid="Base_Column_List" />
+       FROM shop_activity
+       where  is_del=0
+       order by activity_sort
+   </select>
+
+</mapper>

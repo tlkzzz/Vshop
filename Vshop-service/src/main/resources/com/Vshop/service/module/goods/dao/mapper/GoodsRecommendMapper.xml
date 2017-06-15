@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.Vshop.service.module.goods.dao.mapper.GoodsRecommendMapper">
+    <resultMap id="BaseResultMap" type="com.Vshop.core.entity.base.GoodsRecommend" >
+        <id column="recommend_id" property="reCommendid" jdbcType="INTEGER" />
+        <result column="recommend_name" property="recommendName" jdbcType="VARCHAR" />
+        <result column="recommend_info" property="recommendInfo" jdbcType="VARCHAR" />
+        <result column="recommend_use" property="recommendUse" jdbcType="INTEGER" />
+        <result column="create_time" property="createTime" jdbcType="BIGINT" />
+    </resultMap>
+    
+    <sql id="Base_Column_List" >
+        recommend_id,recommend_name,recommend_info,recommend_use,create_time
+    </sql>
+    
+    <sql id="whereStatement">
+		<where>
+			1 = 1
+			<if test="recommendName != null and recommendName!='' ">
+				and recommend_name = #{recommendName}
+			</if>
+			<if test="recommendUse != null">
+				and recommend_use = #{recommendUse}
+			</if>
+		</where>
+	</sql>
+	
+    <insert id="save" parameterType="com.Vshop.core.entity.base.GoodsRecommend" useGeneratedKeys="true" keyProperty="reCommendid">
+        INSERT INTO shop_goods_recommend(recommend_name, recommend_info,recommend_use,create_time)
+        VALUES(#{recommendName},#{recommendInfo},#{recommendUse},#{createTime});
+    </insert>
+    
+    <update id="update" parameterType="com.Vshop.core.entity.base.GoodsRecommend">
+        update shop_goods_recommend
+        <set>
+            <if test="recommendName != null">
+                recommend_name = #{recommendName},
+            </if>
+            <if test="recommendInfo != null">
+                recommend_info = #{recommendInfo},
+            </if>
+            <if test="recommendUse != null">
+                recommend_use = #{recommendUse},
+            </if>
+        </set>
+        where recommend_id=#{reCommendid}
+    </update>
+    <delete id="delete" parameterType="java.lang.Integer">
+        delete from shop_goods_recommend where recommend_name = #{reCommendid}
+    </delete>
+
+    <select id="findById" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List" />
+        from shop_goods_recommend where recommend_use=1 and  recommend_id=#{reCommendid}
+    </select>
+	
+	<!-- 查询所有的商品类型 -->
+    <select id="findList" resultMap="BaseResultMap" >
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM shop_goods_recommend
+        order by recommend_id
+    </select>
+
+    <!--关联查询
+    <select id="selectTypeFetchOther" parameterType="int" resultMap="BaseVOMap" >
+    
+    </select>-->
+
+    <select id="findCount" resultType="int" parameterType="com.Vshop.core.entity.base.GoodsRecommend">
+        select count(*) from shop_goods_recommend
+    </select>
+
+    <select id="findPageList" resultMap="BaseResultMap" parameterType="com.Vshop.service.utils.page.Pager">
+        select a.* from(
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM shop_goods_recommend
+        order by recommend_id) a
+    </select>
+    
+    <!--通过商品栏目名称查找商品栏目-->
+    <select id="findBycolum" resultMap="BaseResultMap"  parameterType="string">
+        select
+        <include refid="Base_Column_List" />
+        from shop_goods_recommend where recommend_use=1 and  recommend_name=#{recommendName}
+    </select>
+</mapper>

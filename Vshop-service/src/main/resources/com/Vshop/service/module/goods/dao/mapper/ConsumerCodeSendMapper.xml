@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.Vshop.service.module.goods.dao.mapper.ConsumerCodeSendMapper">
+
+	<resultMap id="BaseResultMap" type="com.Vshop.core.entity.base.ConsumerCodeSend" >
+        <id column="consumer_code_id" property="consumerCodeId" jdbcType="INTEGER" />
+        <result column="consumer_code_bunch" property="consumerCodeBunch" jdbcType="VARCHAR"/>
+        <result column="code_source" property="codeSource" jdbcType="INTEGER" />
+        <result column="send_user" property="sendUser" jdbcType="INTEGER" />
+        <result column="order_id" property="orderId" jdbcType="INTEGER" />
+        <result column="goods_id" property="goodsId" jdbcType="INTEGER" />
+        <result column="goods_amount" property="goodsAmount" jdbcType="DECIMAL" />
+        <result column="validity_status" property="validityStatus" jdbcType="INTEGER" />
+        <result column="validity_time" property="validityTime" jdbcType="INTEGER" />
+        <result column="validity_endtime" property="validityEndTime" jdbcType="BIGINT" />
+        <result column="send_time" property="sendTime" jdbcType="BIGINT" />
+        <result column="receive_time" property="receiveTime" jdbcType="BIGINT" />
+        <result column="code_status" property="codeStatus" jdbcType="INTEGER" />
+        <result column="order_sn" property="orderSn" jdbcType="VARCHAR" />
+    </resultMap>
+
+	<sql id="BaseWhereSql">
+    	<where>
+    		1=1
+    		<if test="condition.consumerCodeBunch != null">
+    			and consumer_code_bunch = #{condition.consumerCodeBunch}
+    		</if>
+    		<if test="condition.sendUser != null">
+    			and send_user = #{condition.sendUser}
+    		</if>
+    		<if test="condition.orderId != null">
+    			and order_id = #{condition.orderId}
+    		</if>
+    		<if test="condition.goodsId != null">
+    			and goods_id = #{condition.goodsId}
+    		</if>
+    		<if test="condition.validityStatus != null">
+    			and validity_status = #{condition.validityStatus}
+    		</if>
+    		<if test="condition.validityTime != null">
+    			and validity_time = #{condition.validityTime}
+    		</if>
+    		<if test="condition.validityTimeStart != null">
+    			and validity_time &gt;= #{condition.validityTimeStart}
+    		</if>
+    		<if test="condition.validityTimeEnd != null">
+    			and validity_time &lt;= #{condition.validityTimeEnd}
+    		</if>
+    		<if test="condition.validityEndTimeStart != null">
+    			and validity_endtime &gt;= #{condition.validityEndTimeStart}
+    		</if>
+    		<if test="condition.validityEndTimeEnd != null">
+    			and validity_endtime &lt;= #{condition.validityEndTimeEnd}
+    		</if>
+    		<if test="condition.sendTimeStart != null">
+    			and send_time &gt;= #{condition.sendTimeStart}
+    		</if>
+    		<if test="condition.sendTimeEnd != null">
+    			and send_time &lt;= #{condition.sendTimeEnd}
+    		</if>
+    		<if test="condition.receiveTimeStart != null">
+    			and receive_time &gt;= #{condition.receiveTimeStart}
+    		</if>
+    		<if test="condition.receiveTimeEnd != null">
+    			and receive_time &lt;= #{condition.receiveTimeEnd}
+    		</if>
+    		<if test="condition.codeStatus != null">
+    			and code_status=#{condition.codeStatus}
+    		</if>
+    		<if test="condition.orderSn != null">
+				and order_sn=#{condition.orderSn}
+			</if>
+    	</where>
+    </sql>
+    
+	<sql id="Base_Column_List" >
+        consumer_code_id, consumer_code_bunch, code_source, send_user, order_id, goods_id, goods_amount, 
+        validity_status, validity_time, validity_endtime, send_time, receive_time, code_status, order_sn 
+    </sql>
+
+	<insert id="save" parameterType="com.Vshop.core.entity.base.ConsumerCodeSend">
+        INSERT INTO shop_consumer_codesend (consumer_code_bunch, send_user, order_id, goods_id, goods_amount, 
+        validity_status, validity_time, validity_endtime, send_time, receive_time, code_status, order_sn) 
+        VALUES (#{consumerCodeBunch}, #{sendUser}, #{orderId}, #{goodsId}, #{goodsAmount}, 
+        #{validityStatus}, #{validityTime}, #{validityEndTime}, #{sendTime}, #{receiveTime}, #{codeStatus}, #{orderSn});         
+    </insert>
+    
+    <update id="updateById" parameterType="com.Vshop.core.entity.base.ConsumerCodeSend">
+        update shop_consumer_codesend set code_status = #{codeStatus}, receive_time = #{receiveTime} where consumer_code_id = #{consumerCodeId}
+    </update>
+    
+    <update id="updateByCode" parameterType="com.Vshop.core.entity.base.ConsumerCodeSend">
+        update shop_consumer_codesend set code_status = #{codeStatus}, receive_time = #{receiveTime} where consumer_code_bunch = #{consumerCodeBunch}
+    </update>
+    
+    <select id="findById" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        SELECT
+        <include refid="Base_Column_List" />
+        from shop_consumer_codesend where consumer_code_id = #{consumerCodeId}
+    </select>
+	
+	<select id="findByCode" resultMap="BaseResultMap" parameterType="java.lang.String">
+        SELECT
+        <include refid="Base_Column_List" />
+        from shop_consumer_codesend where consumer_code_bunch = #{consumerCodeBunch}
+    </select>
+    
+    <select id="countById" resultType="int" parameterType="java.lang.Integer">
+        SELECT count(1) FROM shop_consumer_codesend where consumer_code_id = #{consumerCodeId}
+    </select>
+    
+    <select id="countByCode" resultType="int" parameterType="java.lang.String">
+        SELECT count(1) FROM shop_consumer_codesend where consumer_code_bunch = #{consumerCodeBunch}
+    </select>
+    
+    <select id="findPageList" resultMap="BaseResultMap" parameterType="com.Vshop.service.utils.page.Pager">
+        SELECT a.* from (
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM shop_consumer_codesend
+        <include refid="BaseWhereSql" />
+        order by send_time desc, order_id, goods_id) a 
+    </select>
+    
+</mapper>

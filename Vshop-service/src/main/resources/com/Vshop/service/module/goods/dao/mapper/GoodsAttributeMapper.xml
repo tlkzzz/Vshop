@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.Vshop.service.module.goods.dao.mapper.GoodsAttributeMapper">
+    <resultMap id="BaseResultMap" type="com.Vshop.core.entity.GoodsAttribute" >
+        <id column="attr_id" property="attrId" jdbcType="INTEGER" />
+        <result column="attr_name" property="attrName" jdbcType="VARCHAR" />
+        <result column="type_id" property="typeId" jdbcType="INTEGER" />
+        <result column="attr_value" property="attrValue" jdbcType="VARCHAR" />
+        <result column="attr_show" property="attrShow" jdbcType="INTEGER" />
+        <result column="attr_sort" property="attrSort" jdbcType="INTEGER" />
+        <result column="is_del" property="isDel" jdbcType="TINYINT" />
+        <result column="create_time" property="createTime" jdbcType="BIGINT" />
+        <result column="update_time" property="updateTime" jdbcType="BIGINT" />
+    </resultMap>
+
+    <resultMap id="BaseResultMap1" type="com.Vshop.core.entity.GoodsAttribute" >
+        <id column="attr_id" property="attrId" jdbcType="INTEGER" />
+        <result column="attr_name" property="attrName" jdbcType="VARCHAR" />
+        <result column="type_id" property="typeId" jdbcType="INTEGER" />
+        <result column="attr_value" property="attrValue" jdbcType="VARCHAR" />
+        <result column="attr_show" property="attrShow" jdbcType="INTEGER" />
+        <result column="attr_sort" property="attrSort" jdbcType="INTEGER" />
+        <result column="is_del" property="isDel" jdbcType="TINYINT" />
+        <result column="create_time" property="createTime" jdbcType="BIGINT" />
+        <result column="update_time" property="updateTime" jdbcType="BIGINT" />
+        <collection property="avList" ofType="com.Vshop.core.entity.GoodsAttribute"
+                    column="attr_id" javaType="arraylist"
+                    select="com.Vshop.service.module.goods.dao.mapper.GoodsAttributeValueMapper.findListByAttr">
+        </collection>
+    </resultMap>
+
+    <sql id="Base_Column_List" >
+        attr_id, attr_name, type_id, attr_value, attr_show,is_del,attr_sort
+    </sql>
+    <insert id="save" parameterType="com.Vshop.core.entity.GoodsAttribute" useGeneratedKeys="true" keyProperty="attrId">
+        INSERT INTO shop_attribute(attr_sort, attr_name, type_id, attr_value,attr_show,is_del,create_time)
+        VALUES(#{attrSort},#{attrName},#{typeId},#{attrValue},#{attrShow},0,now());
+    </insert>
+    <update id="update" parameterType="com.Vshop.core.entity.GoodsAttribute">
+        update shop_attribute
+        <set>
+            <if test="attrName != null and attrName != ''">
+                attr_name = #{attrName},
+            </if>
+            <if test="typeId != null">
+                type_id = #{typeId},
+            </if>
+            <if test="attrValue != null and attrValue != ''">
+                attr_value = #{attrValue},
+            </if>
+            <if test="attrShow != null">
+                attr_show = #{attrShow},
+            </if>
+            <if test="attrSort != null">
+                attr_sort = #{attrSort}
+            </if>
+        </set>
+        where attr_id = #{attrId}
+    </update>
+    <delete id="delete" parameterType="java.lang.Integer">
+        delete from shop_attribute where attr_id=#{attrId}
+    </delete>
+
+    <select id="findById" resultMap="BaseResultMap1" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List" />
+        from shop_attribute where attr_id=#{attrId}
+    </select>
+
+    <select id="findList" resultMap="BaseResultMap" parameterType="com.Vshop.core.entity.GoodsAttribute">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM shop_attribute
+        where  is_del=0
+    </select>
+
+    <insert id="batchSave" parameterType="java.util.List">
+        INSERT INTO shop_attribute(attr_sort, attr_name, type_id, attr_value,attr_show,is_del,create_time)
+        VALUES
+        <foreach collection="list" item="item" separator=",">
+            (#{item.attrSort},#{item.attrName},#{item.typeId},#{item.attrValue},#{item.attrShow},0,now())
+        </foreach>
+    </insert>
+
+    <select id="findListByType" resultMap="BaseResultMap1" parameterType="int">
+        SELECT
+        attr_id, attr_name, type_id, attr_value, attr_show,is_del,attr_sort
+        FROM shop_attribute
+        where  type_id = #{typeId}
+    </select>
+
+    <delete id="deleteBatch" parameterType="int">
+        delete from shop_attribute where type_id = #{typeId}
+    </delete>
+
+    <update id="deleteByType" parameterType="int">
+        delete from shop_attribute where type_id = #{typeId}
+    </update>
+
+    <update id="deleteBatchByType" parameterType="java.lang.String">
+        delete from shop_attribute where type_id in (${ids})
+    </update>
+    
+    <select id="findByType" resultMap="BaseResultMap" parameterType="int">
+        SELECT 
+			attribute.attr_id as attr_id, 
+			attribute.attr_name as attr_name
+		FROM shop_attribute AS attribute
+		WHERE attribute.type_id = #{typeId} 
+ 		ORDER BY attribute.attr_sort asc
+
+    </select>
+    
+    <select id="findDetailListByType" resultMap="BaseResultMap" parameterType="int">
+        SELECT 
+			attribute.attr_id as attr_id, 
+			attribute.attr_name as attr_name, 
+			attribute_value.attr_value_id as attr_value_id, 
+			attribute_value.attr_value_name as attr_value_name 
+		FROM shop_attribute AS attribute
+ 			INNER JOIN shop_attribute_value AS attribute_value
+ 			ON attribute.attr_id=attribute_value.attr_id 
+		WHERE attribute.type_id = #{typeId} 
+ 		ORDER BY attribute.attr_sort asc, 
+				attribute_value.attr_value_sort asc, 
+				attribute_value.attr_value_id asc 
+
+    </select>
+</mapper>

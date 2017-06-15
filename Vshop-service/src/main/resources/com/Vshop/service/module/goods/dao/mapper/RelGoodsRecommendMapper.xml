@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.Vshop.service.module.goods.dao.mapper.RelGoodsRecommendMapper">
+    <resultMap id="BaseResultMap" type="com.Vshop.core.entity.base.RelGoodsRecommend" >
+        <id column="rel_id" property="relId" jdbcType="INTEGER" />
+        <result column="recommend_id" property="reCommendId" jdbcType="INTEGER" />
+        <result column="goods_id" property="goodsId" jdbcType="INTEGER" />
+        <association property="goods" column="goodsid"   resultMap="com.Vshop.service.module.goods.dao.mapper.GoodsMapper.BaseResultMap"/>
+    </resultMap>
+    
+    <sql id="Base_Column_List" >
+        rel_id,recommend_id,goods_id
+    </sql>
+    
+    
+    
+    <insert id="save" parameterType="com.Vshop.core.entity.base.RelGoodsRecommend" useGeneratedKeys="true" keyProperty="relId">
+        INSERT INTO shop_rel_goods_recommend(recommend_id,goods_id)
+        VALUES(#{reCommendId},#{goodsId});
+    </insert>
+    
+    <insert id="saveStoreIdGoodsId" parameterType="com.Vshop.core.entity.base.RelGoodsRecommend" useGeneratedKeys="true" keyProperty="relId">
+        INSERT INTO shop_rel_goods_recommend(recommend_id,goods_id,store_id)
+        VALUES(#{reCommendId},#{goodsId},#{storeId});
+    </insert>
+   
+    <delete id="delete" parameterType="java.lang.Integer">
+        delete from shop_rel_goods_recommend where rel_id = #{relId}
+    </delete>
+    
+    <delete id="deleteByGoodsIdAndStoreId" parameterType="com.Vshop.core.entity.base.RelGoodsRecommend">
+        delete from shop_rel_goods_recommend where goods_id = #{goodsId} and store_id = #{storeId} and recommend_id = #{reCommendId}
+    </delete>
+    
+    <select id="findByStoreGoodsIds" parameterType="com.Vshop.core.entity.base.RelGoodsRecommend" resultMap="BaseResultMap">
+    	select rel_id , recommend_id , goods_id, store_id from shop_rel_goods_recommend where 1 = 1
+    	 <if test='goodsId!=null and goodsId != ""'>
+    	 	and goods_id = #{goodsId}
+    	 </if> 
+    	 <if test='storeId!=null and storeId != ""'>
+    	 	and store_id = #{storeId}
+    	 </if>
+    	 <if test='reCommendId!=null and reCommendId != ""'>
+    	 	and recommend_id = #{reCommendId}
+    	 </if> 
+    </select>
+    
+      <!-- 获取商品的关联数据-->
+    <select id="findgoodsList" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+       select sr.*,sg.* from shop_rel_goods_recommend sr left join shop_goods sg on 
+       sr.goods_id=sg.goods_id where 
+       
+           sr.recommend_id=#{reCommendId}
+    		
+      
+    </select>
+    
+    <select id="findStoregoodsList" resultMap="BaseResultMap" >
+       select sr.*,sg.* from shop_rel_goods_recommend sr left join shop_goods sg on 
+       sr.goods_id=sg.goods_id where   sr.recommend_id=#{0} and  sr.store_id =#{1}
+    	
+    		
+    		
+    		
+      
+    </select>
+    
+      <!-- 获取商品ids-->
+    <select id="findgoodsids" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+          select sr.* from shop_rel_goods_recommend sr where sr.recommend_id=#{reCommendId}
+    </select>
+    
+    <select id="findByStoreGoodsId" parameterType="com.Vshop.core.entity.base.RelGoodsRecommend" resultMap="BaseResultMap">
+    	select recommend_id , goods_id , store_id from shop_rel_goods_recommend where 1 = 1
+    	 <if test="goodsId!=null">
+    	 	and goods_id = #{goodsId}
+    	 </if> 
+    	 <if test="storeId!=null">
+    	 	and store_id = #{storeId}
+    	 </if>
+    	 <if test="reCommendId!=null">
+    	 	and recommend_id = #{reCommendId}
+    	 </if> 
+    </select>
+    
+    
+    
+</mapper>

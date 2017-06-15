@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.Vshop.service.module.trade.dao.mapper.PredepositRechargeMapper">
+	<resultMap id="BaseResultMap" type="com.Vshop.core.entity.base.PredepositRecharge">
+		<id column="pdr_id" property="pdrId" jdbcType="INTEGER" />
+		<result column="pdr_sn" property="pdrSn" jdbcType="VARCHAR" />
+		<result column="pdr_member_id" property="pdrMemberId" jdbcType="INTEGER" />
+		<result column="pdr_member_name" property="pdrMemberName" jdbcType="VARCHAR" />
+		<result column="pdr_amount" property="pdrAmount" jdbcType="DECIMAL" />
+		<result column="pdr_payment_code" property="pdrPaymentCode" jdbcType="VARCHAR" />
+		<result column="pdr_payment_name" property="pdrPaymentName" jdbcType="VARCHAR" />
+		<result column="pdr_trade_sn" property="pdrTradeSn" jdbcType="VARCHAR" />
+		<result column="create_time" property="createTime" jdbcType="BIGINT" />
+		<result column="pdr_payment_state" property="pdrPaymentState" jdbcType="VARCHAR" />
+		<result column="pdr_payment_time" property="pdrPaymentTime" jdbcType="BIGINT" />
+		<result column="pdr_admin" property="pdrAdmin" jdbcType="VARCHAR" />
+	</resultMap>
+	
+	<!-- 全部查询字段 -->
+	<sql id="Base_Column_List">
+		pdr_id, pdr_sn, pdr_member_id, pdr_member_name, pdr_amount, pdr_payment_code, pdr_payment_name,
+		pdr_trade_sn, create_time, pdr_payment_state, pdr_payment_time, pdr_admin
+	</sql>
+	
+	<!-- 保存预存款充值表 -->
+	<insert id="savePdr" parameterType="com.Vshop.core.entity.base.PredepositRecharge" useGeneratedKeys="true" keyProperty="pdrId">
+		insert into shop_pd_recharge
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			pdr_sn, pdr_member_id, pdr_member_name, pdr_amount,create_time,pdr_payment_state,
+			<if test="pdrPaymentCode != null and pdrPaymentCode != '' ">
+				pdr_payment_code,
+			</if>
+			<if test="pdrPaymentName != null and pdrPaymentName != '' ">
+				pdr_payment_name,
+			</if>
+			<if test="pdrTradeSn != null and pdrTradeSn != '' ">
+				pdr_trade_sn,
+			</if>
+			<if test="pdrPaymentTime != null ">
+				pdr_payment_time,
+			</if>
+			<if test="pdrAdmin != null and pdrAdmin != '' ">
+				pdr_admin,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			#{pdrSn}, #{pdrMemberId}, #{pdrMemberName}, #{pdrAmount}, #{createTime}, #{pdrPaymentState},
+			<if test="pdrPaymentCode != null and pdrPaymentCode != '' ">
+				#{pdrPaymentCode},
+			</if>
+			<if test="pdrPaymentName != null and pdrPaymentName != '' ">
+				#{pdrPaymentName},
+			</if>
+			<if test="pdrTradeSn != null and pdrTradeSn != '' ">
+				#{pdrTradeSn},
+			</if>
+			<if test="pdrPaymentTime != null ">
+				#{pdrPaymentTime},
+			</if>
+			<if test="pdrAdmin != null and pdrAdmin != '' ">
+				#{pdrAdmin},
+			</if>
+		</trim>
+	</insert>
+	
+	<!-- 修改预存款充值表 -->
+	<update id="updatePdr" parameterType="com.Vshop.core.entity.base.PredepositRecharge">
+		update shop_pd_recharge
+		<set>
+			<if test="pdrSn != null and pdrSn != '' ">
+				pdr_sn = #{pdrSn},
+			</if>
+			<if test="pdrMemberId != null">
+				pdr_member_id = #{pdrMemberId},
+			</if>
+			<if test="pdrMemberName != null and pdrMemberName != '' ">
+				pdr_member_name = #{pdrMemberName},
+			</if>
+			<if test="pdrAmount != null">
+				pdr_amount = #{pdrAmount},
+			</if>
+			<if test="createTime != null">
+				create_time = #{createTime},
+			</if>
+			<if test="pdrPaymentState != null and pdrPaymentState != '' ">
+				pdr_payment_state = #{pdrPaymentState},
+			</if>
+			<if test="pdrPaymentCode != null and pdrPaymentCode != '' ">
+				pdr_payment_code = #{pdrPaymentCode},
+			</if>
+			<if test="pdrPaymentName != null and pdrPaymentName != '' ">
+				pdr_payment_name = #{pdrPaymentName},
+			</if>
+			<if test="pdrTradeSn != null and pdrTradeSn != '' ">
+				pdr_trade_sn = #{pdrTradeSn},
+			</if>
+			<if test="pdrPaymentTime != null ">
+				pdr_payment_time = #{pdrPaymentTime},
+			</if>
+			<if test="pdrAdmin != null and pdrAdmin != '' ">
+				pdr_admin = #{pdrAdmin},
+			</if>
+		</set>
+		where pdr_id = #{pdrId}
+	</update>
+	
+	<!-- 根据id删除预存款充值表 -->
+	<delete id="deletePdr" parameterType="int">
+		delete from shop_pd_recharge where pdr_id = #{pdrId}
+	</delete>
+	
+	<!-- 根据id查询预存款充值表 -->
+	<select id="findById" parameterType="int" resultMap="BaseResultMap">
+		select <include refid="Base_Column_List" /> from shop_pd_recharge where pdr_id = #{pdrId}
+	</select>
+	
+	<!-- 根据用户id查询预存款充值表 -->
+	<select id="findByMemberId" parameterType="int" resultMap="BaseResultMap">
+		select <include refid="Base_Column_List" /> from shop_pd_recharge where pdr_member_id = #{pdrMemberId}
+	</select>
+	
+	<!-- 根据充值表编号查询预存款充值表信息 -->
+	<select id="findByPdrSn" parameterType="string" resultMap="BaseResultMap">
+		select <include refid="Base_Column_List" /> from shop_pd_recharge where pdr_sn = #{pdrSn}
+	</select>
+</mapper>

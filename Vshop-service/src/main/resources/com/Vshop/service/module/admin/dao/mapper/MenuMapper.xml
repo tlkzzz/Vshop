@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.Vshop.service.module.admin.dao.mapper.MenuClassMapper">
+    <resultMap id="BaseResultMap" type="com.Vshop.core.entity.MenuClass" >
+        <id column="m_id" property="mid" jdbcType="INTEGER" />
+        <result column="m_name" property="mname" jdbcType="VARCHAR" />
+        <result column="m_url" property="murl" jdbcType="VARCHAR" />
+        <result column="m_parent_id" property="mparentid" jdbcType="INTEGER" />
+        <result column="m_sort" property="msort" jdbcType="INTEGER" />
+        <result column="m_level" property="mlevel" jdbcType="INTEGER" />
+        <result column="m_path" property="mpath" jdbcType="VARCHAR" />
+        <result column="m_description" property="mdescription" jdbcType="VARCHAR" />
+    </resultMap>
+
+   <resultMap id="BaseResultMap1" type="com.Vshop.core.entity.vo.MenuClassVo" >
+        <id column="m_id" property="mid" jdbcType="INTEGER" />
+        <result column="has_child" property="hasChild" jdbcType="INTEGER" />
+        <result column="m_name" property="mname" jdbcType="VARCHAR" />
+        <result column="m_url" property="murl" jdbcType="VARCHAR" />
+        <result column="m_parent_id" property="mparentid" jdbcType="INTEGER" />
+        <result column="m_sort" property="msort" jdbcType="INTEGER" />
+        <result column="m_level" property="mlevel" jdbcType="INTEGER" />
+        <result column="m_path" property="mpath" jdbcType="VARCHAR" />
+        <result column="m_description" property="mdescription" jdbcType="VARCHAR" />
+    </resultMap>
+
+    
+
+    <sql id="Base_Column_List" >
+        m_id, m_name, m_url, m_parent_id, m_sort, m_level,m_path,m_description
+    </sql>
+    
+    <sql id="Base_Column_List1" >
+        m_id, m_name, m_url, m_parent_id, m_sort, m_level,m_path,m_description
+    </sql> 
+    <insert id="save" parameterType="com.Vshop.core.entity.MenuClass" useGeneratedKeys="true" keyProperty="mid">
+        INSERT INTO shop_menu( m_name, m_url, m_parent_id, m_sort, m_level,m_path,m_description)
+        VALUES(#{mname},#{murl},#{mparentid},#{msort},#{mlevel},#{mpath},#{mdescription});
+    </insert>
+    <update id="update" parameterType="com.Vshop.core.entity.MenuClass">
+        update shop_menu
+        <set>
+            <if test="mname != null and mname !=''">
+                m_name = #{mname},
+            </if>
+           <if test="murl != null and murl !=''">
+                m_url = #{murl},
+            </if>
+            <if test="mparentid != null">
+                m_parent_id=#{mparentid},
+            </if> 
+            <if test="msort != null">
+                m_sort=#{msort},
+            </if>
+            <if test="mlevel != null">
+                m_level=#{mlevel},
+            </if>
+            <if test="mpath != null and mpath !=''">
+                m_path = #{mpath},
+            </if>
+            <if test="mdescription != null">
+                m_description = #{mdescription}
+            </if> 
+        </set>
+        where m_id=#{mid}
+    </update>
+    
+    <delete id="delete" parameterType="java.lang.Integer">
+        delete from shop_menu  where m_id=#{mid}
+    </delete>
+
+    <select id="findById" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List" />
+        from shop_menu where m_id=#{mid}
+    </select>
+
+     <select id="findPageList" resultMap="BaseResultMap1">
+        SELECT
+        <include refid="Base_Column_List1" />,
+        (select count(1) from shop_menu s1 where s1.m_parent_id=s.m_id) has_child
+        FROM shop_menu s
+        where  s.m_parent_id = 0 order by s.m_sort
+    </select>
+
+    <select id="findList" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM shop_menu
+       
+        order by m_sort
+    </select>
+
+   
+
+    <select id="findCount" resultType="int">
+        select count(*) from shop_menu where  m_parent_id = 0
+    </select>
+
+    <select id="findChildListmap" resultMap="BaseResultMap1" parameterType="map">
+        SELECT
+        <include refid="Base_Column_List1" />,
+        (select count(*) from shop_menu s1 where s1.m_parent_id=s.m_id) has_child
+        FROM shop_menu s
+        where  m_parent_id = #{mparentid} and s.m_id in (select menu_id from
+         shop_role_menu where role_id=#{roleid})
+    </select>
+    
+      <select id="findChildList" resultMap="BaseResultMap1" parameterType="int">
+        SELECT
+        <include refid="Base_Column_List1" />,
+        (select count(*) from shop_menu s1 where s1.m_parent_id=s.m_id) has_child
+        FROM shop_menu s
+        where  m_parent_id = #{mparentid}
+    </select>
+  
+   <!--递归查询所有分类-->
+    <select id="findAll" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM shop_menu
+        order by m_sort
+    </select>
+
+     <select id="findChild" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM shop_menu
+        where  m_parent_id = #{mparentid}  order by m_sort
+    </select>
+    
+     <!-- 修改子类类型 -->
+    <update id="updateChildType" parameterType="com.Vshop.core.entity.MenuClass">
+        UPDATE  shop_menu
+        SET  m_name = #{mname}
+        WHERE m_parent_id = #{mid}
+    </update>
+    
+    <!--根据parentId，得到id plash-->
+    <select id="findbyparentid" parameterType="int" resultType="int">
+        SELECT m_parent_id
+        FROM shop_menu
+        where m_id = #{mparentid}
+    </select>
+    
+    <!--判断是否有其它菜单以本Id，为父id-->
+     <select id="findparentidCount" parameterType="int" resultType="int">
+        select count(*) from shop_menu where  m_parent_id = #{mid}
+     </select>
+    
+</mapper>

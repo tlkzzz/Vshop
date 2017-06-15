@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.Vshop.service.module.member.dao.mapper.MemberGradeMapper">
+	<resultMap id="BaseResultMap" type="com.Vshop.core.entity.base.MemberGrade">
+		<result column="grade_id" property="gradeId" jdbcType="INTEGER" />
+		<result column="grade_name" property="gradeName" jdbcType="VARCHAR" />
+		<result column="integration" property="integration" jdbcType="INTEGER" />
+		<result column="grade_img" property="gradeImg" jdbcType="VARCHAR" />
+		<result column="preferential" property="preferential" jdbcType="INTEGER" />
+		<result column="is_default" property="isDefault" jdbcType="INTEGER" />
+	</resultMap>
+
+	<sql id="Base_Column_List">
+		smg.grade_id, smg.grade_name, smg.integration, smg.grade_img, smg.preferential, smg.is_default
+	</sql>
+
+	<sql id="whereStatement">
+		<where>
+			1 = 1
+			<if test="condition.gradeName != null and condition.gradeName != '' ">
+				and smg.grade_name  like CONCAT('%','${condition.gradeName}','%' )
+			</if>
+		</where>
+	</sql>
+	
+	<sql id="whereStatement2">
+		<where>
+			1 = 1
+			<if test="gradeName != null and gradeName != '' ">
+				and smg.grade_name  like CONCAT('%','${gradeName}','%' )
+			</if>
+		</where>
+	</sql>
+	
+	<!-- 查询默认的会员等级 -->
+	<select id="findDefaultGrade" resultMap="BaseResultMap">
+		select <include refid="Base_Column_List"/> from shop_member_grade smg where smg.is_default = 1
+	</select>
+
+	<!-- 分页查询count -->
+	<select id="findMemberGradeCount" resultType="int" parameterType="com.Vshop.core.entity.base.MemberGrade">
+		select count(1) from shop_member_grade smg
+		<include refid="whereStatement2" />
+	</select>
+
+	<!-- 分页查询List -->
+	<select id="findMemberGradePageList" resultMap="BaseResultMap" parameterType="com.Vshop.service.utils.page.Pager">
+       select <include refid="Base_Column_List"/> from shop_member_grade smg <include refid="whereStatement" />
+    </select>
+    
+	<!-- 根据ID查询实体 -->
+	<select id="findMembeGraderById" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		from shop_member_grade smg where smg.grade_id = #{gradeId,jdbcType=INTEGER}
+	</select>
+
+    <!-- 保存实体 -->
+    <insert id="save" parameterType="com.Vshop.core.entity.base.MemberGrade" useGeneratedKeys="true" keyProperty="gradeId">
+        insert into shop_member_grade 
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+  	      <if test="gradeName != null" >
+	        grade_name,
+	      </if>
+  	      <if test="integration != null" >
+	        integration,
+	      </if>
+  	      <if test="gradeImg != null" >
+	        grade_img,
+	      </if>
+  	      <if test="preferential != null" >
+	        preferential,
+	      </if>
+	      <if test="isDefault != null" >
+	        is_default,
+	      </if>
+	      
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+          <if test="gradeName != null" >
+	        #{gradeName},
+	      </if>
+          <if test="integration != null" >
+	        #{integration},
+	      </if>
+          <if test="gradeImg != null" >
+	        #{gradeImg},
+	      </if>
+          <if test="preferential != null" >
+	        #{preferential},
+	      </if>
+	       <if test="isDefault != null" >
+	        #{isDefault},
+	      </if>
+        </trim>
+    </insert>
+    
+    
+	<!-- 根据ID修改数据 -->
+	<update id="update" parameterType="com.Vshop.core.entity.base.MemberGrade">
+		update shop_member_grade
+		 <set>
+           	<if test="gradeName != null and gradeName != ''">
+           		grade_name = #{gradeName},
+           	</if>
+           	<if test="integration != null">
+           		integration = #{integration},
+           	</if>
+            <if test="gradeImg != '' and gradeImg != null ">
+                grade_img = #{gradeImg},
+            </if>
+            <if test="preferential != null">
+                preferential = #{preferential},
+            </if>
+            <if test="isDefault != null">
+                is_default = #{isDefault}
+            </if>
+            WHERE grade_id = #{gradeId}
+        </set>
+	</update>
+	
+	<!-- 修改所有的默认值为0 -->
+	<update id="updateDefault" parameterType="java.lang.Integer">
+		update shop_member_grade set is_default = 0 where grade_id !=#{gradeId}
+	</update>
+	
+	<!-- 根据ID删除数据 -->
+	<delete id="delete" parameterType="java.lang.Integer">
+		delete from shop_member_grade where grade_id = #{gradeId}
+	</delete>
+
+</mapper>

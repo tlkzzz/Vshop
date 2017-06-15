@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.Vshop.service.module.admin.dao.mapper.AdminMapper" >
+  <resultMap id="BaseResultMap" type="com.Vshop.core.entity.base.Admin" >
+    <result column="admin_id" property="adminId" jdbcType="INTEGER" />
+    <result column="admin_name" property="adminName" jdbcType="VARCHAR" />
+    <result column="admin_password" property="adminPassword" jdbcType="VARCHAR" />
+    <result column="admin_login_time" property="adminLoginTime" jdbcType="BIGINT" />
+    <result column="admin_login_num" property="adminLoginNum" jdbcType="INTEGER" />
+    <result column="admin_is_super" property="adminIsSuper" jdbcType="INTEGER" />
+    <result column="admin_gid" property="adminGid" jdbcType="INTEGER" />
+	<result column="is_del" property="isDel" jdbcType="BIT" />
+	<result column="role_id" property="roleid" jdbcType="VARCHAR" />
+	<result column="supplier_id" property="supplierId" jdbcType="INTEGER" />
+  </resultMap>
+  
+   <sql id="Base_Column_List">
+        admin_id,admin_name,admin_password,admin_login_time,admin_login_num,admin_is_super,admin_gid,is_del,role_id,supplier_id
+    </sql>
+    <select id="findByAdminName" resultMap="BaseResultMap" parameterType="java.lang.String">
+        SELECT
+        <include refid="Base_Column_List" />
+        from shop_admin
+        where is_del=0 and admin_name=#{adminName}
+    </select>
+
+  	<resultMap id="BaseResultMapVo" type="com.Vshop.core.entity.vo.AdminVo"
+		extends="BaseResultMap">
+		<result column="gname" property="gname" jdbcType="VARCHAR" />
+	</resultMap>
+	
+	<sql id="Base_Column_List_Vo">
+		admin_id, admin_name, admin_password, admin_login_time, admin_login_num, admin_is_super, 
+   		admin_gid, gname,role_id,supplier_id
+	</sql>
+  
+  	<sql id="whereStatement">
+		<where>
+			1 = 1
+			and is_del = 0
+		</where>
+	</sql>
+
+	<!-- 获取总条数count -->
+	<select id="findAdminCount" resultType="java.lang.Integer"
+		parameterType="com.Vshop.core.entity.base.Admin">
+		select count(1) from shop_admin left join shop_gadmin on shop_gadmin.gid=shop_admin.admin_gid
+		<include refid="whereStatement" />
+	</select>
+
+	<!-- 获取List -->
+	<select id="findAdminList" resultMap="BaseResultMapVo"
+		parameterType="com.Vshop.service.utils.page.Pager">
+		select
+		<include refid="Base_Column_List_Vo" />
+		from shop_admin left join shop_gadmin on shop_gadmin.gid=shop_admin.admin_gid
+		<include refid="whereStatement" />
+		
+	</select>
+  
+  <select id="findAdminById" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from shop_admin
+    where admin_id = #{id,jdbcType=INTEGER}
+  </select>
+  
+  <delete id="delete" parameterType="java.lang.Integer" >
+    delete from shop_admin
+    where admin_id = #{adminId,jdbcType=INTEGER}
+  </delete>
+  
+  <insert id="save" parameterType="com.Vshop.core.entity.base.Admin" >
+    insert into shop_admin (admin_name, admin_password, 
+      admin_login_num, admin_is_super, 
+      admin_gid,role_id,supplier_id)
+    values ( #{adminName,jdbcType=VARCHAR}, #{adminPassword,jdbcType=VARCHAR}, 
+      0, 0, 
+      #{adminGid,jdbcType=SMALLINT},#{roleid,jdbcType=VARCHAR},#{supplierId,jdbcType=INTEGER})
+  </insert>
+
+  
+  <update id="update" parameterType="com.Vshop.core.entity.base.Admin" >
+    update shop_admin
+    set 
+      admin_password = #{adminPassword,jdbcType=VARCHAR},
+      admin_gid = #{adminGid,jdbcType=SMALLINT},
+      role_id = #{roleid,jdbcType=VARCHAR},supplier_id = #{supplierId,jdbcType=INTEGER}
+    where admin_id = #{adminId,jdbcType=INTEGER}
+  </update>
+</mapper>

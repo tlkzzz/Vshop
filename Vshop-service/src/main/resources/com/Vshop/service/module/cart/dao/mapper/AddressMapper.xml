@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.Vshop.service.module.cart.dao.mapper.AddressMapper">
+    <resultMap id="BaseResultMap" type="com.Vshop.core.entity.base.Address">
+        <result column="address_id" property="addressId" jdbcType="INTEGER"/>
+        <result column="member_id" property="memberId" jdbcType="INTEGER"/>
+        <result column="true_name" property="trueName" jdbcType="VARCHAR"/>
+        <result column="area_id" property="areaId" jdbcType="INTEGER"/>
+        <result column="city_id" property="cityId" jdbcType="INTEGER"/>
+        <result column="province_id" property="provinceId" jdbcType="INTEGER" />
+        <result column="area_info" property="areaInfo" jdbcType="VARCHAR"/>
+        <result column="address" property="address" jdbcType="VARCHAR"/>
+        <result column="tel_phone" property="telPhone" jdbcType="VARCHAR"/>
+        <result column="mob_phone" property="mobPhone" jdbcType="VARCHAR"/>
+        <result column="zip_code" property="zipCode" jdbcType="INTEGER"/>
+        <result column="is_default" property="isDefault" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        address_id, member_id, true_name,area_id, city_id,area_info,address,tel_phone,mob_phone,zip_code,province_id,is_default
+    </sql>
+
+
+    <insert id="saveAddress" parameterType="com.Vshop.core.entity.base.Address" useGeneratedKeys="true" keyProperty="addressId">
+        INSERT INTO shop_address
+        (member_id,true_name,area_id,city_id,area_info,address,tel_phone,mob_phone,is_default,province_id,zip_code)
+        VALUES
+        (#{memberId,jdbcType=INTEGER},
+        #{trueName,jdbcType=VARCHAR},
+        #{areaId,jdbcType=INTEGER},
+        #{cityId,jdbcType=INTEGER},
+        #{areaInfo,jdbcType=VARCHAR},
+        #{address,jdbcType=VARCHAR},
+        #{telPhone,jdbcType=VARCHAR},
+        #{mobPhone,jdbcType=VARCHAR},
+        #{isDefault,jdbcType=VARCHAR},
+        #{provinceId,jdbcType=INTEGER},
+        #{zipCode,jdbcType=INTEGER}
+        )
+    </insert>
+
+
+    <select id="queryAddreassMemberId" resultMap="BaseResultMap" parameterType="com.Vshop.core.entity.base.Address">
+        select
+        <include refid="Base_Column_List"/>
+        from shop_address where 1=1
+        <if test="memberId != null">
+            and member_id = #{memberId,jdbcType=INTEGER}
+        </if>
+        ORDER BY is_default desc,address_id desc
+    </select>
+
+    <select id="deleteAddress" parameterType="com.Vshop.core.entity.base.Address">
+        delete from shop_address where address_id = #{addressId}
+    </select>
+
+    <select id="queryById" parameterType="int" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from shop_address
+        where address_id = #{addressId}
+    </select>
+    <update id="updateAddress" parameterType="com.Vshop.core.entity.base.Address">
+        update shop_address
+        <set>
+            <if test="trueName!=null and trueName!=''">
+                true_name = #{trueName,jdbcType=VARCHAR},
+            </if>
+            <if test="areaId!=null">
+                area_id = #{areaId,jdbcType=INTEGER},
+            </if>
+            <if test="cityId!=null">
+                city_id = #{cityId,jdbcType=INTEGER},
+            </if>
+            <if test="areaInfo!=null and areaInfo!=''">
+                area_info = #{areaInfo,jdbcType=VARCHAR},
+            </if>
+            <if test="address!=null and address!=''">
+                address = #{address,jdbcType=VARCHAR},
+            </if>
+            <if test="mobPhone!=null and mobPhone!=''">
+                mob_phone = #{mobPhone,jdbcType=VARCHAR},
+            </if>
+            <if test="telPhone!=null and telPhone!=''">
+                tel_phone = #{telPhone,jdbcType=VARCHAR},
+            </if>
+            <if test="isDefault!=null and isDefault!=''">
+                is_default = #{isDefault,jdbcType=VARCHAR},
+            </if>
+            <if test="provinceId!=null">
+            	province_id = #{provinceId,jdbcType=INTEGER},
+            </if>
+            <if test="zipCode!=null">
+            	zip_code = #{zipCode,jdbcType=INTEGER}
+            </if>
+        </set>
+        where 1=1
+        <if test="addressId!=null">
+            and address_id = #{addressId,jdbcType=VARCHAR}
+        </if>
+        <if test="memberId!=null">
+            and member_id = #{memberId,jdbcType=INTEGER}
+        </if>
+    </update>
+
+    <sql id="whereStatement">
+        where 1=1
+        <if test="condition.addressId != null">
+            and shop_address.address_id =#{condition.addressId,jdbcType=INTEGER}
+        </if>
+        <if test="condition.trueName != null and condition.trueName != '' ">
+            and shop_address.true_name like
+            CONCAT('%',#{condition.trueName,
+            jdbcType=VARCHAR},'%')
+        </if>
+        <if test="condition.memberId != null">
+            and shop_address.member_id = #{condition.memberId,jdbcType=INTEGER}
+        </if>
+        <if test="condition.areaId != null ">
+            and shop_address.area_id = #{condition.areaId,jdbcType=INTEGER}
+        </if>
+        <if test="condition.cityId != null and condition.cityId != '' ">
+            and shop_address.city_id = #{condition.cityId,jdbcType=INTEGER}
+        </if>
+        <if test="condition.mobPhone != null and condition.mobPhone != ''">
+            and shop_address.mob_phone = #{condition.mobPhone,jdbcType=VARCHAR}
+        </if>
+        <if test="condition.isDefault != null">
+            and shop_address.is_default = #{condition.isDefault,jdbcType=INTEGER}
+        </if>
+    </sql>
+    
+    <sql id="whereStatement2">
+        where 1=1
+        <if test="addressId != null">
+            and shop_address.address_id =#{addressId,jdbcType=INTEGER}
+        </if>
+        <if test="trueName != null and trueName != '' ">
+            and shop_address.true_name like
+            CONCAT('%',#{trueName,
+            jdbcType=VARCHAR},'%')
+        </if>
+        <if test="memberId != null">
+            and shop_address.member_id = #{memberId,jdbcType=INTEGER}
+        </if>
+        <if test="areaId != null ">
+            and shop_address.area_id = #{areaId,jdbcType=INTEGER}
+        </if>
+        <if test="cityId != null and cityId != '' ">
+            and shop_address.city_id = #{cityId,jdbcType=INTEGER}
+        </if>
+        <if test="mobPhone != null and mobPhone != ''">
+            and mob_phone = #{mobPhone,jdbcType=VARCHAR}
+        </if>
+        <if test="isDefault != null">
+            and is_default = #{isDefault,jdbcType=INTEGER}
+        </if>
+    </sql>
+    
+    <select id="findList" resultMap="BaseResultMap" parameterType="com.Vshop.service.utils.page.Pager">
+        select
+        <include refid="Base_Column_List"/>
+        from shop_address
+        <include refid="whereStatement"/>
+        order by address_id desc
+    </select>
+
+    <select id="countfindAll" parameterType="com.Vshop.core.entity.base.Address"
+            resultType="int">
+        select count(1) from shop_address
+        <include refid="whereStatement2"/>
+    </select>
+
+</mapper>

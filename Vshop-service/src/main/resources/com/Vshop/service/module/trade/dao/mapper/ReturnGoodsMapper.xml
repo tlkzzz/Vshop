@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.Vshop.service.module.trade.dao.mapper.ReturnGoodsMapper">
+	<resultMap id="BaseResultMap" type="com.Vshop.core.entity.base.ReturnGoods">
+		<id column="log_id" property="logId" jdbcType="INTEGER" />
+		<result column="return_id" property="returnId" jdbcType="INTEGER" />
+		<result column="order_id" property="orderId" jdbcType="INTEGER" />
+		<result column="goods_id" property="goodsId" jdbcType="INTEGER" />
+		<result column="goods_name" property="goodsName" jdbcType="VARCHAR" />
+		<result column="spec_id" property="specId" jdbcType="INTEGER" />
+		<result column="spec_info" property="specInfo" jdbcType="VARCHAR" />
+		<result column="goods_price" property="goodsPrice" jdbcType="DECIMAL" />
+		<result column="goods_num" property="goodsNum" jdbcType="INTEGER" />
+		<result column="goods_returnnum" property="goodsReturnNum" jdbcType="INTEGER" />
+		<result column="goods_image" property="goodsImage" jdbcType="VARCHAR" />
+	</resultMap>
+	
+	<!-- 全部查询字段 -->
+	<sql id="Base_Column_List">
+		log_id, return_id, order_id, goods_id, goods_name, spec_id, spec_info, goods_price,
+		goods_num, goods_returnnum, goods_image
+	</sql>
+	
+	<!-- 保存退货商品表 -->
+	<insert id="saveReturnGoods" parameterType="com.Vshop.core.entity.base.ReturnGoods" useGeneratedKeys="true" keyProperty="logId">
+		insert into shop_return_goods(return_id, order_id, goods_id, goods_name, spec_id, spec_info, goods_price,
+									  goods_num, goods_returnnum, goods_image)
+		values(#{returnId}, #{orderId}, #{goodsId}, #{goodsName}, #{specId}, #{specInfo},
+			   #{goodsPrice}, #{goodsNum}, #{goodsReturnNum}, #{goodsImage})
+	</insert>
+	
+	<!-- 根据退货表id删除退货商品表 -->
+	<delete id="deleteByReturnOrderId" parameterType="int">
+		delete from shop_return_goods where return_id = #{returnId}
+	</delete>
+	
+	<!-- 根据退货表id删除退货商品信息 -->
+	<select id="findByReturnOrderId" parameterType="int" resultMap="BaseResultMap">
+		select  <include refid="Base_Column_List" /> from shop_return_goods where return_id = #{returnId}
+	</select>
+</mapper>

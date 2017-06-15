@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.Vshop.service.module.member.dao.mapper.ShopPointsLogMapper">
+    <resultMap id="BaseResultMap" type="com.Vshop.core.entity.base.ShopPointsLog" >
+        <id column="pl_id" property="id" jdbcType="INTEGER" />
+        <result column="pl_memberid" property="memberid" jdbcType="INTEGER" />
+        <result column="pl_membername" property="membername" jdbcType="VARCHAR" />
+        <result column="pl_adminid" property="adminid" jdbcType="INTEGER" />
+        <result column="pl_adminname" property="adminname" jdbcType="VARCHAR" />
+        <result column="pl_points" property="points" jdbcType="INTEGER" />
+        <result column="create_time" property="createTime" jdbcType="BIGINT" />
+        <result column="pl_desc" property="desc" jdbcType="VARCHAR" />
+        <result column="pl_stage" property="stage" jdbcType="VARCHAR" />
+        <result column="pl_type" property="type" jdbcType="INTEGER" />
+    </resultMap>
+
+
+    <sql id="Base_Column_List" >
+        pl_id,pl_memberid, pl_membername, pl_adminid, pl_adminname, pl_points, create_time,pl_desc,pl_stage,pl_type
+    </sql>
+    
+    <!-- 保存会员积分记录 -->
+    <insert id="save" parameterType="com.Vshop.core.entity.base.ShopPointsLog" useGeneratedKeys="true" keyProperty="pl_id">
+        INSERT INTO shop_points_log(pl_memberid,pl_membername,pl_adminid,pl_adminname,pl_points,create_time,pl_desc,pl_stage,pl_type)
+        VALUES(#{memberid},#{membername},#{adminid},#{adminname},#{points},#{createTime},#{desc},#{stage},#{type});
+    </insert>
+    
+     <sql id="whereStatement">
+		<where>
+			1 = 1
+		</where>
+		<if test="condition.memberid != null and condition.memberid!=0" >
+            and pl_memberid = #{condition.memberid}
+        </if>
+        <if test="condition.type != null " >
+            and pl_type = #{condition.type}
+        </if>
+        <if test="condition.startTime != null and condition.startTime != '' ">
+			and create_time &gt;= #{condition.startTime}   
+		</if>
+		<if test="condition.endTime != null and condition.endTime != '' ">
+			and create_time &lt; #{condition.endTime} 
+		</if>
+	</sql>
+	
+	<sql id="whereStatement2">
+		<where>
+			1 = 1
+		</where>
+		<if test="memberid != null and memberid!=0" >
+            and pl_memberid = #{memberid}
+        </if>
+        <if test="type != null " >
+            and pl_type = #{type}
+        </if>
+        <if test="startTime != null and startTime != '' ">
+			and create_time &gt;= #{startTime}   
+		</if>
+		<if test="endTime != null and endTime != '' ">
+			and create_time &lt; #{endTime} 
+		</if>
+	</sql>
+    
+    
+    
+    <!--查询条数-->
+    <select id="findCount" parameterType="com.Vshop.core.entity.base.ShopPointsLog" resultType="int">
+        SELECT
+        count(*)
+        FROM shop_points_log
+        <include refid="whereStatement2" />
+    </select>
+
+    <!--查询分页列表-->
+    <select id="findPageList" parameterType="com.Vshop.service.utils.page.Pager" resultMap="BaseResultMap">
+        SELECT a.* FROM(
+        SELECT
+         <include refid="Base_Column_List" />
+        FROM shop_points_log
+         <include refid="whereStatement" />
+        order by pl_id) a 
+    </select>
+    
+    <!-- 获取全部数据 -->
+    <select id="findList" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM shop_points_log
+    </select>
+</mapper>

@@ -1,0 +1,432 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper
+	namespace="com.Vshop.service.module.store.dao.mapper.StoreMapper">
+	<resultMap id="BaseResultMap" type="com.Vshop.core.entity.base.Store" >
+        <id column="store_id" property="storeId" jdbcType="INTEGER" />
+        <result column="store_name" property="storeName" jdbcType="VARCHAR" />
+        <result column="store_auth" property="storeAuth" jdbcType="INTEGER" />
+        <result column="name_auth" property="nameAuth" jdbcType="INTEGER" />
+        <result column="grade_id" property="gradeId" jdbcType="INTEGER" />
+        <result column="member_id" property="memberId" jdbcType="INTEGER" />
+        
+        <result column="member_name" property="memberName" jdbcType="VARCHAR" />
+        <result column="store_owner_card" property="storeOwnerCard" jdbcType="VARCHAR" />
+        <result column="sc_id" property="scId" jdbcType="INTEGER" />
+        <result column="st_id" property="stId" jdbcType="INTEGER" />
+        <result column="area_id" property="areaId" jdbcType="INTEGER" />
+        <result column="area_info" property="areaInfo" jdbcType="VARCHAR" />
+        <result column="store_address" property="storeAddress" jdbcType="VARCHAR" />
+        <result column="store_zip" property="storeZip" jdbcType="VARCHAR" />
+      
+        <result column="store_tel" property="storeTel" jdbcType="VARCHAR" />
+        <result column="store_sms" property="storeSms" jdbcType="VARCHAR" />
+        <result column="store_image" property="storeImage" jdbcType="VARCHAR" />
+        <result column="store_image1" property="storeImage1" jdbcType="VARCHAR" />
+        <result column="store_state" property="storeState" jdbcType="INTEGER" />
+        <result column="store_close_info" property="storeCloseInfo" jdbcType="VARCHAR" />
+        
+        <result column="store_sort" property="storeSort" jdbcType="INTEGER" />
+        <result column="store_time" property="storeTime" jdbcType="BIGINT" />
+        <result column="end_time" property="endTime" jdbcType="BIGINT" />
+        <result column="store_label" property="storeLabel" jdbcType="VARCHAR" />
+        <result column="store_banner" property="storeBanner" jdbcType="VARCHAR" />
+        <result column="store_logo" property="storeLogo" jdbcType="VARCHAR" />
+        
+        <result column="store_keywords" property="storeKeywords" jdbcType="VARCHAR" />
+        <result column="store_description" property="storeDescription" jdbcType="VARCHAR" />
+        <result column="store_qq" property="storeQq" jdbcType="VARCHAR" />
+        <result column="store_ww" property="storeWw" jdbcType="VARCHAR" />
+        <result column="description" property="description" jdbcType="VARCHAR" />
+        <result column="store_zy" property="storeZy" jdbcType="VARCHAR" />
+        
+        <result column="store_domain" property="storeDomain" jdbcType="VARCHAR" />
+        <result column="store_domain_times" property="storeDomainTimes" jdbcType="INTEGER" />
+        <result column="store_recommend" property="storeRecommend" jdbcType="INTEGER" />
+        <result column="store_theme" property="storeTheme" jdbcType="VARCHAR" />
+        <result column="store_credit" property="storeCredit" jdbcType="INTEGER" />
+        <result column="praise_rate" property="praiseRate" jdbcType="REAL" />
+        
+        <result column="store_desccredit" property="storeDesccredit" jdbcType="REAL" />
+        <result column="store_servicecredit" property="storeServicecredit" jdbcType="REAL" />
+        <result column="store_deliverycredit" property="storeDeliverycredit" jdbcType="REAL" />
+        <result column="store_code" property="storeCode" jdbcType="VARCHAR" />
+        <result column="store_collect" property="storeCollect" jdbcType="INTEGER" />
+        <result column="store_slide" property="storeSlide" jdbcType="VARCHAR" />
+        
+        <result column="store_slide_url" property="storeSlideUrl" jdbcType="VARCHAR" />
+        <result column="store_center_quicklink" property="storeSlideUrl" jdbcType="VARCHAR" />
+        <result column="store_stamp" property="storeStamp" jdbcType="VARCHAR" />
+        <result column="store_printdesc" property="storePrintdesc" jdbcType="VARCHAR" />
+        <result column="store_sales" property="storeSales" jdbcType="INTEGER" />
+        <result column="store_presales" property="storePresales" jdbcType="VARCHAR" />
+        
+        <result column="store_aftersales" property="storeAftersales" jdbcType="VARCHAR" />
+        <result column="store_workingtime" property="storeWorkingtime" jdbcType="VARCHAR" />
+        <result column="city_id" property="cityId" jdbcType="INTEGER"/>
+        <result column="province_id" property="provinceId" jdbcType="INTEGER"/>
+        
+        <result column="store_click" property="storeClick" jdbcType="INTEGER" />
+        <result column="storeclassname" property="storeclassname" jdbcType="VARCHAR"/>
+        <result column="gradename" property="gradename" jdbcType="VARCHAR" />
+        
+        <result column="store_goods_count" property="storeGoodsCount" jdbcType="INTEGER" />
+        <result column="storecreate_time" property="createTime" jdbcType="BIGINT" />
+        <result column="store_logintime" property="storeLogintime" jdbcType="BIGINT" />
+        <result column="store_lastlogintime" property="storeLastLogintime" jdbcType="BIGINT" />
+        
+        <result column="store_longitude" property="storeLongitude" jdbcType="VARCHAR"/>
+        <result column="store_atitude" property="storeAtitude" jdbcType="VARCHAR"/>
+        
+        
+        <result column="bank_name" property="bankName" jdbcType="VARCHAR"/>
+        <result column="bank_account_name" property="bankAccountName" jdbcType="VARCHAR"/>
+        <result column="bank_account_number" property="bankAccountNumber" jdbcType="VARCHAR"/>
+        <result column="weichat_account_number" property="weichatAccountNumber" jdbcType="VARCHAR"/>
+        
+        <result column="store_type" property="storeType" jdbcType="INTEGER"/>
+    </resultMap>
+    
+    <resultMap id="BaseResultMapVo" type="com.Vshop.core.entity.vo.StoreVo"
+		extends="BaseResultMap">
+		<result column="sg_name" property="sgName" jdbcType="VARCHAR" />
+        <result column="name" property="name" jdbcType="VARCHAR" />
+	</resultMap>
+	
+	
+	<resultMap id="BaseResultMapfa" type="com.Vshop.core.entity.base.Store" >
+        <id column="store_id" property="storeId" jdbcType="INTEGER" />
+        <result column="store_name" property="storeName" jdbcType="VARCHAR"/>
+        <result column="store_image" property="storeImage" jdbcType="VARCHAR" />
+        <result column="area_info" property="areaInfo" jdbcType="VARCHAR" />
+        <result column="member_name" property="memberName" jdbcType="VARCHAR"/>
+        <result column="store_collect" property="storeCollect" jdbcType="INTEGER" />
+        <result column="store_goods_count" property="storeGoodsCount" jdbcType="INTEGER" />
+    </resultMap>
+    
+	
+	<sql id="Base_Column_List" >
+         store_id,store_name,store_auth,name_auth,grade_id,member_id,member_name,
+         store_owner_card,sc_id,st_id,area_id,area_info,store_address,store_zip,
+         store_tel,store_sms,store_image,store_image1,store_state,store_close_info,store_sort,store_time,
+         end_time,store_label,store_banner,store_logo,store_keywords,store_description,store_qq,
+         store_ww,description,store_zy,store_domain,store_domain_times,store_recommend,store_theme,store_credit,
+         praise_rate,store_desccredit,store_servicecredit,store_deliverycredit,store_code,store_collect,store_slide,
+         store_slide_url,store_center_quicklink,store_stamp,store_printdesc,store_sales,store_presales,store_aftersales,
+         store_workingtime,city_id,province_id,store_click,storecreate_time,store_logintime,store_lastlogintime,store_longitude
+         ,store_atitude,bank_name,bank_account_name,bank_account_number,weichat_account_number,store_type
+    </sql>
+    
+    <sql id="Base_Column_List1" >
+         ss.store_id,ss.store_name,ss.store_auth,ss.name_auth,ss.grade_id,ss.member_id,ss.member_name,
+         ss.store_owner_card,ss.sc_id,st_id,ss.area_id,ss.area_info,ss.store_address,ss.store_zip,
+         ss.store_tel,ss.store_sms,ss.store_image,ss.store_image1,ss.store_state,ss.store_close_info,ss.store_sort,ss.store_time,
+         ss.end_time,ss.store_label,ss.store_banner,ss.store_logo,ss.store_keywords,ss.store_description,ss.store_qq,
+         ss.store_ww,ss.description,ss.store_zy,ss.store_domain,ss.store_domain_times,ss.store_recommend,ss.store_theme,ss.store_credit,
+         ss.praise_rate,ss.store_desccredit,ss.store_servicecredit,ss.store_deliverycredit,ss.store_code,ss.store_collect,ss.store_slide,
+         ss.store_slide_url,ss.store_center_quicklink,ss.store_stamp,ss.store_printdesc,ss.store_sales,ss.store_presales,ss.store_aftersales,
+         ss.store_workingtime,ss.city_id,ss.province_id,ss.store_click,ss.storecreate_time,ss.store_logintime,ss.store_lastlogintime,ss.store_longitude
+         ,ss.store_atitude,ss.bank_name,ss.bank_account_name,ss.bank_account_number,ss.weichat_account_number,store_type
+    </sql>
+    
+    <sql id="Base_Column_List_Vo" >
+         store_id,store_name,store_auth,name_auth,grade_id,member_id,member_name,
+         store_owner_card,sc_id,st_id,area_id,area_info,store_address,store_zip,
+         store_tel,store_sms,store_image,store_image1,store_state,store_close_info,store_sort,store_time,
+         end_time,store_label,store_banner,store_logo,store_keywords,store_description,store_qq,
+         store_ww,description,store_zy,store_domain,store_domain_times,store_recommend,store_theme,store_credit,
+         praise_rate,store_desccredit,store_servicecredit,store_deliverycredit,store_code,store_collect,store_slide,
+         store_slide_url,store_center_quicklink,store_stamp,store_printdesc,store_sales,store_presales,store_aftersales,
+         store_workingtime,sg_name
+    </sql>
+    
+    <sql id="whereStatement">
+        <where>
+            1=1
+            <if test="condition.storeName != null and condition.storeName != ''" >
+                and a.store_name like CONCAT('%',#{condition.storeName, jdbcType=VARCHAR},'%')
+            </if>
+            <if test="condition.memberName != null and condition.memberName != ''">
+                and a.member_name like CONCAT('%',#{condition.memberName, jdbcType=VARCHAR},'%')
+            </if>
+            <if test="condition.gradeId != null">
+                and a.grade_id = #{condition.gradeId , jdbcType=INTEGER}
+            </if>
+            <if test="condition.storeState != null">
+                and a.store_state = #{condition.storeState}
+            </if>
+        </where>
+    </sql>
+    
+    
+     <sql id="whereStatement2">
+        <where>
+            1=1
+            <if test="storeName != null and storeName != ''" >
+                and a.store_name like CONCAT('%',#{storeName, jdbcType=VARCHAR},'%')
+            </if>
+            <if test="memberName != null and memberName != ''">
+                and a.member_name like CONCAT('%',#{memberName, jdbcType=VARCHAR},'%')
+            </if>
+            <if test="gradeId != null">
+                and a.grade_id = #{gradeId , jdbcType=INTEGER}
+            </if>
+            <if test="storeState != null">
+                and a.store_state = #{storeState}
+            </if>
+            <if test="flag!=null and flag='expire' and createTime!=null ">
+            	and a.end_time &gt;= #{endTime} and a.end_time &lt;= #{createTime}
+            </if>
+            <if test="flag!=null and flag='expired' and createTime!=null ">
+            	and a.end_time &lt;= #{createTime}
+            </if>
+        </where>
+    </sql>
+	
+	<!-- 根据ID查询实体 -->
+    <select id="findById" resultMap="BaseResultMap" parameterType="integer">
+		select <include refid="Base_Column_List1" />,b.NAME AS storeclassname,
+		sg.sg_name as gradename
+        from shop_store ss
+        left join shop_store_type b on ss.st_id = b.id
+        left join shop_store_grade sg on ss.grade_id=sg.sg_id
+        where store_id = #{id}
+	</select>
+
+    <!-- 根据ID查询实体 -->
+    <select id="findByMemberId" resultMap="BaseResultMap" parameterType="integer">
+        select <include refid="Base_Column_List" />
+        from shop_store where member_id = #{id}
+    </select>
+	
+	<select id="findVoById" resultMap="BaseResultMapVo" parameterType="integer">
+		select <include refid="Base_Column_List_Vo" />
+		from shop_store left join shop_store_grade on shop_store.grade_id = shop_store_grade.sg_id
+        where  store_id = #{id,jdbcType=INTEGER}
+	</select>
+    
+     <!-- 根据name查询实体 -->
+    <select id="findByStorename" resultMap="BaseResultMap" parameterType="String">
+        select <include refid="Base_Column_List" />
+        from shop_store where store_name = #{storeName}
+    </select>
+    
+    <select id="countStore" resultType="Integer" parameterType="Map">
+        SELECT count(1) from shop_store
+        <where>
+			1 = 1
+	        <if test="storeName !=null and storeName !='' ">
+	            AND store_name LIKE CONCAT('', '${storeName}', '')
+	        </if>
+	        <if test="storeId != null">
+	            AND store_id != #{storeId}
+	        </if>
+		</where>
+    </select>
+    
+ 	<update id="updateStore" parameterType="com.Vshop.core.entity.base.Store">
+        update shop_store
+        <set>
+            <if test="storeName != '' and storeName != null">
+                store_name = #{storeName},
+            </if>
+            <if test="storeZy != null and storeZy != ''">
+                store_zy = #{storeZy},
+            </if>
+            <if test="storeLabel != null and storeLabel != ''">
+                store_label = #{storeLabel},
+            </if>
+            <if test="storeBanner != null and storeBanner != ''">
+                store_banner = #{storeBanner},
+            </if>
+            <if test="storeLogo != null and storeLogo != '' ">
+                store_logo = #{storeLogo},
+            </if>
+            <if test="storeDomain != null and storeDomain != ''">
+                store_domain = #{storeDomain},
+            </if>
+            <if test="areaInfo != null and areaInfo != ''">
+                area_info = #{areaInfo},
+            </if>
+            <if test="storeAddress != null and storeAddress!= ''">
+                store_address = #{storeAddress},
+            </if>
+             <if test="storeZip != null and storeZip!=''">
+                store_zip = #{storeZip},
+            </if>
+            <if test="storeTel != null and storeTel!=''">
+                store_tel = #{storeTel},
+            </if>
+            <if test="storeQq != null and storeQq != ''">
+                store_qq = #{storeQq},
+            </if>
+            <if test="storeWw != null and storeWw != ''">
+                store_ww = #{storeWw},
+            </if>
+            <if test="storeKeywords != null and storeKeywords != ''">
+                store_keywords = #{storeKeywords},
+            </if>
+            <if test="storeDescription != null and storeDescription != ''">
+                store_description = #{storeDescription},
+            </if>
+             <if test="description != null and description != ''">
+                description = #{description},
+            </if>
+            <if test="storeSlide != null and storeSlide != ''">
+                store_slide = #{storeSlide},
+            </if>
+            <if test="storeSlideUrl != null and storeSlideUrl != ''">
+                store_slide_url = #{storeSlideUrl},
+            </if>
+            <if test="areaId != null">
+                area_id = #{areaId},
+            </if>
+            <if test="cityId != null">
+                city_id = #{cityId},
+            </if>
+            <if test="provinceId != null">
+                province_id = #{provinceId},
+            </if>
+            <if test="storeState != null">
+                store_state = #{storeState},
+            </if>
+            <if test="storeCloseInfo != null and storeCloseInfo != ''">
+                store_close_info= #{storeCloseInfo},
+            </if>
+            <if test="storeClick != null">
+                store_click= #{storeClick},
+            </if>
+            <if test="storeTheme != null and storeTheme!=''">
+                store_theme= #{storeTheme},
+            </if>
+            <if test="storeCode != null and storeCode!=''">
+                store_code= #{storeCode},
+            </if>
+            <if test="storeLogintime != null and storeLogintime!=''">
+                store_logintime= #{storeLogintime},
+            </if>
+            <if test="storeLastLogintime != null and storeLastLogintime!=''">
+                store_lastlogintime = #{storeLastLogintime},
+            </if>
+            <if test="storeLongitude != null and storeLongitude!=''">
+                store_longitude = #{storeLongitude},
+            </if>
+            <if test="storeAtitude != null and storeAtitude!=''">
+                store_atitude = #{storeAtitude},
+            </if>
+            <if test="scId != null">
+                sc_id = #{scId},
+            </if>
+            <if test="stId != null">
+                st_id = #{stId},
+            </if>
+            <if test="storeRecommend != null">
+                store_recommend = #{storeRecommend},
+            </if>
+             <if test="gradeId != null">
+                grade_id = #{gradeId},
+            </if>
+            <if test="storeSort != null">
+                store_sort = #{storeSort},
+            </if>
+             <if test="endTime != null and endTime!=''">
+                end_time = #{endTime},
+            </if>
+            
+            <if test="bankName != null and bankName != ''">
+                bank_name = #{bankName},
+            </if>
+            <if test="bankAccountName != null and bankAccountName != ''">
+                bank_account_name = #{bankAccountName},
+            </if>
+            <if test="bankAccountNumber != null and bankAccountNumber != ''">
+                bank_account_number = #{bankAccountNumber},
+            </if>
+            <if test="weichatAccountNumber != null and weichatAccountNumber != ''">
+                weichat_account_number = #{weichatAccountNumber},
+            </if>
+            <if test="storeType != null">
+            	store_type = #{storeType}
+            </if>
+        </set>
+        where store_id=#{storeId}
+    </update>
+
+    <update id="updateStoreCus" parameterType="com.Vshop.core.entity.base.Store">
+        update shop_store
+        set store_presales = #{storePresales},store_aftersales = #{storeAftersales},store_workingtime = #{storeWorkingtime}
+        where store_id=#{storeId}
+    </update>
+    
+     <insert id="save" parameterType="com.Vshop.core.entity.base.Store" useGeneratedKeys="true" keyProperty="storeId">
+        insert into shop_store (store_name,name_auth,grade_id,member_id,member_name,
+        store_owner_card,sc_id,st_id,area_id,area_info,store_address,store_zip,
+        store_tel,store_image,store_image1,store_state,store_recommend,
+        store_zy,city_id,province_id,store_sales,store_collect,store_click,store_credit,praise_rate,storecreate_time,
+        store_logo,bank_name,bank_account_name,bank_account_number,weichat_account_number,store_type)
+        values(#{storeName,jdbcType=VARCHAR},
+        #{nameAuth,jdbcType=INTEGER},#{gradeId,jdbcType=INTEGER}, #{memberId,jdbcType=INTEGER},
+        #{memberName,jdbcType=VARCHAR},#{storeOwnerCard,jdbcType=VARCHAR},#{scId,jdbcType=INTEGER},#{stId,jdbcType=INTEGER},
+        #{areaId,jdbcType=INTEGER},#{areaInfo,jdbcType=VARCHAR},#{storeAddress,jdbcType=VARCHAR},
+        #{storeZip,jdbcType=INTEGER},#{storeTel,jdbcType=INTEGER},
+        #{storeImage,jdbcType=INTEGER},#{storeImage1,jdbcType=INTEGER},#{storeState,jdbcType=INTEGER},
+        #{storeRecommend,jdbcType=INTEGER},#{storeZy,jdbcType=VARCHAR},#{cityId,jdbcType=INTEGER}
+        ,#{provinceId,jdbcType=INTEGER},#{storeSales,jdbcType=INTEGER},#{storeCollect,jdbcType=INTEGER},
+        #{storeClick,jdbcType=INTEGER},#{storeCredit,jdbcType=INTEGER},
+        #{praiseRate,jdbcType=REAL},#{createTime,jdbcType=BIGINT},#{storeLogo,jdbcType=VARCHAR},
+        #{bankName,jdbcType=VARCHAR},#{bankAccountName,jdbcType=VARCHAR},#{bankAccountNumber,jdbcType=VARCHAR},
+        #{weichatAccountNumber,jdbcType=VARCHAR},#{storeType,jdbcType=INTEGER}
+        ) 
+    </insert>
+    
+    <select id="queryCount" resultType="int" parameterType="com.Vshop.core.entity.base.Store">
+        select count(1)
+        from shop_store a
+        <include refid="whereStatement2"/>
+    </select>
+    
+     <select id="queryList" resultMap="BaseResultMap" parameterType="com.Vshop.service.utils.page.Pager">
+        select s.* from (
+        select <include refid="Base_Column_List"/>
+        from shop_store a
+        <include refid="whereStatement"/> order by a.store_state,a.store_id desc) s order by s.store_sort
+    </select>
+    
+     <!-- 修改店铺收藏的数量 -->
+     <update id="updateStoreCount" parameterType="map">
+         update shop_store
+        <if test="flags != null and flags=='add'">
+              set store_collect=store_collect+1
+        </if>
+        <if test="flags != null and flags=='reduce'">
+              set store_collect=store_collect-1
+        </if>
+        where store_id=#{storeId}
+    </update>
+    
+     <!-- 根据实体条件查找 -->
+    <select id="findByIds" resultMap="BaseResultMap" parameterType="com.Vshop.core.entity.base.Store">
+        select 
+        <include refid="Base_Column_List" />
+        from shop_store
+        where store_id = #{storeId}
+        <if test="goodsState != null">
+			and store_state = #{storeState}
+		</if>
+    </select>
+    
+     <!--  根据ID删除数据 -->
+    <update id="delete" parameterType="java.lang.Integer">
+        delete from shop_store  where store_id = #{id,jdbcType=INTEGER}
+    </update>
+    
+        <!-- 获取全部数据 -->
+    <select id="findList" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM shop_store 
+        <include refid="whereStatement2"></include>
+        order by store_sort desc
+    </select>
+    
+</mapper>

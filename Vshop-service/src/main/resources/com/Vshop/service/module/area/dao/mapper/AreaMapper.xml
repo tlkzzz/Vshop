@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.Vshop.service.module.area.dao.mapper.AreaMapper">
+    <resultMap id="BaseResultMap" type="com.Vshop.core.entity.Area">
+        <result column="area_id" property="areaId" jdbcType="INTEGER" />
+        <result column="area_name" property="areaName" jdbcType="VARCHAR" />
+        <result column="area_parent_id" property="areaParentId" jdbcType="INTEGER" />
+        <result column="area_sort" property="areaSort" jdbcType="INTEGER" />
+        <result column="area_deep" property="areaDeep" jdbcType="INTEGER" />
+        <result column="is_del" property="isDel" jdbcType="TINYINT" />
+        <result column="created_time" property="createdTime" jdbcType="BIGINT" />
+        <result column="updated_time" property="updatedTime" jdbcType="BIGINT" />
+    </resultMap>
+    
+    <resultMap id="BaseResultMap1" type="com.Vshop.core.entity.Area">
+        <result column="area_id" property="areaId" jdbcType="INTEGER" />
+        <result column="area_name" property="areaName" jdbcType="VARCHAR" />
+        <collection property="childern" ofType="com.Vshop.core.entity.Area" column="area_id" javaType="arraylist"
+        select="com.Vshop.service.module.area.dao.mapper.AreaMapper.queryAllChildList"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        area_id, area_name, area_parent_id, area_sort, area_deep
+    </sql>
+    
+	<!-- 查出全部数据 -->
+    <select id="queryAll" resultMap="BaseResultMap" >
+		select <include refid="Base_Column_List" />
+		from shop_area where is_del = 0 and area_parent_id= 0  order by area_id asc
+	</select>
+	
+	<!-- 根据父ID查询List -->
+    <select id="queryChildList" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+		select <include refid="Base_Column_List" />
+		from shop_area where is_del = 0 
+		and area_parent_id = #{parentId,jdbcType=INTEGER}
+	</select>
+	<!-- 根据父ID查询List -->
+    <select id="queryParentList" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+		select <include refid="Base_Column_List" />
+		from shop_area where is_del = 0 
+		and area_id = #{areaId,jdbcType=INTEGER}
+	</select>
+	
+	<!-- 根据areaid查询唯一area -->
+	<select id="getAreaByAreaId" resultType="java.lang.String" parameterType="java.lang.Integer">
+		select area_name areaName from shop_area where area_id=#{areaId}
+	</select>
+	
+	<select id="queryByAreaId" resultMap="BaseResultMap" parameterType="string">
+        select area_id , area_parent_id from shop_area
+        where area_deep = 3 and area_id in (${areaId})
+    </select>
+    
+    <!-- 根据父ID查询List -->
+    <select id="queryByParentId" resultMap="BaseResultMap" parameterType="java.lang.Long">
+		select <include refid="Base_Column_List" />
+		from shop_area where area_parent_id = #{parentId,jdbcType=INTEGER} and area_deep = 2
+	</select>
+	
+	<select id="queryCityCount" resultMap="BaseResultMap">
+        SELECT area_parent_id,count(area_id) as area_count
+        FROM shop_area WHERE area_deep = '3' GROUP BY area_parent_id
+    </select>
+    
+    <select id="queryProvince" resultMap="BaseResultMap1">
+        SELECT area_id, area_name
+        FROM shop_area
+        where is_del = 0 and area_deep = 1
+    </select>
+    
+    <select id="queryAllChildList" resultMap="BaseResultMap1" parameterType="java.lang.Long">
+		select area_id, area_name
+		from shop_area where area_parent_id = #{parentId,jdbcType=INTEGER}
+	</select>
+    
+</mapper>

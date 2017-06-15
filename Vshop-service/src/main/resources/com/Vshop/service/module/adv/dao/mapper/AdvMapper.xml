@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.Vshop.service.module.adv.dao.mapper.AdvMapper" >
+  <resultMap id="BaseResultMap" type="com.Vshop.core.entity.base.Adv" >
+    <result column="adv_id" property="advId" jdbcType="INTEGER" />
+    <result column="ap_id" property="apId" jdbcType="INTEGER" />
+    <result column="adv_title" property="advTitle" jdbcType="VARCHAR" />
+    <result column="adv_url" property="advUrl" jdbcType="VARCHAR" />
+    <result column="end_date" property="endDate" jdbcType="BIGINT" />
+    <result column="start_date" property="startDate" jdbcType="BIGINT" />
+    <result column="click_num" property="clickNum" jdbcType="INTEGER" />
+    <result column="sort" property="sort" jdbcType="INTEGER" />
+    <result column="is_allow" property="isAllow" jdbcType="INTEGER" />
+    <result column="res_url" property="resUrl" jdbcType="VARCHAR" />
+  </resultMap>
+  
+   <sql id="Base_Column_List">
+        adv_id,ap_id,adv_title,adv_url,end_date,start_date,click_num,sort,is_allow,res_url
+    </sql>
+  
+  	<sql id="whereStatement">
+		<where>
+			1 = 1
+			<if test="condition.advId != null">
+				and a.adv_id = ${condition.advId}
+			</if>
+			<if test="condition.apId != null">
+				and a.ap_id = ${condition.apId}
+			</if>
+			<if test="condition.startDate != null and condition.startDate != ''">
+				and a.start_date &gt;= ${condition.startDate}
+			</if>
+			<if test="condition.endDate != null and condition.endDate != ''">
+				and a.startDate &lt; ${condition.endDate}
+			</if>
+			<if test="condition.advTitle != null and condition.advTitle != ''">
+				and a.adv_title like CONCAT('%','${condition.advTitle}','%' )
+			</if>
+		</where>
+	</sql>
+	
+	<sql id="whereStatement2">
+		<where>
+			1 = 1
+			<if test="advId != null">
+				and a.adv_id = ${advId}
+			</if>
+			<if test="apId != null">
+				and a.ap_id = ${apId}
+			</if>
+			<if test="startDate != null and startDate != ''">
+				and a.start_date &gt;= ${startDate}
+			</if>
+			<if test="endDate != null and endDate != ''">
+				and a.startDate &lt; ${endDate}
+			</if>
+			<if test="advTitle != null and advTitle != ''">
+				and a.adv_title like CONCAT('%','${advTitle}','%' )
+			</if>
+		</where>
+	</sql>
+
+	<select id="findAdvCount" resultType="java.lang.Integer" parameterType="com.Vshop.core.entity.base.Adv">
+		select count(1) from shop_adv a 
+       <include refid="whereStatement2" />
+	</select>
+	
+	<select id="findAdvPagerList" resultMap="BaseResultMap" parameterType="com.Vshop.service.utils.page.Pager">
+		 SELECT s.* from( select a.* from shop_adv a
+			<include refid="whereStatement" />
+			<if test="orderBy == 0">
+					order by adv_id desc
+			</if>
+			<if test="orderBy == 1">
+					order by adv_id asc
+			</if>) s
+	</select>
+	
+	<select id="findAllAdv" resultMap="BaseResultMap" parameterType="com.Vshop.core.entity.base.Adv">
+		 SELECT
+		 <include refid="Base_Column_List" />
+		 from shop_adv 
+	</select>
+  
+   <select id="findAdvById" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+   		select 
+   		<include refid="Base_Column_List" /> 
+   		from shop_adv where adv_id = #{advId}
+   </select>
+  
+   <delete id="delete" parameterType="java.lang.Integer" >
+   		delete from shop_adv where adv_id = #{advId}
+   </delete>
+  
+   <insert id="save" parameterType="com.Vshop.core.entity.base.Adv" >
+	    insert into shop_adv (
+	    <if test="apId != null">
+	    	ap_id, 
+	    </if>
+	    <if test="advTitle != null">
+	    	adv_title, 
+	    </if>
+	    <if test="advUrl != null">
+	    	adv_url, 
+	    </if>
+	    <if test="endDate != null">
+	    	end_date, 
+	    </if>
+	    <if test="startDate != null">
+	    	start_date, 
+	    </if>
+	    <if test="clickNum != null">
+	    	click_num, 
+	    </if>
+	    <if test="sort != null">
+	    	sort, 
+	    </if>
+	    <if test="isAllow != null">
+	    	is_allow, 
+	    </if>
+	     <if test="resUrl != null">
+	    	res_url
+	    </if>
+	    )
+	    values(
+	    <if test="apId != null">
+	    	#{apId}, 
+	    </if>
+	    <if test="advTitle != null">
+	    	#{advTitle}, 
+	    </if>
+	    <if test="advUrl != null">
+	    	#{advUrl}, 
+	    </if>
+	    <if test="endDate != null">
+	    	#{endDate}, 
+	    </if>
+	    <if test="startDate != null">
+	    	#{startDate}, 
+	    </if>
+	    <if test="clickNum != null">
+	    	#{clickNum}, 
+	    </if>
+	    <if test="sort != null">
+	    	#{sort}, 
+	    </if>
+	    <if test="isAllow != null">
+	    	#{isAllow}, 
+	    </if>
+	     <if test="resUrl != null">
+	    	#{resUrl} 
+	    </if>
+	    );
+   </insert>
+  
+   <update id="update" parameterType="com.Vshop.core.entity.base.Adv" >
+    update shop_adv 
+	    <set> 
+		    <if test="apId != null">
+		    	ap_id = #{apId}, 
+		    </if>
+		    <if test="advTitle != null">
+		    	adv_title = #{advTitle}, 
+		    </if>
+		    <if test="advUrl != null and advUrl != ''">
+		    	adv_url = #{advUrl}, 
+		    </if>
+		    <if test="endDate != null">
+		    	end_date = #{endDate},
+			</if>
+		    <if test="startDate != null">
+		    	start_date = #{startDate},
+		    </if>
+		    <if test="sort != null">
+		    	 sort = #{sort},
+		    </if>
+		    <if test="clickNum != null">
+		    	 click_num = #{clickNum},
+		    </if>
+		   	<if test="resUrl!=null and resUrl != ''">
+		   		res_url = #{resUrl}
+		   	</if>
+	   	</set>
+	   	where adv_id = #{advId}
+   </update>
+   
+   <select id="findByAdvPositionId" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+	   	select * from shop_adv where (end_date/1000) &gt; UNIX_TIMESTAMP(now()) and  ap_id = #{apId}
+   </select>
+</mapper>

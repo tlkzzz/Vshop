@@ -1,0 +1,12 @@
+﻿p,li,ul,dt,dl,dd,a,blockquote,body,h1,h2,h3,h4,h5,h6{padding:0px; margin:0px; text-decoration:none; font-size:12px;list-style-type:none;font-family:'宋体'; color:#484848;}
+a,span,label,b{ font-size:12px;}
+a{ text-decoration:none;}
+ul,li{text-decoration:none; list-style-type:none;}
+img{ border:0px;}
+input,select,textarea{ outline:none;}
+.clear{ clear:both;}
+.none{ display:none;}
+a:hover{ color:#CD2A2C; text-decoration:underline;}
+
+body{ background:url(../pic/header_bg.jpg) repeat-x 0px 0px;}
+#header{ height:128px; overflow:hidden; width:970px; margin:0px auto;}

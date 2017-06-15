@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.Vshop.service.module.trade.dao.mapper.OrderGoodsMapper" >
+  	<resultMap id="BaseResultMap" type="com.Vshop.core.entity.base.OrderGoods" >
+    	<id column="rec_id" property="recId" jdbcType="INTEGER" />
+    	<result column="order_id" property="orderId" jdbcType="INTEGER" />
+    	<result column="goods_id" property="goodsId" jdbcType="INTEGER" />
+    	<result column="goods_name" property="goodsName" jdbcType="VARCHAR" />
+    	<result column="spec_id" property="specId" jdbcType="INTEGER" />
+    	<result column="spec_info" property="specInfo" jdbcType="VARCHAR" />
+    	<result column="goods_price" property="goodsPrice" jdbcType="DECIMAL" />
+    	<result column="goods_num" property="goodsNum" jdbcType="INTEGER" />
+    	<result column="goods_image" property="goodsImage" jdbcType="VARCHAR" />
+    	<result column="stores_id" property="storeId" jdbcType="INTEGER" />
+    	<result column="goods_returnnum" property="goodsReturnNum" jdbcType="INTEGER" />
+    	<result column="evaluation_status" property="evaluationStatus" jdbcType="INTEGER" />
+    	<result column="evaluation_time" property="evaluationTime" jdbcType="BIGINT" />
+  	</resultMap>
+  	
+  	<resultMap id="BaseResultMap2" type="com.Vshop.core.entity.base.OrderGoods" >
+    	<id column="rec_id" property="recId" jdbcType="INTEGER" />
+    	<result column="order_id" property="orderId" jdbcType="INTEGER" />
+    	<result column="goods_id" property="goodsId" jdbcType="INTEGER" />
+    	<result column="goods_name" property="goodsName" jdbcType="VARCHAR" />
+    	<result column="spec_id" property="specId" jdbcType="INTEGER" />
+    	<result column="spec_info" property="specInfo" jdbcType="VARCHAR" />
+    	<result column="goods_price" property="goodsPrice" jdbcType="DECIMAL" />
+    	<result column="goods_num" property="goodsNum" jdbcType="INTEGER" />
+    	<result column="goods_image" property="goodsImage" jdbcType="VARCHAR" />
+    	<result column="stores_id" property="storeId" jdbcType="INTEGER" />
+    	<result column="goods_returnnum" property="goodsReturnNum" jdbcType="INTEGER" />
+    	<result column="evaluation_status" property="evaluationStatus" jdbcType="INTEGER" />
+    	<result column="evaluation_time" property="evaluationTime" jdbcType="BIGINT" />
+    	<result column="goods_commission_rate" property="goodsCommissionRate" jdbcType="DECIMAL" />
+  	</resultMap>
+  	
+  	<!-- 物品订单信息 -->
+  	<resultMap id="VoResultMap" type="com.Vshop.core.entity.vo.OrderGoodsVo" >
+  		<result column="goods_id" property="goodsId" jdbcType="INTEGER" />
+  		<result column="buyer_id" property="buyerId" jdbcType="INTEGER" />
+  		<result column="buyer_name" property="buyerName" jdbcType="VARCHAR" />
+  		<result column="goods_name" property="goodsName" jdbcType="VARCHAR" />
+  		<result column="order_state" property="orderState" jdbcType="INTEGER" />
+  		<result column="create_tiem" property="addTime" jdbcType="BIGINT" />
+  		<result column="finnshed_time" property="finnshedTime" jdbcType="BIGINT" />
+  	</resultMap>
+
+
+  	<sql id="Base_Column_List" >
+    rec_id, order_id, goods_id, goods_name, goods_price, goods_num, goods_image, spec_id, 
+    spec_info, goods_returnnum, stores_id, evaluation_status, evaluation_time
+  	</sql>
+  	
+  	<!-- 插入订单项 -->
+  	<insert id="saveOrderGoods" parameterType="com.Vshop.core.entity.base.OrderGoods">
+  		insert into shop_order_goods(order_id,goods_id,goods_name,goods_price,goods_num,goods_image,spec_id, 
+    									spec_info, goods_returnnum, stores_id) 
+    		values(#{orderId},#{goodsId},#{goodsName},#{goodsPrice},#{goodsNum},#{goodsImage},
+    				#{specId},#{specInfo},#{goodsReturnNum},#{storeId});
+  	</insert>
+  	
+  	<!-- 修改订单项 -->
+  	<update id="updateOrderGoods" parameterType="com.Vshop.core.entity.base.OrderGoods">
+		update shop_order_goods 
+		<set>
+			<if test="orderId != null">
+				order_id = #{orderId},
+			</if>
+			<if test="goodsId != null">
+				goods_id = #{goodsId},
+			</if>
+			<if test="goodsName != null and goodsName != '' ">
+				goods_name = #{goodsName},
+			</if>
+			<if test="goodsPrice != null">
+				goods_price = #{goodsPrice},
+			</if>
+			<if test="goodsNum != null">
+				goods_num = #{goodsNum},
+			</if>
+			<if test="goodsImage != null and goodsImage != '' ">
+				goods_image = #{goodsImage},
+			</if>
+			<if test="specId != null">
+				spec_id = #{specId},
+			</if>
+			<if test="specInfo != null and specInfo != '' ">
+				spec_info = #{specInfo},
+			</if>
+			<if test="goodsReturnNum != null">
+				goods_returnnum = #{goodsReturnNum},
+			</if>
+			<if test="storeId != null">
+				stores_id = #{storeId},
+			</if>
+			<if test="evaluationStatus != null ">
+				evaluation_status = #{evaluationStatus},
+			</if>
+			<if test="evaluationTime != null">
+				evaluation_time = #{evaluationTime},
+			</if>
+		</set>
+		where rec_id = #{recId}		
+  	</update>
+  	
+  	<!-- 根据订单id删除订单项 -->
+  	<delete id="deleteByOrderId" parameterType="int">
+  		delete from shop_order_goods where order_id = #{orderId}
+  	</delete>
+
+	<!-- 根据订单id查询订单项 -->
+	<select id="findByOrderId" parameterType="int" resultMap="BaseResultMap">
+		select <include refid="Base_Column_List" /> from shop_order_goods 
+		where order_id = #{orderId}
+	</select>
+	
+	<select id="findByOrderId2" parameterType="int" resultMap="BaseResultMap2">
+		select 
+			rec_id, order_id, goods_id, goods_name, goods_price, goods_num, goods_image, spec_id, 
+    spec_info, goods_returnnum, stores_id, evaluation_status, evaluation_time,
+    		(select goods_commission_rate r FROM shop_goods r WHERE r.goods_id = t.goods_id) 
+    		as goods_commission_rate
+		 from shop_order_goods t
+		where order_id = #{orderId}
+	</select>
+	
+	<!-- 根据id查询订单项 -->
+	<select id="findById" parameterType="int" resultMap="BaseResultMap">
+		select <include refid="Base_Column_List" /> from shop_order_goods 
+		where rec_id = #{recId}	
+	</select>
+	
+	<!-- 根据物品id查询物品订单信息 -->
+	<select id="findOrderGoodsVoByGoodsId" parameterType="int" resultMap="VoResultMap">
+		SELECT a.goods_id,b.buyer_id,b.buyer_name,a.goods_name,b.order_state,b.create_time,
+		b.finnshed_time from shop_order_goods a INNER JOIN shop_order b ON a.order_id = b.order_id 
+		where a.goods_id = #{goodsId} and b.order_state=40
+	</select>
+
+</mapper>

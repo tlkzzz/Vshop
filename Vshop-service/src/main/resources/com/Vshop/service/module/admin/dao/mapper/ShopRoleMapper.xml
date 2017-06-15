@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.Vshop.service.module.admin.dao.mapper.RoleMapper">
+	<resultMap id="BaseResultMap" type="com.Vshop.core.entity.base.Roles">
+		<result column="r_id" property="id" jdbcType="INTEGER" />
+		<result column="r_name" property="name" jdbcType="VARCHAR" />
+		<result column="create_time" property="createTime" jdbcType="BIGINT" />
+		<result column="r_description" property="description" jdbcType="VARCHAR"/>
+		<result column="r_alias" property="roleAlias" jdbcType="VARCHAR"/>
+	</resultMap>
+	
+	<sql id="Base_Column_List">
+		r_id,r_name,create_time,r_description,r_alias
+	</sql>
+	
+	<sql id="whereStatement">
+		<where>
+			1 = 1 
+		</where>
+	</sql>
+	
+	<!--  分页查询count -->
+    <select id="countShopRole" resultType="int" parameterType="com.Vshop.core.entity.base.Roles">
+        select count(1) from shop_role shopRole
+        <include refid="whereStatement" />
+    </select>
+    
+    <select id="findCount" parameterType="com.Vshop.core.entity.base.Roles" resultType="int">
+        select count(1) from shop_role where
+        1=1
+        <if test="name != null and name != '' ">
+              and r_name = #{name}
+        </if>
+        <if test="description != null and description != '' ">
+            and r_description = #{description}
+        </if>
+
+    </select>
+    
+    <!--  分页查询List -->
+    <select id="findShopRoleList" resultMap="BaseResultMap" parameterType="com.Vshop.service.utils.page.Pager">
+        select shopRole.* from (
+    	SELECT role.* FROM shop_role role
+  		<include refid="whereStatement" />
+        order by role.r_id desc) shopRole
+    </select>
+
+	<select id="findShopRoleById" resultMap="BaseResultMap" parameterType="com.Vshop.core.entity.base.Roles">
+		select * from shop_role
+		where r_id = #{id,jdbcType=INTEGER}
+	</select>
+
+	<delete id="deleteShopRole" parameterType="java.lang.Integer">
+		delete from shop_role
+		where r_id = #{id,jdbcType=INTEGER} 
+	</delete>
+	
+	<insert id="saveShopRole" parameterType="com.Vshop.core.entity.base.Roles">
+		insert into shop_role (r_name,create_time,r_description,r_alias) VALUES (#{name},#{createTime},#{description},#{roleAlias});
+	</insert>
+	
+	<update id="updateState" parameterType="com.Vshop.core.entity.base.Roles">
+         update shop_role set r_name = #{name},r_description = #{description},r_alias = #{roleAlias} 
+         where r_id = #{id}
+    </update>	
+    
+     <select id="findList" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM shop_role
+        order by r_id
+    </select>
+</mapper>

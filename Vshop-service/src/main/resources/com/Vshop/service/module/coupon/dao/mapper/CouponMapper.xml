@@ -1,0 +1,312 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.Vshop.service.module.coupon.dao.mapper.CouponMapper">
+	<resultMap id="BaseResultMap" type="com.Vshop.core.entity.base.Coupon">
+        <result column="coupon_id" property="couponId" jdbcType="INTEGER"/>
+        <result column="coupon_title" property="couponTitle" jdbcType="VARCHAR"/>
+        <result column="coupon_type" property="couponType" jdbcType="VARCHAR"/>
+        <result column="coupon_pic" property="couponPic" jdbcType="VARCHAR"/>
+        <result column="coupon_desc" property="couponDesc" jdbcType="VARCHAR"/>
+
+        <result column="coupon_price" property="couponPrice" jdbcType="DECIMAL"/>
+        <result column="coupon_limit" property="couponLimit" jdbcType="DECIMAL"/>
+        <result column="sponsor_id" property="sponsorId" jdbcType="INTEGER"/>
+        <result column="store_id" property="storeId" jdbcType="INTEGER"/>
+        
+        <result column="coupon_state" property="couponState" jdbcType="INTEGER"/>
+        <result column="coupon_storage" property="couponstorage" jdbcType="INTEGER"/>
+        <result column="coupon_usage" property="couponusage" jdbcType="INTEGER"/>
+        <result column="coupon_lock" property="couponIock" jdbcType="INTEGER"/>
+        
+        <result column="coupon_class_id" property="couponClassId" jdbcType="INTEGER"/>
+        <result column="coupon_click" property="coupClick" jdbcType="INTEGER"/>
+        <result column="coupon_print_style" property="couponPrintStyle" jdbcType="VARCHAR"/>
+        <result column="coupon_recommend" property="couponRecommend" jdbcType="INTEGER"/>
+        <result column="coupon_allowstate" property="couponAllowState" jdbcType="INTEGER"/>
+        <result column="coupon_allowremark" property="couponAllowmark" jdbcType="VARCHAR"/>
+        <result column="store_name" property="storeName" jdbcType="VARCHAR"/>
+        <result column="couponTypeName" property="couponTypeName" jdbcType="VARCHAR"/>
+        
+        <result column="start_time" property="startTime" jdbcType="BIGINT"/>
+        <result column="end_time" property="endTime" jdbcType="BIGINT"/>
+        <result column="create_time" property="createTime" jdbcType="BIGINT"/>
+    </resultMap>
+    
+    <sql id="Base_Column_List">
+        coupon_id,coupon_title,coupon_type,coupon_pic,coupon_desc,
+        start_time,end_time,coupon_price,coupon_limit,store_id,sponsor_id,
+        coupon_state,coupon_storage,coupon_usage,coupon_lock,create_time,
+        coupon_class_id,coupon_click,coupon_print_style,coupon_recommend,
+        coupon_allowstate,coupon_allowremark,store_name
+    </sql>
+    
+    <sql id="whereStatement">
+		<where>
+			1 = 1 
+		</where>
+		<if test="condition.storeId != null">
+			and store_id = #{condition.storeId} 
+		</if>
+		<if test="condition.sponsorId != null">
+			and sponsor_id = #{condition.sponsorId} 
+		</if>
+		<if test="condition.couponTitle != null and condition.couponTitle !='' " >
+            AND coupon_title like CONCAT('%','${condition.couponTitle}','%' )
+        </if>
+		<if test="condition.startTime != null" >
+            and start_time &gt;= #{condition.startTime}
+        </if>
+		<if test="condition.endTime != null" >
+            and end_time &lt;= #{condition.endTime}
+        </if>
+		<if test="condition.couponAllowState != null" >
+            and coupon_allowstate = #{condition.couponAllowState}
+        </if>
+	</sql>
+	
+	<sql id="whereStatement1">
+		<where>
+			1 = 1 
+		</where>
+		<if test="storeId != null">
+			and store_id = #{storeId} 
+		</if>
+		<if test="sponsorId != null">
+			and sponsor_id = #{sponsorId}
+		</if>
+		<if test="couponTitle != null" >
+            and coupon_title = #{couponTitle}
+        </if>
+		<if test="startTime != null" >
+            and start_time &gt;= #{startTime}
+        </if>
+		<if test="endTime != null" >
+            and end_time &lt;= #{endTime}
+        </if>
+		<if test="couponAllowState != null" >
+            and coupon_allowstate = #{couponAllowState}
+        </if>
+	</sql>
+    
+    
+    <!-- 插入优惠券 -->
+    <insert id="saveCoupon" parameterType="com.Vshop.core.entity.base.Coupon" useGeneratedKeys="true" keyProperty="couponId">
+	    insert into shop_coupon ( 
+		    coupon_id,coupon_title,coupon_type,coupon_pic,coupon_desc,
+	        start_time,end_time,coupon_price,coupon_limit,store_id,sponsor_id,
+	        coupon_state,coupon_storage,coupon_usage,coupon_lock,create_time,
+	        coupon_class_id,coupon_click,coupon_print_style,coupon_recommend,
+	        coupon_allowstate,coupon_allowremark,store_name
+	    )
+	    values(
+		    #{couponId,jdbcType=INTEGER},#{couponTitle}, #{couponType}, #{couponPic},
+		    #{couponDesc}, #{startTime}, #{endTime},
+		    #{couponPrice}, #{couponLimit}, #{storeId}, #{sponsorId},
+		    #{couponState}, #{couponstorage}, #{couponusage},
+		    #{couponIock}, #{createTime}, #{couponClassId},
+		    #{coupClick}, #{couponPrintStyle}, #{couponRecommend},
+		    #{couponAllowState}, #{couponAllowmark},#{storeName}
+	    );
+   </insert>
+   
+   <!-- 删除优惠券 -->
+   <delete id="deleteCoupon" parameterType="java.lang.Integer" >
+   		delete from shop_coupon where coupon_id = #{id}
+   </delete>
+   
+   <!-- 更新优惠券 -->
+   <update id="updateCoupon" parameterType="com.Vshop.core.entity.base.Coupon" >
+    update shop_coupon 
+	    <set>
+	    <if test="couponTitle != null">
+	    	coupon_title = #{couponTitle}, 
+	    </if>
+	    <if test="couponType != null">
+	    	coupon_type = #{couponType},
+	    </if>
+	   	<if test="couponPic != null">
+	   		coupon_pic = #{couponPic},
+	   	</if>
+	   	<if test="couponDesc != null">
+	   		coupon_desc = #{couponDesc},
+	   	</if>
+	   	
+	    <if test="startTime != null">
+	    	start_time = #{startTime}, 
+	    </if>
+	    <if test="endTime != null">
+	    	end_time = #{endTime},
+	    </if>
+	   	<if test="couponPrice != null">
+	   		coupon_price = #{couponPrice},
+	   	</if>
+	    <if test="couponState != null">
+	    	coupon_state = #{couponState},
+	    </if>
+	   	<if test="couponstorage != null">
+	   		coupon_storage = #{couponstorage},
+	   	</if>
+	   	<if test="couponusage != null">
+	   		coupon_usage = #{couponusage},
+	   	</if>
+	   	
+	   	<if test="couponIock != null">
+	    	coupon_lock = #{couponIock}, 
+	    </if>
+	   	<if test="couponClassId != null">
+	   		coupon_class_id = #{couponClassId},
+	   	</if>
+	   	<if test="coupClick != null">
+	   		coupon_click = #{coupClick},
+	   	</if>
+	   	
+	   	<if test="couponPrintStyle != null">
+	    	coupon_print_style = #{couponPrintStyle}, 
+	    </if>
+	    <if test="couponRecommend != null">
+	    	coupon_recommend = #{couponRecommend},
+	    </if>
+	   	<if test="couponAllowState != null">
+	   		coupon_allowstate = #{couponAllowState},
+	   	</if>
+	   	<if test="couponAllowmark != null">
+	   		coupon_allowremark = #{couponAllowmark},
+	   	</if>
+	   	<if test="couponLimit != null">
+	   		coupon_limit = #{couponLimit},
+	   	</if>
+	    <if test="storeId != null">
+	    	store_id = #{storeId}, 
+	    </if>
+	    <if test="sponsorId != null">
+			and sponsor_id = #{sponsorId}
+		</if>
+	    <if test="createTime != null">
+	    	create_time = #{createTime},
+	    </if>
+	   	<if test="storeName != null">
+	   		store_name = #{storeName}
+	   	</if>
+	   	</set> 
+	   	where coupon_id = #{couponId}
+	</update>
+   
+	<!-- 优惠券总数 -->
+	<select id="findCouponCount" resultType="java.lang.Integer" parameterType="com.Vshop.core.entity.base.Coupon">
+		select count(1) from shop_coupon a <include refid="whereStatement1" />
+	</select>
+	
+	<!-- 优惠券分页列表 -->
+	<select id="findCouponPagerList" resultMap="BaseResultMap" parameterType="com.Vshop.service.utils.page.Pager">
+		SELECT s.* from shop_coupon s
+		<include refid="whereStatement" />
+	</select>
+
+	<!-- 优惠券列表 -->
+	<select id="findCouponAllList" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+		select a.* from shop_coupon a where 1 = 1 and store_id = #{storeId} 
+	</select>
+	
+	<!--根据id获取数据-->
+    <select id="getCouponById" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List" />, a.class_name as couponTypeName
+        from shop_coupon 
+        left join shop_coupon_class a on a.class_id = shop_coupon.coupon_type
+        where coupon_id = #{id}
+    </select>
+    
+    <!-- 优惠券列表 -->
+	<select id="findCouponbycolumList" resultMap="BaseResultMap" parameterType="com.Vshop.core.entity.base.Coupon">
+		select a.* from shop_coupon a where 1 = 1 and store_id = #{storeId} and coupon_state=#{couponState}
+		and coupon_allowstate=#{couponAllowState}
+	</select>
+	
+	<!-- 根据couponClassId获取优惠券 -->
+	<select id="findCouponByClassId" resultMap="BaseResultMap" parameterType="com.Vshop.core.entity.base.Coupon">
+		select
+        <include refid="Base_Column_List" />, a.class_name as couponTypeName
+        from shop_coupon 
+        left join shop_coupon_class a on a.class_id = shop_coupon.coupon_class_id
+        where coupon_class_id = #{couponClassId} ORDER BY coupon_id
+	</select>
+	
+	<resultMap id="GoodsBaseResultMap" type="com.Vshop.core.entity.base.Goods">
+        <result column="goods_id" property="goodsId" jdbcType="INTEGER"/>
+        <result column="goods_name" property="goodsName" jdbcType="VARCHAR"/>
+        <result column="goods_subtitle" property="goodsSubtitle" jdbcType="VARCHAR"/>
+        <result column="gc_id" property="gcId" jdbcType="INTEGER"/>
+        <result column="gc_name" property="gcName" jdbcType="VARCHAR"/>
+        <result column="brand_id" property="brandId" jdbcType="INTEGER"/>
+        <result column="brand_name" property="brandName" jdbcType="VARCHAR"/>
+        <result column="type_id" property="typeId" jdbcType="INTEGER"/>
+        <result column="store_id" property="storeId" jdbcType="INTEGER"/>
+        <result column="store_name" property="storeName" jdbcType="VARCHAR"/>
+        <result column="spec_open" property="specOpen" jdbcType="INTEGER"/>
+        <result column="spec_id" property="specId" jdbcType="INTEGER"/>
+        <result column="spec_name" property="specName" jdbcType="VARCHAR"/>
+        <result column="goods_image" property="goodsImage" jdbcType="VARCHAR"/>
+        <result column="goods_image_more" property="goodsImageMore" jdbcType="VARCHAR"/>
+        <result column="goods_store_price" property="goodsStorePrice" jdbcType="DECIMAL"/>
+        <result column="goods_serial" property="goodsSerial" jdbcType="VARCHAR"/>
+        <result column="goods_show" property="goodsShow" jdbcType="INTEGER"/>
+        <result column="goods_click" property="goodsClick" jdbcType="INTEGER"/>
+        <result column="goods_state" property="goodsState" jdbcType="INTEGER"/>
+        <result column="goods_commend" property="goodsCommend" jdbcType="INTEGER"/>
+        <result column="create_time" property="createTime" jdbcType="BIGINT"/>
+        <result column="goods_keywords" property="goodsKeywords" jdbcType="VARCHAR"/>
+        <result column="goods_description" property="goodsDescription" jdbcType="VARCHAR"/>
+        <result column="goods_body" property="goodsBody" jdbcType="VARCHAR"/>
+        <result column="goods_attr" property="goodsAttr" jdbcType="VARCHAR"/>
+        <result column="goods_spec" property="goodsSpec" jdbcType="VARCHAR"/>
+        <result column="goods_col_img" property="goodsColImg" jdbcType="VARCHAR"/>
+        <result column="update_time" property="updateTime" jdbcType="BIGINT"/>
+        <result column="start_time" property="startTime" jdbcType="BIGINT"/>
+        <result column="end_time" property="endTime" jdbcType="BIGINT"/>
+        <result column="goods_form" property="goodsForm" jdbcType="INTEGER"/>
+        <result column="transport_id" property="transportId" jdbcType="INTEGER"/>
+        <result column="py_price" property="pyPrice" jdbcType="DECIMAL"/>
+        <result column="kd_price" property="kdPrice" jdbcType="DECIMAL"/>
+        <result column="es_price" property="esPrice" jdbcType="DECIMAL"/>
+        <result column="city_id" property="cityId" jdbcType="INTEGER"/>
+        <result column="city_name" property="cityName" jdbcType="VARCHAR"/>
+        <result column="province_id" property="provinceId" jdbcType="INTEGER"/>
+        <result column="province_name" property="provinceName" jdbcType="VARCHAR"/>
+        <result column="goods_close_reason" property="goodsCloseReason" jdbcType="VARCHAR"/>
+        <result column="goods_store_state" property="goodsStoreState" jdbcType="INTEGER"/>
+        <result column="commentnum" property="commentnum" jdbcType="INTEGER"/>
+        <result column="salenum" property="salenum" jdbcType="INTEGER"/>
+        <result column="goods_collect" property="goodsCollect" jdbcType="INTEGER"/>
+        <result column="goods_transfee_charge" property="goodsTransfeeCharge" jdbcType="INTEGER"/>
+        <result column="store_class_id" property="storeClassId" jdbcType="INTEGER"/>
+        <result column="supplier_id" property="supplierId" jdbcType="INTEGER"/>
+        <result column="supplier_name" property="supplierName" jdbcType="VARCHAR"/>
+    </resultMap>
+    <sql id="Goods_Base_Column_List">
+    	g.goods_id,goods_name,goods_subtitle,gc_id,gc_name,brand_id,brand_name,type_id,
+    	store_id,store_name,spec_open,spec_id,spec_name,goods_image,goods_image_more,
+    	goods_store_price,goods_serial,goods_show,goods_click,goods_state,
+    	goods_commend,create_time,goods_keywords,goods_description,goods_body,
+    	goods_attr,goods_spec,goods_col_img,update_time,start_time,end_time,
+    	goods_form,transport_id,py_price,kd_price,es_price,city_id,city_name,
+    	province_id,province_name,goods_close_reason,goods_store_state,commentnum,
+    	salenum,goods_collect,goods_transfee_charge,store_class_id,supplier_id,supplier_name
+    </sql>
+    
+	<select id="findGoodsByCouponId" parameterType="java.lang.Integer" resultMap="GoodsBaseResultMap">
+		SELECT 
+		  <include refid="Goods_Base_Column_List"/>
+		FROM
+		  shop_coupon_goods c 
+		  LEFT JOIN shop_goods g 
+		    ON c.goods_id = g.goods_id 
+		WHERE c.coupon_id = #{id}
+	</select>
+	
+	<insert id="saveCouponGoods" parameterType="java.util.List">
+		INSERT INTO shop_coupon_goods(coupon_id, goods_id) VALUES
+		<foreach collection="list" item="item" index="index" separator=",">
+			(#{item.couponId},#{item.goodsId})
+		</foreach>
+	</insert>
+</mapper>

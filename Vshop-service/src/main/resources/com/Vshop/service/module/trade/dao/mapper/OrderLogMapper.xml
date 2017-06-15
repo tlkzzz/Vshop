@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.Vshop.service.module.trade.dao.mapper.OrderLogMapper">
+	<resultMap id="BaseResultMap" type="com.Vshop.core.entity.base.OrderLog">
+		<id column="log_id" property="logId" jdbcType="INTEGER" />
+		<result column="order_id" property="orderId" jdbcType="INTEGER" />
+		<result column="order_state" property="orderState" jdbcType="VARCHAR" />
+		<result column="change_state" property="changeState" jdbcType="VARCHAR" />
+		<result column="state_info" property="stateInfo" jdbcType="VARCHAR" />
+		<result column="create_time" property="createTime" jdbcType="BIGINT"/>
+		<result column="operator" property="operator" jdbcType="VARCHAR" />
+	</resultMap>
+	
+	<sql id="Base_Column_List">
+		log_id, order_id, order_state, change_state, state_info, create_time, operator
+	</sql>
+	
+	<!-- 通过id查询订单日志 -->
+	<select id="findById" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		from shop_order_log
+		where log_id = #{logId,jdbcType=INTEGER}
+	</select>
+	
+	<!--  根据订单id查询订单日志 -->
+	<select id="findByOrderId" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		from shop_order_log
+		where order_id = #{orderId,jdbcType=INTEGER}
+	</select>
+	
+	<!-- 插入orderLog实体 -->
+	<insert id="saveOrderLog" parameterType="com.Vshop.core.entity.base.OrderLog" useGeneratedKeys="true" keyProperty="logId">
+		insert into shop_order_log(order_id,order_state,change_state,state_info,create_time,operator) 
+		values (#{orderId},#{orderState},#{changeState},#{stateInfo},#{createTime},#{operator});
+	</insert>
+	
+	<!-- 更新orderLog实体 -->
+	<update id="updateOrderLog" parameterType="com.Vshop.core.entity.base.OrderLog">
+		update shop_order_log
+		<set>
+			<if test="orderId != null">
+				order_id = #{orderId,jdbcType=INTEGER},
+			</if>
+			<if test="orderState != null and orderState != '' ">
+				order_state = #{orderState,jdbcType=VARCHAR},
+			</if>
+			<if test="changeState != null and changeState != '' ">
+				change_state = #{changeState,jdbcType=VARCHAR},
+			</if>
+			<if test="stateInfo != null and stateInfo != '' ">
+				state_info = #{stateInfo,jdbcType=VARCHAR},
+			</if>
+			<if test="createTime != null">
+				create_time = #{createTime,jdbcType=BIGINT},
+			</if>
+			<if test="operator != null and operator != '' ">
+				operator = #{operator,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where log_id = #{logId,jdbcType=INTEGER}
+	</update>
+</mapper>

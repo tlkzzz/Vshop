@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.Vshop.service.module.store.dao.mapper.UploadMapper">
+    <resultMap id="BaseResultMap" type="com.Vshop.core.entity.base.Upload" >
+        <id column="upload_id" property="uploadId" jdbcType="INTEGER" />
+        <result column="file_name" property="fileName" jdbcType="VARCHAR" />
+        <result column="file_thumb" property="fileThumb" jdbcType="VARCHAR" />
+        <result column="file_wm" property="fileWm" jdbcType="VARCHAR" />
+        <result column="file_size" property="fileSize" jdbcType="INTEGER" />
+        <result column="store_id" property="storeId" jdbcType="INTEGER" />
+        <result column="upload_type" property="uploadType" jdbcType="INTEGER" />
+        <result column="upload_time" property="uploadTime" jdbcType="DATE" />
+        <result column="item_id" property="itemId" jdbcType="INTEGER" />
+        <result column="is_del" property="isDel" jdbcType="TINYINT" />
+        <result column="created_time" property="createdTime" jdbcType="BIGINT" />
+        <result column="updated_time" property="updatedTime" jdbcType="BIGINT" />
+    </resultMap>
+
+    <sql id="Base_Column_List" >
+        upload_id, file_name, file_thumb, file_wm, file_size, store_id, upload_type,item_id,
+        upload_time,is_del,created_time,updated_time
+    </sql>
+
+    <insert id="save" parameterType="com.Vshop.core.entity.base.Upload" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO shop_upload(file_name,file_thumb,file_wm,file_size,store_id,upload_type,upload_time,item_id,is_del,created_time)
+        VALUES (#{fileName},#{fileThumb},#{fileWm},#{fileSize},#{storeId},#{uploadType},now(),#{itemId},0,now())
+    </insert>
+
+    <update id="update" parameterType="com.Vshop.core.entity.base.Upload">
+        UPDATE shop_upload SET file_name = #{fileName},file_size = #{fileSize},upload_time = now(),updated_time = now()  WHERE upload_id = #{uploadId}
+    </update>
+
+    <select id="findByStoreId" parameterType="int" resultMap="BaseResultMap">
+        SELECT <include refid="Base_Column_List"/>
+        FROM shop_upload
+        WHERE store_id = #{id}
+        ORDER BY upload_time desc
+    </select>
+</mapper>

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.Vshop.service.module.setting.dao.mapper.OffPayAreaMapper">
+    <resultMap id="BaseResultMap" type="com.Vshop.core.entity.base.OffPayArea">
+        <result column="store_id" property="storeId" jdbcType="INTEGER"/>
+        <result column="area_id" property="areaId" />
+        <result column="is_del" property="isDel" jdbcType="TINYINT" />
+        <result column="created_time" property="createdTime" jdbcType="BIGINT" />
+        <result column="updated_time" property="updatedTime" jdbcType="BIGINT" />
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        store_id,area_id
+    </sql>
+
+   <select id="queryByStoreId" resultType="java.lang.String">
+       SELECT area_id FROM shop_offpay_area where store_id = 1
+   </select>
+
+    <insert id="save" parameterType="com.Vshop.core.entity.base.OffPayArea">
+        INSERT INTO shop_offpay_area (store_id, area_id) values (#{storeId},#{areaId})
+    </insert>
+
+    <update id="update" parameterType="com.Vshop.core.entity.base.OffPayArea">
+        update shop_offpay_area set area_id = #{areaId} where store_id = #{storeId}
+    </update>
+
+    <select id="findCount" resultType="int" parameterType="com.Vshop.core.entity.base.OffPayArea">
+        SELECT count(1) from shop_offpay_area where store_id = #{storeId}
+    </select>
+</mapper>

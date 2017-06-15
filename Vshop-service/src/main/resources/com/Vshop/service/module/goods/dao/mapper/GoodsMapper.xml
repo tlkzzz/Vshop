@@ -1,0 +1,1402 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.Vshop.service.module.goods.dao.mapper.GoodsMapper">
+    <resultMap id="BaseResultMap" type="com.Vshop.core.entity.base.Goods">
+        <result column="goods_id" property="goodsId" jdbcType="INTEGER"/>
+        <result column="goods_name" property="goodsName" jdbcType="VARCHAR"/>
+        <result column="goods_subtitle" property="goodsSubtitle" jdbcType="VARCHAR"/>
+        <result column="gc_id" property="gcId" jdbcType="INTEGER"/>
+        <result column="gc_name" property="gcName" jdbcType="VARCHAR"/>
+        <result column="brand_id" property="brandId" jdbcType="INTEGER"/>
+        <result column="brand_name" property="brandName" jdbcType="VARCHAR"/>
+        <result column="type_id" property="typeId" jdbcType="INTEGER"/>
+        <result column="store_id" property="storeId" jdbcType="INTEGER"/>
+        <result column="store_name" property="storeName" jdbcType="VARCHAR"/>
+        <result column="spec_open" property="specOpen" jdbcType="INTEGER"/>
+        <result column="spec_id" property="specId" jdbcType="INTEGER"/>
+        <result column="spec_name" property="specName" jdbcType="VARCHAR"/>
+        <result column="goods_image" property="goodsImage" jdbcType="VARCHAR"/>
+        <result column="goods_image_more" property="goodsImageMore" jdbcType="VARCHAR"/>
+        <result column="goods_store_price" property="goodsStorePrice" jdbcType="DECIMAL"/>
+        <result column="goods_market_price" property="goodsMarketPrice" jdbcType="DECIMAL"/>
+        <result column="goods_cost_price" property="goodsCostPrice" jdbcType="DECIMAL"/>
+        <result column="goods_serial" property="goodsSerial" jdbcType="VARCHAR"/>
+        <result column="goods_show" property="goodsShow" jdbcType="INTEGER"/>
+        <result column="goods_click" property="goodsClick" jdbcType="INTEGER"/>
+        <result column="goods_state" property="goodsState" jdbcType="INTEGER"/>
+        <result column="goods_commend" property="goodsCommend" jdbcType="INTEGER"/>
+        <result column="create_time" property="createTime" jdbcType="BIGINT"/>
+        <result column="goods_keywords" property="goodsKeywords" jdbcType="VARCHAR"/>
+        <result column="goods_description" property="goodsDescription" jdbcType="VARCHAR"/>
+        <result column="goods_body" property="goodsBody" jdbcType="VARCHAR"/>
+        <result column="goods_attr" property="goodsAttr" jdbcType="VARCHAR"/>
+        <result column="goods_spec" property="goodsSpec" jdbcType="VARCHAR"/>
+        <result column="goods_col_img" property="goodsColImg" jdbcType="VARCHAR"/>
+        <result column="update_time" property="updateTime" jdbcType="BIGINT"/>
+        <result column="start_time" property="startTime" jdbcType="BIGINT"/>
+        <result column="end_time" property="endTime" jdbcType="BIGINT"/>
+        <result column="goods_form" property="goodsForm" jdbcType="INTEGER"/>
+        <result column="transport_id" property="transportId" jdbcType="INTEGER"/>
+        <result column="py_price" property="pyPrice" jdbcType="DECIMAL"/>
+        <result column="kd_price" property="kdPrice" jdbcType="DECIMAL"/>
+        <result column="es_price" property="esPrice" jdbcType="DECIMAL"/>
+        <result column="city_id" property="cityId" jdbcType="INTEGER"/>
+        <result column="city_name" property="cityName" jdbcType="VARCHAR"/>
+        <result column="province_id" property="provinceId" jdbcType="INTEGER"/>
+        <result column="province_name" property="provinceName" jdbcType="VARCHAR"/>
+        <result column="goods_close_reason" property="goodsCloseReason" jdbcType="VARCHAR"/>
+        <result column="goods_store_state" property="goodsStoreState" jdbcType="INTEGER"/>
+        <result column="commentnum" property="commentnum" jdbcType="INTEGER"/>
+        <result column="salenum" property="salenum" jdbcType="INTEGER"/>
+        <result column="goods_collect" property="goodsCollect" jdbcType="INTEGER"/>
+        <result column="goods_transfee_charge" property="goodsTransfeeCharge" jdbcType="INTEGER"/>
+        <result column="store_class_id" property="storeClassId" jdbcType="INTEGER"/>
+        <result column="supplier_id" property="supplierId" jdbcType="INTEGER"/>
+        <result column="supplier_name" property="supplierName" jdbcType="VARCHAR"/>
+         <result column="is_code" property="isCode" jdbcType="INTEGER" />
+         <result column="goods_commission_rate" property="goodsCommissionRate" jdbcType="DECIMAL" />
+         <result column="up_time" property="upForTime" jdbcType="BIGINT" />
+        <result column="down_time" property="downForTime" jdbcType="BIGINT" />
+        <result column="goods_close_info" property="goodsCloseInfo" jdbcType="VARCHAR" />
+    </resultMap>
+    
+    
+    <resultMap id="GoodsStoreResultMap" type="com.Vshop.core.entity.base.GoodsStore">
+        <result column="goods_id" property="goodsId" jdbcType="INTEGER"/>
+        <result column="store_id" property="storeId" jdbcType="INTEGER"/>
+        <result column="store_name" property="storeName" jdbcType="VARCHAR"/>
+        <result column="goods_store_price" property="goodsStorePrice" jdbcType="DECIMAL"/>
+        <result column="goods_show" property="goodsShow" jdbcType="INTEGER"/>
+        <result column="goods_commend" property="goodsCommend" jdbcType="INTEGER"/>
+        <result column="create_time" property="createTime" jdbcType="BIGINT"/>
+        <result column="update_time" property="updateTime" jdbcType="BIGINT"/>
+        <result column="goods_store_state" property="goodsStoreState" jdbcType="INTEGER"/>
+        <result column="store_class_id" property="storeClassId" jdbcType="INTEGER"/>
+        <result column="up_time" property="upForTime" jdbcType="BIGINT" />
+        <result column="down_time" property="downForTime" jdbcType="BIGINT" />
+    </resultMap>
+    
+    <resultMap id="BaseResultMap2" extends="BaseResultMap" type="com.Vshop.core.entity.base.Goods">
+    	<result column="goodsTotalStorage" property="goodsTotalStorage" jdbcType="INTEGER"/>
+    </resultMap>
+    
+    <resultMap id="BaseResultMap3" extends="BaseResultMap" type="com.Vshop.core.entity.vo.GoodsTradeVo">
+    <!-- 	<result column="goods_id" property="goodsId" jdbcType="INTEGER"/>
+        <result column="goods_name" property="goodsName" jdbcType="VARCHAR"/>
+        <result column="gc_id" property="gcId" jdbcType="INTEGER"/>
+        <result column="gc_name" property="gcName" jdbcType="VARCHAR"/>
+        <result column="store_id" property="storeId" jdbcType="INTEGER"/>
+        <result column="city_name" property="cityName" jdbcType="VARCHAR"/>
+        <result column="store_name" property="storeName" jdbcType="VARCHAR"/>
+        <result column="province_name" property="provinceName" jdbcType="VARCHAR"/> -->
+        <result column="trade_goodscount" property="tradeGoodsCount" jdbcType="VARCHAR"/>
+        <result column="trade_goodsprice" property="tradeGoodsPrice" jdbcType="VARCHAR"/>
+    </resultMap>
+    
+    <sql id="Base_Column_List">
+    	goods_id,goods_name,goods_subtitle,gc_id,gc_name,brand_id,brand_name,type_id,
+    	store_id,store_name,spec_open,spec_id,spec_name,goods_image,goods_image_more,
+    	goods_store_price,goods_market_price,goods_cost_price,goods_serial,goods_show,goods_click,goods_state,
+    	goods_commend,create_time,goods_keywords,goods_description,goods_body,
+    	goods_attr,goods_spec,goods_col_img,update_time,start_time,end_time,
+    	goods_form,transport_id,py_price,kd_price,es_price,city_id,city_name,
+    	province_id,province_name,goods_close_reason,goods_store_state,commentnum,
+    	salenum,goods_collect,goods_transfee_charge,store_class_id,supplier_id,supplier_name,is_code,goods_commission_rate
+    </sql>
+    
+     <sql id="Store_Goods_List">
+    	goods_id,
+    	store_id,
+    	store_name,
+    	goods_show,
+    	goods_store_price,
+    	goods_commend,
+    	create_time,
+    	update_time,
+    	store_class_id,
+    	up_time,
+    	down_time
+    </sql>
+    
+	<!-- 分页where条件 -->
+	<sql id="whereStatement">
+		<where>
+			1 = 1
+			<if test="condition.goodsName != null and condition.goodsName != '' ">
+				and goods_name like CONCAT('%',#{condition.goodsName},'%')
+			</if>
+			<if test="condition.brandId != null and condition.brandId != '' ">
+				and brand_id = #{condition.brandId}
+			</if>
+			<if test="condition.storeId != null">
+				and store_id = #{condition.storeId}
+			</if>
+			<if test="condition.supplierId != null">
+				and supplier_id = #{condition.supplierId}
+			</if>
+			<if test="condition.goodsState != null">
+				and goods_state = #{condition.goodsState}
+			</if>
+			<if test="condition.goodsShow != null">
+				and goods_show = #{condition.goodsShow}
+			</if>
+			<if test="condition.goodsStoreState != null">
+				and goods_store_state = #{condition.goodsStoreState}
+			</if>
+			<if test="condition.gcId != null">
+				and gc_id = #{condition.gcId}
+			</if>
+			<if test="condition.storeClassId != null">
+				and store_class_id = #{condition.storeClassId}
+			</if>
+			<if test="condition.typeId != null">
+				and type_id = #{condition.typeId}
+			</if>
+			<if test="condition.cityId != null">
+				and city_id = #{condition.cityId}
+			</if>
+			<if test="condition.provinceId != null">
+				and province_id = #{condition.provinceId}
+			</if>
+			<if test="condition.goodsCommend != null">
+				and goods_commend = #{condition.goodsCommend}
+			</if>
+			<if test="condition.goodsSerial != null and condition.goodsSerial != '' ">
+				and goods_serial like CONCAT('%',#{condition.goodsSerial},'%')
+			</if>
+			<if test="condition.goodsSerial != null and condition.goodsSerial != '' ">
+				and goods_serial like CONCAT('%',#{condition.goodsSerial},'%')
+			</if>
+			<if test="condition.storeName != null and condition.storeName != '' ">
+				and store_name like CONCAT('%',#{condition.storeName},'%')
+			</if>
+			<if test="condition.goodids!=null and condition.goodids!='' and  condition.goodids!='[]'">
+                and goods_id not in 
+				<foreach item="item" index="index" collection="condition.goodids"   
+                        open="(" separator="," close=")">
+                       #{item}  
+               </foreach>
+            </if>
+            <if test="condition.storeName != null">
+				and store_name like CONCAT('%', #{condition.storeName}, '%')
+			</if>
+			and is_del = 0
+		</where>
+	</sql>
+	
+	<sql id="orderBy">
+		<if test="condition.sortField == 'createTime'">
+			order by sg.create_time ${condition.orderBy}
+		</if>
+		<if test="condition.sortField == 'goodsStorePrice'">
+			order by sg.goods_store_price ${condition.orderBy}
+		</if>
+		<if test="condition.sortField == 'salenum'">
+			order by sg.salenum ${condition.orderBy}
+		</if>
+		<if test="condition.sortField == 'goodsCollect'">
+			order by sg.goods_collect ${condition.orderBy}
+		</if>
+		<if test="condition.sortField == 'goodsClick'">
+			order by sg.goods_click ${condition.orderBy}
+		</if>
+	</sql>
+	
+	<select id="findGoodPagerList" resultMap="BaseResultMap2" parameterType="com.Vshop.service.utils.page.Pager">
+		select a.* from(
+			select
+			sg.*,sgs.goodsTotalStorage
+			from (
+				(select * from shop_goods <include refid="whereStatement" /> order by goods_id desc) sg 
+				join 
+				(select sum(spec_goods_storage) goodsTotalStorage,goods_id from shop_goods_spec group by goods_id) sgs
+				on sg.goods_id=sgs.goods_id
+				)
+				<if test="condition.sortField != null">
+					<if test="condition.orderBy != null">
+						<include refid="orderBy"/>
+					</if>
+				</if>
+		) a 
+		<!-- limit #{start}, #{pageSize} -->
+	</select>
+	
+     <!--* 通过一定条件的条件,查找某个商品,
+	 * 这个方法只会返回一个商品,
+	 * 使用方法:
+	 * 新建一个goods对象,在这个对象中
+	 * 一定要设置goodsid这个属性
+	 * 可以选择set属性:storeId,goodsState
+	 * 使用这个方法会根据你所设置的条件去查询,
+	 * 如果没有返回null 
+	 -->
+    <select id="findOneGoodByCondition" resultMap="BaseResultMap" parameterType="com.Vshop.core.entity.base.Goods">
+        select
+        <include refid="Base_Column_List" />
+        from shop_goods
+        WHERE goods_id = #{goodsId}
+		<if test="storeId != null">
+			and store_id = #{storeId}
+		</if>
+		<if test="goodsState != null">
+			and goods_state = #{goodsState}
+		</if>
+		<if test="goodsShow != null">
+			and goods_show = #{goodsShow}
+		</if>
+		<if test="goodsStoreState != null">
+			and goods_store_state = #{goodsStoreState}
+		</if>
+		and is_del = 0
+    </select>
+        
+    <select id="findGoodById" resultMap="BaseResultMap2" parameterType="int">
+        select
+        sg.*,sgs.goodsTotalStorage
+        from  (
+				shop_goods sg 
+				join 
+				(select sum(spec_goods_storage) goodsTotalStorage,goods_id from shop_goods_spec group by goods_id) sgs
+				on sg.goods_id=sgs.goods_id
+				)
+        WHERE sg.goods_id = #{goodsId} and sg.is_del = 0
+    </select>
+    
+    <insert id="saveGoods" parameterType="com.Vshop.core.entity.base.Goods" useGeneratedKeys="true" keyProperty="goodsId">
+    	insert into shop_goods
+	    <trim prefix="(" suffix=")" suffixOverrides="," >
+	      <if test="goodsName != null" >
+	        goods_name,
+	      </if>
+	      <if test="goodsSubtitle != null" >
+	        goods_subtitle,
+	      </if>
+	      <if test="gcId != null" >
+	        gc_id,
+	      </if>
+	      <if test="gcName != null" >
+	        gc_name,
+	      </if>
+	      <if test="brandId != null" >
+	        brand_id,
+	      </if>
+	      <if test="brandName != null" >
+	        brand_name,
+	      </if>
+	      <if test="typeId != null" >
+	        type_id,
+	      </if>
+	      <if test="storeId != null" >
+	        store_id,
+	      </if>
+	      <if test="storeName != null" >
+	        store_name,
+	      </if>
+	      <if test="specOpen != null" >
+	        spec_open,
+	      </if>
+	      <if test="specId != null" >
+	        spec_id,
+	      </if>
+	      <if test="specName != null" >
+	        spec_name,
+	      </if>
+	      <if test="goodsImage != null" >
+	        goods_image,
+	      </if>
+	      <if test="goodsImageMore != null" >
+	        goods_image_more,
+	      </if>
+	      <if test="goodsStorePrice != null" >
+	        goods_store_price,
+	      </if>
+	      <if test="goodsMarketPrice != null" >
+	        goods_market_price,
+	      </if>
+	      <if test="goodsCostPrice != null" >
+	        goods_cost_price,
+	      </if>
+	      <if test="goodsSerial != null" >
+	        goods_serial,
+	      </if>
+	      <if test="goodsShow != null" >
+	        goods_show,
+	      </if>
+	      <if test="goodsClick != null" >
+	        goods_click,
+	      </if>
+	      <if test="goodsState != null" >
+	        goods_state,
+	      </if>
+	      <if test="goodsCommend != null" >
+	        goods_commend,
+	      </if>
+	      <if test="createTime != null" >
+	        create_time,
+	      </if>
+	      <if test="goodsKeywords != null" >
+	        goods_keywords,
+	      </if>
+	      <if test="goodsDescription != null" >
+	        goods_description,
+	      </if>
+	      <if test="goodsBody != null" >
+	        goods_body,
+	      </if>
+	      <if test="goodsAttr != null" >
+	        goods_attr,
+	      </if>
+	      <if test="goodsSpec != null" >
+	        goods_spec,
+	      </if>
+	      <if test="goodsColImg != null" >
+	        goods_col_img,
+	      </if>
+	      <if test="updateTime != null" >
+	        update_time,
+	      </if>
+	      <if test="startTime != null" >
+	        start_time,
+	      </if>
+	      <if test="endTime != null" >
+	        end_time,
+	      </if>
+	      <if test="goodsForm != null" >
+	        goods_form,
+	      </if>
+	      <if test="transportId != null" >
+	        transport_id,
+	      </if>
+	      <if test="pyPrice != null" >
+	        py_price,
+	      </if>
+	      <if test="kdPrice != null" >
+	        kd_price,
+	      </if>
+	      <if test="esPrice != null" >
+	        es_price,
+	      </if>
+	      <if test="cityId != null" >
+	        city_id,
+	      </if>
+	      <if test="cityName != null" >
+	        city_name,
+	      </if>
+	      <if test="provinceId != null" >
+	        province_id,
+	      </if>
+	      <if test="provinceName != null" >
+	        province_name,
+	      </if>
+	      <if test="goodsCloseReason != null" >
+	        goods_close_reason,
+	      </if>
+	      <if test="goodsStoreState != null" >
+	        goods_store_state,
+	      </if>
+	      <if test="commentnum != null" >
+	        commentnum,
+	      </if>
+	      <if test="salenum != null" >
+	        salenum,
+	      </if>
+	      <if test="goodsCollect != null" >
+	        goods_collect,
+	      </if>
+	      <if test="goodsTransfeeCharge != null" >
+	        goods_transfee_charge,
+	      </if>
+	      <if test="storeClassId != null" >
+	        store_class_id,
+	      </if>
+	      <if test="supplierId != null" >
+	        supplier_id,
+	      </if>
+	      <if test="supplierName != null" >
+	        supplier_name,
+	      </if>
+	      <if test="isCode != null">
+	      	is_code,
+	      </if>
+	      <if test="goodsCommissionRate != null">
+	      	goods_commission_rate
+	      </if>
+	      <if test="goodsCloseInfo != null">
+	      	goods_close_info
+	      </if>
+	    </trim>
+	    <trim prefix="values (" suffix=")" suffixOverrides="," >
+	      <if test="goodsName != null" >
+	        #{goodsName},
+	      </if>
+	      <if test="goodsSubtitle != null" >
+	        #{goodsSubtitle},
+	      </if>
+	      <if test="gcId != null" >
+	        #{gcId},
+	      </if>
+	      <if test="gcName != null" >
+	        #{gcName},
+	      </if>
+	      <if test="brandId != null" >
+	        #{brandId},
+	      </if>
+	      <if test="brandName != null" >
+	        #{brandName},
+	      </if>
+	      <if test="typeId != null" >
+	        #{typeId},
+	      </if>
+	      <if test="storeId != null" >
+	        #{storeId},
+	      </if>
+	      <if test="storeName != null" >
+	        #{storeName},
+	      </if>
+	      <if test="specOpen != null" >
+	        #{specOpen},
+	      </if>
+	      <if test="specId != null" >
+	        #{specId},
+	      </if>
+	      <if test="specName != null" >
+	        #{specName},
+	      </if>
+	      <if test="goodsImage != null" >
+	        #{goodsImage},
+	      </if>
+	      <if test="goodsImageMore != null" >
+	        #{goodsImageMore},
+	      </if>
+	      <if test="goodsStorePrice != null" >
+	        #{goodsStorePrice},
+	      </if>
+	      <if test="goodsMarketPrice != null" >
+	        #{goodsMarketPrice},
+	      </if>
+	      <if test="goodsCostPrice != null" >
+	        #{goodsCostPrice},
+	      </if>
+	      <if test="goodsSerial != null" >
+	        #{goodsSerial},
+	      </if>
+	      <if test="goodsShow != null" >
+	        #{goodsShow},
+	      </if>
+	      <if test="goodsClick != null" >
+	        #{goodsClick},
+	      </if>
+	      <if test="goodsState != null" >
+	        #{goodsState},
+	      </if>
+	      <if test="goodsCommend != null" >
+	        #{goodsCommend},
+	      </if>
+	      <if test="createTime != null" >
+	        #{createTime},
+	      </if>
+	      <if test="goodsKeywords != null" >
+	        #{goodsKeywords},
+	      </if>
+	      <if test="goodsDescription != null" >
+	        #{goodsDescription},
+	      </if>
+	      <if test="goodsBody != null" >
+	        #{goodsBody},
+	      </if>
+	      <if test="goodsAttr != null" >
+	        #{goodsAttr},
+	      </if>
+	      <if test="goodsSpec != null" >
+	        #{goodsSpec},
+	      </if>
+	      <if test="goodsColImg != null" >
+	        #{goodsColImg},
+	      </if>
+   	      <if test="updateTime != null" >
+	        #{updateTime},
+	      </if>
+	      <if test="startTime != null" >
+	        #{startTime},
+	      </if>
+	      <if test="endTime != null" >
+	        #{endTime},
+	      </if>
+	      <if test="goodsForm != null" >
+	        #{goodsForm},
+	      </if>
+	      <if test="transportId != null" >
+	        #{transportId},
+	      </if>
+	      <if test="pyPrice != null" >
+	        #{pyPrice},
+	      </if>
+	      <if test="kdPrice != null" >
+	        #{kdPrice},
+	      </if>
+	      <if test="esPrice != null" >
+	        #{esPrice},
+	      </if>
+	      <if test="cityId != null" >
+	        #{cityId},
+	      </if>
+	      <if test="cityName != null" >
+	        #{cityName},
+	      </if>
+	      <if test="provinceId != null" >
+	        #{provinceId},
+	      </if>
+	      <if test="provinceName != null" >
+	        #{provinceName},
+	      </if>
+	      <if test="goodsCloseReason != null" >
+	        #{goodsCloseReason},
+	      </if>
+	      <if test="goodsStoreState != null" >
+	        #{goodsStoreState},
+	      </if>
+	      <if test="commentnum != null" >
+	        #{commentnum},
+	      </if>
+	      <if test="salenum != null" >
+	        #{salenum},
+	      </if>
+	      <if test="goodsCollect != null" >
+	        #{goodsCollect},
+	      </if>
+	      <if test="goodsTransfeeCharge != null" >
+	        #{goodsTransfeeCharge},
+	      </if>
+	      <if test="storeClassId != null" >
+	        #{storeClassId},
+	      </if>
+	      <if test="supplierId != null" >
+	        #{supplierId},
+	      </if>
+	      <if test="supplierName != null" >
+	        #{supplierName},
+	      </if>
+	      <if test="isCode != null">
+	      	#{isCode},
+	      </if>
+	      <if test="goodsCommissionRate != null">
+	      	#{goodsCommissionRate}
+	      </if>
+	      <if test="goodsCloseInfo != null">
+	      	#{goodsCloseInfo}
+	      </if>
+	    </trim>
+  </insert>
+  
+  	<update id="updateGoods" parameterType="com.Vshop.core.entity.base.Goods" >
+    	update shop_goods
+	    <set>
+	      <if test="goodsName != null" >
+	        goods_name=#{goodsName},
+	      </if>
+	      <if test="goodsSubtitle != null" >
+	        goods_subtitle=#{goodsSubtitle},
+	      </if>
+	      <if test="gcId != null" >
+	        gc_id=#{gcId},
+	      </if>
+	      <if test="gcName != null" >
+	        gc_name=#{gcName},
+	      </if>
+	      <if test="brandId != null" >
+	        brand_id=#{brandId},
+	      </if>
+	      <if test="brandName != null" >
+	        brand_name=#{brandName},
+	      </if>
+	      <if test="typeId != null" >
+	        type_id=#{typeId},
+	      </if>
+	      <if test="storeId != null" >
+	        store_id=#{storeId},
+	      </if>
+	      <if test="storeName != null" >
+	        store_name=#{storeName},
+	      </if>
+	      <if test="specOpen != null" >
+	        spec_open=#{specOpen},
+	      </if>
+	      <if test="specId != null" >
+	        spec_id=#{specId},
+	      </if>
+	      <if test="specName != null" >
+	        spec_name=#{specName},
+	      </if>
+	      <if test="goodsImage != null" >
+	        goods_image=#{goodsImage},
+	      </if>
+	      <if test="goodsImageMore != null" >
+	        goods_image_more=#{goodsImageMore},
+	      </if>
+	      <if test="goodsStorePrice != null" >
+	        goods_store_price=#{goodsStorePrice},
+	      </if>
+	      <if test="goodsMarketPrice != null" >
+	        goods_market_price=#{goodsMarketPrice},
+	      </if>
+	      <if test="goodsCostPrice != null" >
+	        goods_cost_price=#{goodsCostPrice},
+	      </if>
+	      <if test="goodsSerial != null" >
+	        goods_serial=#{goodsSerial},
+	      </if>
+	      <if test="goodsShow != null" >
+	        goods_show=#{goodsShow},
+	      </if>
+	      <if test="goodsClick != null" >
+	        goods_click=#{goodsClick},
+	      </if>
+	      <if test="goodsState != null" >
+	        goods_state=#{goodsState},
+	      </if>
+	      <if test="goodsCommend != null" >
+	        goods_commend=#{goodsCommend},
+	      </if>
+	      <if test="createTime != null" >
+	        create_time=#{createTime},
+	      </if>
+	      <if test="goodsKeywords != null" >
+	        goods_keywords=#{goodsKeywords},
+	      </if>
+	      <if test="goodsDescription != null" >
+	        goods_description=#{goodsDescription},
+	      </if>
+	      <if test="goodsBody != null" >
+	        goods_body=#{goodsBody},
+	      </if>
+	      <if test="goodsAttr != null" >
+	        goods_attr=#{goodsAttr},
+	      </if>
+	      <if test="goodsSpec != null" >
+	        goods_spec=#{goodsSpec},
+	      </if>
+	      <if test="goodsColImg != null" >
+	        goods_col_img=#{goodsColImg},
+	      </if>
+   	      <if test="updateTime != null" >
+	        update_time=#{updateTime},
+	      </if>
+	      <if test="startTime != null" >
+	        start_time=#{startTime},
+	      </if>
+	      <if test="endTime != null" >
+	        end_time=#{endTime},
+	      </if>
+	      <if test="goodsForm != null" >
+	        goods_form=#{goodsForm},
+	      </if>
+	      <if test="transportId != null" >
+	        transport_id=#{transportId},
+	      </if>
+	      <if test="pyPrice != null" >
+	        py_price=#{pyPrice},
+	      </if>
+	      <if test="kdPrice != null" >
+	        kd_price=#{kdPrice},
+	      </if>
+	      <if test="esPrice != null" >
+	        es_price=#{esPrice},
+	      </if>
+	      <if test="cityId != null" >
+	        city_id=#{cityId},
+	      </if>
+	      <if test="cityName != null" >
+	        city_name=#{cityName},
+	      </if>
+	      <if test="provinceId != null" >
+	        province_id=#{provinceId},
+	      </if>
+	      <if test="provinceName != null" >
+	        province_name=#{provinceName},
+	      </if>
+	      <if test="goodsCloseReason != null" >
+	        goods_close_reason=#{goodsCloseReason},
+	      </if>
+	      <if test="goodsStoreState != null" >
+	        goods_store_state=#{goodsStoreState},
+	      </if>
+	      <if test="commentnum != null" >
+	        commentnum = commentnum + #{commentnum},
+	      </if>
+	      <if test="salenum != null" >
+	        salenum = salenum + #{salenum},
+	      </if>
+	      <if test="goodsCollect != null" >
+	        goods_collect = goods_collect + #{goodsCollect},
+	      </if>
+	      <if test="goodsTransfeeCharge != null" >
+	        goods_transfee_charge=#{goodsTransfeeCharge},
+	      </if>
+	      <if test="storeClassId != null" >
+	        store_class_id=#{storeClassId},
+	      </if>
+	      <if test="supplierId != null" >
+	        supplier_id=#{supplierId},
+	      </if>
+	      <if test="supplierName != null" >
+	        supplier_name=#{supplierName},
+	      </if>
+	      <if test="isCode != null">
+	      	is_code = #{isCode},
+	      </if>
+	      <if test="goodsCommissionRate!=null">
+	      	goods_commission_rate=#{goodsCommissionRate},
+	      </if>
+	      <if test='goodsCloseInfo!=null and goodsCloseInfo!=""'>
+	      	goods_close_info = #{goodsCloseInfo}
+	      </if>
+	    </set>
+    	where goods_id = #{goodsId}
+  </update>
+  
+     <update id="deleteGoods" parameterType="java.lang.Integer">
+    	update shop_goods set is_del = 1 where goods_id = #{goodsId,jdbcType=INTEGER} 
+    </update>
+    <!--  查询总条数  -->
+    <select id="countGoods" resultType="Integer" parameterType="com.Vshop.core.entity.base.Goods">
+        select count(1) from shop_goods
+        <include refid="whereStatement2" />
+    </select>
+    
+   <!--  查询总条数where条件 -->
+    <sql id="whereStatement2">
+		<where>
+			1 = 1
+			<if test="goodsName != null and goodsName != '' ">
+				and goods_name like CONCAT('%',#{goodsName},'%')
+			</if>
+			<if test="storeId != null">
+				and store_id = #{storeId}
+			</if>
+			<if test="supplierId != null">
+				and supplier_id = #{supplierId}
+			</if>
+			<if test="goodsState != null">
+				and goods_state = #{goodsState}
+			</if>
+			<if test="goodsShow != null">
+				and goods_show = #{goodsShow}
+			</if>
+			<if test="goodsStoreState != null">
+				and goods_store_state = #{goodsStoreState}
+			</if>
+			<if test="gcId != null">
+				and gc_id = #{gcId}
+			</if>
+			<if test="storeClassId != null">
+				and store_class_id = #{storeClassId}
+			</if>
+			<if test="typeId != null">
+				and type_id = #{typeId}
+			</if>
+			<if test="cityId != null">
+				and city_id = #{cityId}
+			</if>
+			<if test="provinceId != null">
+				and province_id = #{provinceId}
+			</if>
+			<if test="goodsCommend != null">
+				and goods_commend = #{goodsCommend}
+			</if>
+			<if test="goodsSerial != null and goodsSerial != '' ">
+				and goods_serial like CONCAT('%',#{goodsSerial},'%')
+			</if>
+			<if test="goodsSerial != null and goodsSerial != '' ">
+				and goods_serial like CONCAT('%',#{goodsSerial},'%')
+			</if>
+			<!-- 本周新增 -->
+			<if test="startTime != null" >
+		        and create_time &gt;=#{startTime} and create_time &lt;= now()
+		    </if>
+			<if test="goodids!=null and goodids!='' and  goodids!='[]'">
+                and goods_id not in 
+				<foreach item="item" index="index" collection="goodids"   
+                        open="(" separator="," close=")">
+                       #{item}  
+               </foreach>
+            </if>
+			and is_del = 0
+		</where>
+	</sql>
+   
+   
+   <sql id="orderByTrade">
+		<if test="condition.tradeGoodsCount == 'tradeGoodsCount'">
+			order by trade_goodscount ${condition.orderBy}
+		</if>
+		<if test="condition.tradeGoodsPrice == 'tradeGoodsPrice'">
+			order by trade_goodsprice ${condition.orderBy}
+		</if>
+	</sql>
+   
+   <!--  查询总条数where条件 -->
+   <sql id="whereStatement3">
+		<where>
+			1 = 1 and sg.salenum &gt; 0
+			<if test="condition.storeId != null">
+				and sg.store_id = #{condition.storeId}
+			</if>
+			<if test="condition.supplierId != null">
+				and sg.supplier_id = #{condition.supplierId}
+			</if>
+			<if test="condition.goodsState != null">
+				and sg.goods_state = #{condition.goodsState}
+			</if>
+			<if test="condition.gcId != null">
+				and sg.gc_id = #{condition.gcId}
+			</if>
+			<if test="condition.storeClassId != null">
+				and sg.store_class_id = #{condition.storeClassId}
+			</if>
+			<if test="condition.typeId != null">
+				and sg.type_id = #{condition.typeId}
+			</if>
+		</where>
+	</sql>
+	
+	<sql id="whereStatementcount3">
+		<where>
+			1 = 1 and salenum &gt; 0
+			<if test="storeId != null">
+				and store_id = #{storeId}
+			</if>
+			<if test="supplierId != null">
+				and supplier_id = #{supplierId}
+			</if>
+			<if test="goodsState != null">
+				and goods_state = #{goodsState}
+			</if>
+			<if test="gcId != null">
+				and gc_id = #{gcId}
+			</if>
+			<if test="storeClassId != null">
+				and store_class_id = #{storeClassId}
+			</if>
+			<if test="typeId != null">
+				and type_id = #{typeId}
+			</if>
+			<if test="brandId != null">
+				and brand_id = #{brandId}
+			</if>
+		</where>
+	</sql>
+   
+   <select id="findTradeGoodPagerList" resultMap="BaseResultMap3" parameterType="com.Vshop.service.utils.page.Pager">
+		select sg.goods_id,sg.goods_name,sg.gc_name,sg.store_id,sg.province_name,sg.city_name,sg.store_name,(select count(1) from shop_order_goods sord where sord.goods_id=sg.goods_id) as  trade_goodscount,
+           (select sum(sod.goods_price) from shop_order_goods sod where sod.goods_id=sg.goods_id) as trade_goodsprice
+           from shop_goods sg
+           <include refid="whereStatement3" />
+           <if test="condition.orderBy != null">
+				<include refid="orderByTrade"/>
+		   </if>
+	</select>
+	
+	<select id="findTradeGoodcount" resultType="int" parameterType="com.Vshop.core.entity.vo.GoodsTradeVo">
+		select  count(1) from shop_goods
+           <include refid="whereStatementcount3" />
+	</select>
+	
+	
+	<!--通过店铺id查找对应的商品-->
+   <select id="findGoodidList" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+		 select goods_id from shop_goods where store_id = #{storeId}
+	</select>
+	
+	
+	<insert id="saveStoreGoods" parameterType="com.Vshop.core.entity.base.GoodsStore" >
+    	insert into shop_goods_store
+	    <trim prefix="(" suffix=")" suffixOverrides="," >
+			goods_id,	     
+	        store_id,      
+	      <if test="storeName != null" >
+	        store_name,
+	      </if>
+	      
+	      <if test="goodsStorePrice != null" >
+	        goods_store_price,
+	      </if>
+	      
+	      <if test="goodsShow != null" >
+	        goods_show,
+	      </if>
+	      
+	      <if test="goodsCommend != null" >
+	        goods_commend,
+	      </if>
+	      <if test="createTime != null" >
+	        create_time,
+	      </if>
+	      
+	      <if test="updateTime != null" >
+	        update_time,
+	      </if>
+	     
+	      <if test="storeClassId != null" >
+	        store_class_id,
+	      </if>
+	      <if test="goodsStoreState != null" >
+	        goods_store_state,
+	      </if>
+	      
+	    </trim>
+	    <trim prefix="values (" suffix=")" suffixOverrides="," >
+	      
+	        #{goodsId},
+	        #{storeId},
+	     
+	      <if test="storeName != null" >
+	        #{storeName},
+	      </if>
+	      
+	      <if test="goodsStorePrice != null" >
+	        #{goodsStorePrice},
+	      </if>
+
+	      <if test="goodsShow != null" >
+	        #{goodsShow},
+	      </if>
+	      
+	      <if test="goodsCommend != null" >
+	        #{goodsCommend},
+	      </if>
+	      <if test="createTime != null" >
+	        #{createTime},
+	      </if>
+	     
+   	      <if test="updateTime != null" >
+	        #{updateTime},
+	      </if>
+	      
+	      <if test="storeClassId != null" >
+	        #{storeClassId},
+	      </if>
+	      <if test="goodsStoreState != null" >
+	        #{goodsStoreState},
+	      </if>
+	     
+	    </trim>
+  </insert>
+  
+  <select id="findStoreGoodByCondition" resultMap="GoodsStoreResultMap" parameterType="com.Vshop.core.entity.base.GoodsStore">
+        select
+        <include refid="Store_Goods_List" />
+        from shop_goods_store
+        WHERE goods_id = #{goodsId}
+		<if test="storeId != null">
+			and store_id = #{storeId}
+		</if>
+		<if test="goodsCommend != null">
+			and goods_commend = #{goodsCommend}
+		</if>
+		<if test="goodsShow != null">
+			and goods_show = #{goodsShow}
+		</if>
+		<if test="storeClassId != null">
+			and store_class_id = #{storeClassId}
+		</if>
+		<if test="goodsStoreState != null">
+			and goods_store_state = #{goodsStoreState}
+		</if>
+
+   </select>
+   
+   <update id="updateStoreGoods" parameterType="com.Vshop.core.entity.base.GoodsStore" >
+    	update shop_goods_store
+	    <set>
+	     
+	      <if test="goodsStorePrice != null" >
+	        goods_store_price=#{goodsStorePrice},
+	      </if>
+	      
+	      <if test="goodsShow != null" >
+	        goods_show=#{goodsShow},
+	      </if>
+	     
+	      <if test="goodsCommend != null" >
+	        goods_commend=#{goodsCommend},
+	      </if>
+	      <if test="createTime != null" >
+	        create_time=#{createTime},
+	      </if>
+	      
+   	      <if test="updateTime != null" >
+	        update_time=#{updateTime},
+	      </if>
+	      
+	      <if test="goodsStoreState != null" >
+	        goods_store_state=#{goodsStoreState},
+	      </if>
+	     
+	      <if test="storeClassId != null" >
+	        store_class_id=#{storeClassId},
+	      </if>
+	      <if test="upForTime != null" >
+	        up_Time=#{upForTime},
+	      </if>
+	      <if test="downForTime != null" >
+	        down_time=#{downForTime},
+	      </if>
+	      
+	    </set>
+    	where goods_id = #{goodsId} and store_id = #{storeId}
+  </update>
+  
+  <update id="updateEndTime" parameterType="com.Vshop.core.entity.base.GoodsStore">
+  	update shop_goods set 
+  	<if test="startTime != null">
+  		start_time = #{startTime}
+  	</if>
+  	<if test="endTime != null">
+  		end_time = #{endTime}
+  	</if>
+  	  where goods_id = #{goodsId} 
+  </update>
+  
+  <select id="findStoreGoodPagerList" resultMap="BaseResultMap2" parameterType="com.Vshop.service.utils.page.Pager">
+		select a.* from(
+			select
+			sg.*,sgs.goodsTotalStorage
+			from (
+				(select * from shop_goods <include refid="whereStatementSG" />) sg 
+				join 
+				(select sum(spec_goods_storage) goodsTotalStorage,goods_id from shop_goods_spec group by goods_id) sgs
+				on sg.goods_id=sgs.goods_id
+				)
+				<if test="condition.sortField != null">
+					<if test="condition.orderBy != null">
+						<include refid="orderBy"/>
+					</if>
+				</if>
+		) a 
+		<!-- limit #{start}, #{pageSize} -->
+	</select>
+	
+	<sql id="whereStatementSG">
+		<where>
+			1 = 1
+			<if test="condition.goodsName != null and condition.goodsName != '' ">
+				and goods_name like CONCAT('%',#{condition.goodsName},'%')
+			</if>
+			<if test="condition.brandId != null and condition.brandId != '' ">
+				and brand_id = #{condition.brandId}
+			</if>
+			<if test="condition.storeId != null">
+				and 
+				<if test="condition.existsStore != null and condition.existsStore == 'NOT' ">
+				NOT 
+				</if>
+				EXISTS (select * from shop_goods_store b where shop_goods.goods_id = b.goods_id 
+				
+				and b.store_id =  #{condition.storeId}
+				
+				
+				<if test="condition.goodsShow != null">
+					and b.goods_show = #{condition.goodsShow}
+				</if>
+				<if test="condition.goodsStoreState != null">
+					and b.goods_store_state = #{condition.goodsStoreState}
+				</if>
+				<if test="condition.storeClassId != null">
+					and b.store_class_id = #{condition.storeClassId}
+				</if>
+				<if test="condition.goodsCommend != null">
+					and b.goods_commend = #{condition.goodsCommend}
+				</if>
+				
+				)
+			</if>
+			<if test="condition.supplierId != null">
+				and supplier_id = #{condition.supplierId}
+			</if>
+			<if test="condition.goodsState != null">
+				and goods_state = #{condition.goodsState}
+			</if>
+			<if test="condition.gcId != null">
+				and gc_id = #{condition.gcId}
+			</if>
+			<if test="condition.typeId != null">
+				and type_id = #{condition.typeId}
+			</if>
+			<if test="condition.cityId != null">
+				and city_id = #{condition.cityId}
+			</if>
+			<if test="condition.provinceId != null">
+				and province_id = #{condition.provinceId}
+			</if>
+			<if test="condition.goodsSerial != null and condition.goodsSerial != '' ">
+				and goods_serial like CONCAT('%',#{condition.goodsSerial},'%')
+			</if>
+			<if test="condition.goodsSerial != null and condition.goodsSerial != '' ">
+				and goods_serial like CONCAT('%',#{condition.goodsSerial},'%')
+			</if>
+			<if test="condition.storeName != null and condition.storeName != '' ">
+				and store_name like CONCAT('%',#{condition.storeName},'%')
+			</if>
+			<if test="condition.goodids!=null and condition.goodids!='' and  condition.goodids!='[]'">
+                and goods_id not in 
+				<foreach item="item" index="index" collection="condition.goodids"   
+                        open="(" separator="," close=")">
+                       #{item}  
+               </foreach>
+            </if>
+            <if test="condition.storeName != null">
+				and store_name like CONCAT('%', #{condition.storeName}, '%')
+			</if>
+			<if test="condition.storeGoodsShow != null">
+				and goods_show = ${condition.storeGoodsShow}
+			</if>
+			and is_del = 0
+		</where>
+	</sql>
+	
+	
+	
+	<select id="findSaleGoodPagerList" resultMap="BaseResultMap2" parameterType="com.Vshop.service.utils.page.Pager">
+		select a.* from(
+			select
+			sg.*,sgs.goodsTotalStorage
+			from (
+				(select 
+				<include refid="Sale_Goods_Column" />
+				 from  shop_goods a LEFT JOIN shop_goods_store b on a.goods_id = b.goods_id   <include refid="whereStatementSSG" />) sg 
+				join 
+				(select sum(spec_goods_storage) goodsTotalStorage,goods_id from shop_goods_spec group by goods_id) sgs
+				on sg.goods_id=sgs.goods_id
+				)
+				<if test="condition.sortField != null">
+					<if test="condition.orderBy != null">
+						<include refid="orderBy"/>
+					</if>
+				</if>
+		) a 
+		<!-- limit #{start}, #{pageSize} -->
+	</select>
+	
+	<sql id="whereStatementSSG">
+		<where>
+			1 = 1
+			<if test="condition.goodsName != null and condition.goodsName != '' ">
+				and goods_name like CONCAT('%',#{condition.goodsName},'%')
+			</if>
+			<if test="condition.brandId != null and condition.brandId != '' ">
+				and brand_id = #{condition.brandId}
+			</if>
+			<if test="condition.storeId != null">
+				
+				and b.store_id =  #{condition.storeId}
+				
+				
+				<if test="condition.goodsShow != null">
+					and b.goods_show = #{condition.goodsShow}
+				</if>
+				<if test="condition.goodsStoreState != null">
+					and b.goods_store_state = #{condition.goodsStoreState}
+				</if>
+				<if test="condition.storeClassId != null">
+					and b.store_class_id = #{condition.storeClassId}
+				</if>
+				<if test="condition.goodsCommend != null">
+					and b.goods_commend = #{condition.goodsCommend}
+				</if>
+				
+			</if>
+			<if test="condition.supplierId != null">
+				and supplier_id = #{condition.supplierId}
+			</if>
+			<if test="condition.goodsState != null">
+				and goods_state = #{condition.goodsState}
+			</if>
+			<if test="condition.gcId != null">
+				and gc_id = #{condition.gcId}
+			</if>
+			<if test="condition.typeId != null">
+				and type_id = #{condition.typeId}
+			</if>
+			<if test="condition.cityId != null">
+				and city_id = #{condition.cityId}
+			</if>
+			<if test="condition.provinceId != null">
+				and province_id = #{condition.provinceId}
+			</if>
+			<if test="condition.goodsSerial != null and condition.goodsSerial != '' ">
+				and goods_serial like CONCAT('%',#{condition.goodsSerial},'%')
+			</if>
+			<if test="condition.goodsSerial != null and condition.goodsSerial != '' ">
+				and goods_serial like CONCAT('%',#{condition.goodsSerial},'%')
+			</if>
+			<if test="condition.storeName != null and condition.storeName != '' ">
+				and store_name like CONCAT('%',#{condition.storeName},'%')
+			</if>
+			<if test="condition.goodids!=null and condition.goodids!='' and  condition.goodids!='[]'">
+                and goods_id not in 
+				<foreach item="item" index="index" collection="condition.goodids"   
+                        open="(" separator="," close=")">
+                       #{item}  
+               </foreach>
+            </if>
+            <if test="condition.storeName != null">
+				and store_name like CONCAT('%', #{condition.storeName}, '%')
+			</if>
+			and is_del = 0
+		</where>
+	</sql>
+	
+	<sql id="Sale_Goods_Column">
+    	a.goods_id,goods_name,goods_subtitle,gc_id,gc_name,brand_id,brand_name,type_id,
+    	b.store_id,b.store_name,spec_open,spec_id,spec_name,goods_image,goods_image_more,
+    	b.goods_store_price,goods_serial,b.goods_show,goods_click,goods_state,
+    	b.goods_commend,a.goods_commission_rate,a.goods_market_price,
+    	b.create_time,goods_keywords,goods_description,goods_body,
+    	goods_attr,goods_spec,goods_col_img,
+    	b.update_time,
+    	start_time,end_time,
+    	goods_form,transport_id,py_price,kd_price,es_price,city_id,city_name,
+    	province_id,province_name,goods_close_reason,b.goods_store_state,commentnum,
+    	salenum,goods_collect,goods_transfee_charge,b.store_class_id,supplier_id,supplier_name,b.up_time as up_time,b.down_time as down_time
+    </sql>
+    
+    <select id="findGoodsById" parameterType="Integer" resultMap="BaseResultMap">
+    	select <include refid="Base_Column_List" /> from shop_goods where goods_id = #{goodsId}
+    </select>
+    
+    <select id="findGoodsStoreEndTime" parameterType="com.Vshop.core.entity.base.Goods" resultMap="GoodsStoreResultMap">
+    	select <include refid="Store_Goods_List" /> from shop_goods_store where goods_id = #{goodsId} and store_id = #{storeId}
+    </select>
+	
+	<update id="updateGoodsClick" parameterType="Integer">
+  		update shop_goods set goods_click=goods_click+1 where goods_id = #{goodsId} 
+  	</update>
+
+	<update id="minusGoodsCollect" parameterType="Integer">
+  		update shop_goods set goods_collect=goods_collect-1 where goods_id = #{goodsId} and goods_collect &gt; 0 
+  	</update>
+
+	<select id="findGoodsByTypeId" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from shop_goods where type_id in
+		<foreach collection="array" index="index" item="ids" open="("
+			separator="," close=")">
+			#{ids}
+		</foreach>
+	</select>
+	
+	
+	<sql id="pageOrderBy">
+		<if test="condition.sortField == 'update_time'">
+			order by gs.update_time ${condition.orderBy}
+		</if>
+		<if test="condition.sortField == 'goodsStorePrice'">
+			order by gs.goods_store_price ${condition.orderBy}
+		</if>
+		<if test="condition.sortField == 'salenum'">
+			order by g.salenum ${condition.orderBy}
+		</if>
+		<if test="condition.sortField == 'goodsCollect'">
+			order by g.goods_collect ${condition.orderBy}
+		</if>
+		<if test="condition.sortField == 'goodsClick'">
+			order by g.goods_click ${condition.orderBy}
+		</if>
+	</sql>
+	
+	<sql id="pageGoodsColumn">
+		g.goods_id, 
+		g.goods_name, 
+		g.goods_subtitle, 
+		g.gc_id, 
+		g.gc_name, 
+		gs.store_id, 
+		gs.store_name, 
+		g.goods_image, 
+		g.goods_image_more, 
+		gs.goods_store_price, 
+		gs.goods_show, 
+		g.goods_click, 
+		gs.goods_commend, 
+		gs.create_time, 
+		gs.update_time, 
+		gs.goods_store_state, 
+		g.commentnum, 
+		g.salenum, 
+		g.goods_collect, 
+		gs.store_class_id, 
+		g.goods_market_price, 
+		g.goods_cost_price
+	</sql>
+	
+	<select id="findRecommendGoodPager" resultMap="BaseResultMap" parameterType="com.Vshop.service.utils.page.Pager">
+		SELECT 
+			<include refid="pageGoodsColumn" /> 
+			FROM shop_goods g, shop_goods_store gs ,shop_rel_goods_recommend r 
+			WHERE 1=1
+			AND gs.store_id = r.store_id
+			AND gs.goods_id = r.goods_id
+			AND gs.goods_id = g.goods_id
+			AND gs.goods_show = 1
+			AND g.goods_state = 0
+			AND g.is_del = 0 
+			<if test="condition.storeId != null">
+				AND gs.store_id = #{condition.storeId}
+			</if>
+			<if test="condition.goodsCommend != null">
+				AND gs.goods_commend = #{condition.goodsCommend}
+			</if>
+			<if test="condition.reCommendId != null">
+				AND r.recommend_id = #{condition.reCommendId}
+			</if>
+			
+			<if test="condition.sortField != null &amp;&amp; condition.orderBy != null">
+				<include refid="pageOrderBy"/>
+			</if>
+	</select>
+	
+	<select id="findRcGoodPager" resultMap="BaseResultMap" parameterType="com.Vshop.service.utils.page.Pager">
+		SELECT 
+			<include refid="pageGoodsColumn" />  
+			FROM shop_goods g, shop_goods_class c, shop_goods_store gs 
+			WHERE g.gc_id = c.gc_id 
+			AND g.goods_id = gs.goods_id
+			
+			<if test="condition.gcId != null">
+				AND c.gc_idpath LIKE CONCAT(#{condition.gcId}, ',%')
+			</if>
+			AND gs.store_id = #{condition.storeId}
+			<if test="condition.goodsName != null and condition.goodsName != '' ">
+				and g.goods_name like CONCAT('%',#{condition.goodsName},'%')
+			</if>
+			
+			AND gs.goods_show = 1
+			
+			<if test="condition.sortField != null &amp;&amp; condition.orderBy != null">
+				<include refid="pageOrderBy"/>
+			</if>
+	</select>
+	
+	<select id="findAcGoodPager" resultMap="BaseResultMap" parameterType="com.Vshop.service.utils.page.Pager">
+		SELECT 
+			<include refid="pageGoodsColumn" />  
+			FROM shop_goods g, shop_goods_class c, shop_goods_store gs 
+			WHERE g.gc_id = c.gc_id 
+			AND g.goods_id = gs.goods_id
+			
+			<if test="condition.gcId != null">
+				AND c.gc_idpath LIKE CONCAT('%,', #{condition.gcId}, ',%')
+			</if>
+			AND gs.store_id = #{condition.storeId}
+			<if test="condition.goodsName != null and condition.goodsName != '' ">
+				and g.goods_name like CONCAT('%', #{condition.goodsName}, '%')
+			</if>
+			AND gs.goods_show = 1
+			
+			<if test="condition.sortField != null &amp;&amp; condition.orderBy != null">
+				<include refid="pageOrderBy"/>
+			</if>				
+	</select>
+	
+</mapper>

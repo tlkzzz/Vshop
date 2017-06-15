@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.Vshop.service.module.goods.dao.mapper.SpecValueMapper">
+
+    <resultMap id="BaseResultMap" type="com.Vshop.core.entity.base.SpecValue" >
+        <id column="sp_value_id" property="spValueId"/>
+        <result column="sp_value_name" property="spValueName"/>
+        <result column="sp_id" property="spId"/>
+        <result column="sp_value_image" property="spValueImage"/>
+        <result column="sp_value_sort" property="spValueSort"/>
+    </resultMap>
+    
+    <sql id="Base_Column_List" >
+        sp_value_id, sp_value_name, sp_id, sp_value_image, sp_value_sort
+    </sql>
+    
+    <select id="findPageList" resultMap="BaseResultMap" parameterType="com.Vshop.service.utils.page.Pager">
+        select a.* from(
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM shop_spec_value
+        order by sp_value_sort) a limit #{start}, #{pageSize}
+    </select>
+    
+    <insert id="save" parameterType="com.Vshop.core.entity.base.SpecValue">
+        INSERT INTO shop_spec_value(sp_value_name, sp_id, sp_value_image, sp_value_sort)
+        VALUES(#{spValueName},#{spId},#{spValueImage},#{spValueSort});
+    </insert>
+
+    <update id="update" parameterType="com.Vshop.core.entity.base.SpecValue">
+         update shop_spec_value
+         <set>
+             <if test="spValueName != '' and spValueName != null">
+                 sp_value_name = #{spName},
+             </if>
+             <if test="spValueImage != null">
+                 sp_value_image = #{spValueImage},
+             </if>
+             <if test="spValueSort != null">
+                 sp_value_sort = #{spValueSort}
+             </if>
+         </set>
+        where sp_value_id=#{spValueId}
+    </update>
+
+    <delete id="deleteBySpId" parameterType="int">
+        delete from shop_spec_value where sp_id=#{spId}
+    </delete>
+
+    <select id="findById" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List" />
+        from shop_spec_value where sp_value_id=#{spValueId}
+    </select>
+
+    <select id="findListBySpId"  resultMap="BaseResultMap" parameterType="int">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM shop_spec_value
+        where sp_id = #{spId}
+        order by sp_value_sort
+    </select>
+
+    <select id="findCount" resultType="int" parameterType="com.Vshop.service.utils.page.Pager">
+        select count(*) from shop_spec_value
+    </select>
+</mapper>

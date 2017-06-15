@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.Vshop.service.module.coupon.dao.mapper.CouponMemberMapper">
+	<resultMap id="BaseResultMap" type="com.Vshop.core.entity.base.CouponMember">
+        <result column="coupon_id" property="couponId" jdbcType="INTEGER"/>
+        <result column="coupon_member_id" property="couponMemberId" jdbcType="INTEGER"/>
+        <result column="coupon_isused" property="couponIsUser" jdbcType="INTEGER"/>
+    </resultMap>
+    
+    <resultMap id="BaseResultMap1" type="com.Vshop.core.entity.base.CouponMember">
+        <result column="coupon_id" property="couponId" jdbcType="INTEGER"/>
+        <result column="coupon_title" property="couponTitle" jdbcType="VARCHAR"/>
+        <result column="coupon_type" property="couponType" jdbcType="VARCHAR"/>
+        <result column="coupon_pic" property="couponPic" jdbcType="VARCHAR"/>
+        <result column="coupon_desc" property="couponDesc" jdbcType="VARCHAR"/>
+
+        <result column="start_time" property="startTime" jdbcType="BIGINT"/>
+        <result column="end_time" property="endTime" jdbcType="BIGINT"/>
+        <result column="coupon_price" property="couponPrice" jdbcType="DECIMAL"/>
+        <result column="coupon_limit" property="couponLimit" jdbcType="DECIMAL"/>
+        <result column="store_id" property="storeId" jdbcType="INTEGER"/>
+        
+        <result column="coupon_state" property="couponState" jdbcType="INTEGER"/>
+        <result column="coupon_storage" property="couponstorage" jdbcType="INTEGER"/>
+        <result column="coupon_usage" property="couponusage" jdbcType="INTEGER"/>
+        <result column="coupon_lock" property="couponIock" jdbcType="INTEGER"/>
+        <result column="create_time" property="createTime" jdbcType="BIGINT"/>
+        
+        <result column="coupon_class_id" property="couponClassId" jdbcType="INTEGER"/>
+        <result column="coupon_click" property="coupClick" jdbcType="INTEGER"/>
+        <result column="coupon_print_style" property="couponPrintStyle" jdbcType="VARCHAR"/>
+        <result column="coupon_recommend" property="couponRecommend" jdbcType="INTEGER"/>
+        <result column="coupon_allowstate" property="couponAllowState" jdbcType="INTEGER"/>
+        <result column="coupon_allowremark" property="couponAllowmark" jdbcType="VARCHAR"/>
+        <result column="store_name" property="storeName" jdbcType="VARCHAR"/>
+        <result column="couponTypeName" property="couponTypeName" jdbcType="VARCHAR"/>
+        
+        <result column="coupon_member_id" property="couponMemberId" jdbcType="INTEGER"/>
+        <result column="coupon_isused" property="couponIsUser" jdbcType="INTEGER"/>
+        <result column="store_label" property="storeLabel" jdbcType="VARCHAR"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        coupon_id,coupon_member_id,coupon_isused
+    </sql>
+    
+    <!-- 保存 -->
+    <insert id="saveCouponMember" parameterType="com.Vshop.core.entity.base.CouponMember" >
+    	insert into shop_coupon_member ( 
+		    coupon_id,coupon_member_id,coupon_isused
+	    )
+	    values(
+		    #{couponId}, #{couponMemberId}, #{couponIsUser}
+	    );
+    </insert>
+    
+    <!-- 获取优惠券已领数量 -->
+    <select id="getCouponMemberCount" resultType="java.lang.Integer" parameterType="java.lang.Integer">
+		select count(1) from shop_coupon_member a where coupon_id = #{couponId}
+	</select>
+	
+	<!-- 获取会员所拥有的优惠券 -->
+    <select id="getCouponListByMemberIdAndStoreId" resultMap="BaseResultMap1" parameterType="com.Vshop.core.entity.searchbean.CouponSearch">
+		select a.coupon_member_id, a.coupon_isused, b.*, c.store_label from shop_coupon_member a 
+		left join shop_coupon b on b.coupon_id = a.coupon_id
+		left join shop_store c on b.store_id = c.store_id
+		where a.coupon_member_id = #{memberId}
+		<if test="storeId != null">
+	   		and b.store_id = #{storeId}
+	   	</if>
+	   	<if test="couponIsUser != null">
+	   		and a.coupon_isused = #{couponIsUser}
+	   	</if>
+	   	<if test="time != null">
+	   		and b.end_time &lt; #{time}
+	   	</if>
+	   	
+	</select>
+	
+	<!-- 修改优惠修改是否已经使用 -->
+	<update id="updateCouponMember" parameterType="com.Vshop.core.entity.base.CouponMember">
+		update shop_coupon_member 
+		<set>
+			coupon_isused = #{couponIsUser}
+		</set>
+		where coupon_id = #{couponId} and coupon_member_id = #{couponMemberId}
+	</update>
+</mapper>

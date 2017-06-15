@@ -1,0 +1,107 @@
+*{
+	margin: 0;
+	padding: 0;
+}
+.wrap{
+	width: 100%;
+	height: 100%;
+	background: #e9e9e9;
+	overflow: auto;
+}
+.header{
+	width:100%;
+	height: 40px;
+	background: #c81313;
+	display: -webkit-box;
+	-webkit-box-align: center;
+	-webkit-box-pack: justify;
+	-webkit-box-orient: horizontal;
+}
+.header a{
+	width: 24px;
+	display: block;
+}
+.header p{
+	width: 60%;
+	display: block;
+	-webkit-box-flex: 1;
+	height: 40px;
+	font-size: 14px;
+	text-align: center;
+	line-height: 40px;
+	color: #ffffff;
+}
+.header img{
+	width: 10px;
+	height: 16px;
+	margin-left: 15px;
+}
+.font{
+	width: 100%;
+	height: 65px;
+	background: #ffe9e9;
+}
+.font img{
+	width: 27px;
+	height: 27px;
+	float: left;
+	margin-left: 5%;
+	margin-top: 6%;
+}
+.font_cont{
+	width: 222px;
+	height: 20px;
+	float: left;
+	margin-top: 4%;
+	margin-left: 2%;
+}
+.font_cont h1{
+	color: #f94d4d;
+	font-size: 12px;
+	float: left;
+	font-weight: normal;
+}
+.yishu_conter{
+	width: 100%;
+	height: 90px;
+	background: #fff;
+	border-bottom: 1px solid #bfbebe;
+}
+.yishu_conter dl dt{
+	width: 22%;
+	float: left;
+	margin-top: 10px;
+	margin-left: 5%;
+}
+.yishu_conter dl dt img{
+	width: 70px;
+	height: 70px;
+}
+.yishu_conter dl dd{
+	float: left;
+	width: 65%;
+	margin-top: 3%;
+	margin-left: 3%;
+}
+.yishu_conter dl dd p{
+	font-size: 14px;
+	line-height: 23px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

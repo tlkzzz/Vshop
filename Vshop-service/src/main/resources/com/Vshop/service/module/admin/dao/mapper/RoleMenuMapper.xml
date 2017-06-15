@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.Vshop.service.module.admin.dao.mapper.RoleMenuMapper">
+	<resultMap id="BaseResultMap" type="com.Vshop.core.entity.base.RoleMenu">
+		<result column="role_id" property="roleId" jdbcType="INTEGER" />
+		<result column="menu_id" property="menuId" jdbcType="INTEGER" />
+	</resultMap>
+	
+	<sql id="Base_Column_List">
+		role_id,menu_id
+	</sql>
+	
+	<sql id="whereStatement">
+		<where>
+			1 = 1 
+		</where>
+	</sql>
+	
+	<!--  分页查询count -->
+    <select id="countRoleMenu" resultType="int" parameterType="com.Vshop.core.entity.base.RoleMenu">
+        select count(1) from shop_role_menu RoleMenu
+        <include refid="whereStatement" />
+    </select>
+    
+    <!--  编辑页面验证 -->
+    <select id="findCount" parameterType="com.Vshop.core.entity.base.RoleMenu" resultType="int">
+        select count(1) from shop_role_menu where
+        1=1
+        <if test="roleId != null and roleId != '' ">
+            and role_id = #{roleId}
+        </if>
+        <if test="menuId != null and menuId != '' ">
+            and menu_id = #{menuId}
+        </if>
+    </select>
+    
+    <!--  分页查询List -->
+    <select id="findRoleMenuList" resultMap="BaseResultMap" parameterType="com.Vshop.service.utils.page.Pager">
+        select RoleMenu.* from (
+    	SELECT rm.* FROM shop_role_menu rm
+  		<include refid="whereStatement" />
+        order by rm.role_id desc) RoleMenu
+    </select>
+
+	<select id="findRoleMenuById" resultMap="BaseResultMap" parameterType="com.Vshop.core.entity.base.RoleMenu">
+		select * from shop_role_menu
+		where role_id = #{roleId,jdbcType=INTEGER}
+	</select>
+
+	<delete id="deleteRoleMenu" parameterType="java.lang.Integer">
+		delete from shop_role_menu
+		where role_id = #{roleId,jdbcType=INTEGER} 
+	</delete>
+	
+	<insert id="saveRoleMenu" parameterType="com.Vshop.core.entity.base.RoleMenu">
+		insert into shop_role_menu (role_id,menu_id) VALUES (#{roleId},#{menuId});
+	</insert>
+	
+	<update id="updateState" parameterType="com.Vshop.core.entity.base.RoleMenu">
+         update shop_role_menu set role_id = #{roleId},menu_id=#{menuId}
+         where role_id = #{roleId}
+    </update>	
+    
+     <select id="findList" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM shop_role_menu
+        where role_id = #{roleId}
+        order by role_id
+    </select>
+</mapper>

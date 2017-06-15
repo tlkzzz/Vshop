@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.Vshop.service.module.goods.dao.mapper.GoodsCombinationMapper">
+    <resultMap id="BaseResultMap" type="com.Vshop.core.entity.base.GoodsCombination" >
+        <result column="goods_id" property="goodsId" jdbcType="INTEGER" />
+        <result column="combination_goods_id" property="combinationGoodsId" jdbcType="INTEGER" />
+        <result column="goods_name" property="combinationGoodsName" jdbcType="INTEGER" />
+        <result column="goods_image" property="combinationGoodsImg" jdbcType="VARCHAR" />
+        <result column="goods_store_price" property="combinationGoodsPrice"/>
+    </resultMap>
+
+    <sql id="Base_Column_List" >
+        sgc.*, sg.goods_name, sg.goods_image, sg.goods_store_price
+    </sql>
+    
+    <sql id="whereSql">
+    	<where>
+    		1=1
+    		<if test="goodsId != null">
+    			and sgc.goods_id=#{goodsId}
+    		</if>
+    	</where>
+    </sql>
+    
+    <select id="selectByCondition" resultMap="BaseResultMap" parameterType="com.Vshop.core.entity.base.GoodsCombination">
+        select
+        <include refid="Base_Column_List" />
+        from shop_goods_combination sgc
+        join shop_goods sg
+        on sgc.combination_goods_id=sg.goods_id
+        <include refid="whereSql"/> 
+    </select>
+    
+    <insert id="saveGoodsCombination" parameterType="com.Vshop.core.entity.base.GoodsCombination">
+        insert into shop_goods_combination
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+        
+       	  <if test="goodsId != null" >
+	        goods_id,
+	      </if>
+       	  <if test="combinationGoodsId != null" >
+	        combination_goods_id,
+	      </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+	      <if test="goodsId != null" >
+	        #{goodsId},
+	      </if>
+	      <if test="combinationGoodsId != null" >
+	        #{combinationGoodsId},
+	      </if>
+	    </trim>
+    </insert>
+
+    <delete id="deleteByGoodsId" parameterType="java.lang.Integer">
+        delete from shop_goods_combination where goods_id=#{goodsId}
+    </delete>
+
+
+</mapper>

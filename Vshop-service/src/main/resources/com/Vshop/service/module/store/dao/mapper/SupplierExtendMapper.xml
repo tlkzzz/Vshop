@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.Vshop.service.module.store.dao.mapper.SupplierExtendMapper">
+    <resultMap id="BaseResultMap" type="com.Vshop.core.entity.base.SupplierExtend">
+        <id column="supplier_id" property="supplierId" jdbcType="INTEGER"/>
+        <result column="express" property="express" jdbcType="VARCHAR"/>
+    </resultMap>
+	
+	<sql id="Base_Column_List">
+		supplier_id, express
+	</sql>
+	
+	<!-- 插入店铺物流表 -->
+	<insert id="saveSupplierExtend" parameterType="com.Vshop.core.entity.base.SupplierExtend">
+		insert into shop_supplier_extend(supplier_id, express) values(#{supplierId},#{express})
+	</insert>
+	
+	<!-- 修改店铺物流表 -->
+	<update id="updateSupplierExtend" parameterType="com.Vshop.core.entity.base.SupplierExtend">
+		update shop_supplier_extend 
+		<set>
+			express = #{express}
+		</set>
+		where supplier_id = #{supplierId}
+	</update>   
+	
+	<!-- 删除店铺物流表 -->
+	<delete id="deleteSupplierExtend" parameterType="int">
+		delete from shop_supplier_extend where supplier_id = #{supplierId}
+	</delete> 
+	
+	<select id="findBySupplierId" parameterType="int" resultMap="BaseResultMap">
+		select <include refid="Base_Column_List" /> from shop_supplier_extend where supplier_id = #{supplierId}
+	</select>
+</mapper>

@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.Vshop.service.module.website.dao.mapper.NavigationMapper">
+    <resultMap id="BaseResultMap" type="com.Vshop.core.entity.base.Navigation" >
+        <id column="nav_id" property="navId" jdbcType="INTEGER" />
+        <result column="nav_type" property="navType" jdbcType="VARCHAR" />
+        <result column="nav_title" property="navTitle" jdbcType="VARCHAR" />
+        <result column="nav_url" property="navUrl" jdbcType="VARCHAR" />
+        <result column="nav_location" property="navLocation" jdbcType="INTEGER" />
+        <result column="nav_new_open" property="navNewOpen" jdbcType="VARCHAR" />
+        <result column="nav_sort" property="navSort" jdbcType="VARCHAR" />
+        <result column="item_id" property="navItemId" jdbcType="INTEGER" />
+        <result column="is_del" property="isDel" jdbcType="TINYINT" />
+        <result column="create_time" property="createTime" jdbcType="BIGINT" />
+        <result column="update_time" property="updateTime" jdbcType="BIGINT" />
+    </resultMap>
+
+    <sql id="Base_Column_List" >
+        nav_id, nav_type,nav_title, nav_url, nav_location,nav_new_open, nav_sort, item_id,is_del,create_time,update_time
+    </sql>
+
+    <insert id="save" parameterType="com.Vshop.core.entity.base.Navigation" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO shop_navigation(nav_type,nav_title,nav_url,nav_location,nav_new_open,nav_sort,item_id,is_del,create_time)
+        VALUES(#{navType},#{navTitle},#{navUrl},#{navLocation},#{navNewOpen},#{navSort},#{navItemId},0,#{createTime});
+    </insert>
+    <update id="update" parameterType="com.Vshop.core.entity.base.Navigation">
+        update shop_navigation set
+        nav_type = #{navType},
+        nav_title = #{navTitle},
+        nav_url = #{navUrl},
+        nav_location = #{navLocation},
+        nav_new_open = #{navNewOpen},
+        nav_sort = #{navSort},
+        item_id = #{navItemId},
+        update_time = #{updateTime}
+        where nav_id=#{navId}
+    </update>
+    <delete id="delete" parameterType="java.lang.Integer">
+        update shop_navigation set is_del = 1  where nav_id=#{navId}
+    </delete>
+
+    <select id="findById" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List" />
+        from shop_navigation where nav_id=#{navId}
+    </select>
+
+    <select id="findPageList" resultMap="BaseResultMap" parameterType="com.Vshop.service.utils.page.Pager">
+        select a.* from (
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM shop_navigation
+        where is_del = 0
+        <if test="condition.navTitle !=null and condition.navTitle != ''">
+            AND nav_title like CONCAT('%','${condition.navTitle}','%' )
+        </if>
+        <if test="condition.navLocation != null">
+            AND nav_location = #{condition.navLocation}
+        </if>
+        order by nav_sort desc
+        ) a 
+    </select>
+
+    <select id="findCount" resultType="int" parameterType="com.Vshop.core.entity.base.Navigation">
+        select count(*) from shop_navigation  where is_del = 0
+        <if test="navTitle !=null and navTitle != ''">
+            AND nav_title like CONCAT('%','${navTitle}','%' )
+        </if>
+        <if test="navLocation != null">
+            AND nav_location = #{navLocation}
+        </if>
+    </select>
+    
+    <select id="findAllList" resultMap="BaseResultMap" parameterType="com.Vshop.core.entity.base.Navigation">
+    	select 
+		<include refid="Base_Column_List"></include>
+ 		from shop_navigation 
+ 		where is_del = 0
+ 		<if test="navLocation != null">
+ 		 	AND nav_location = #{navLocation}
+ 		</if>
+ 		<if test="navType != null">
+ 			AND nav_type = #{navType}
+ 		</if>
+ 		<if test="navItemId != null">
+ 			AND item_id =#{navItemId}
+ 		</if>
+ 		order by nav_sort desc
+    </select>
+
+</mapper>

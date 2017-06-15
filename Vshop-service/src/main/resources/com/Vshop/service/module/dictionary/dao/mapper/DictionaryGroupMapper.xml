@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.Vshop.service.module.dictionary.dao.mapper.DictionaryGroupMapper">
+
+    <resultMap id="BaseResultMap" type="com.Vshop.core.entity.base.DictionaryGroup" >
+        <id column="group_id" property="groupId" jdbcType="INTEGER" />
+        <result column="group_code" property="groupCode" jdbcType="VARCHAR" />
+        <result column="group_name" property="groupName" jdbcType="VARCHAR" />
+    </resultMap>
+
+    <sql id="Base_Column_List" >
+        group_id,group_code,group_name
+    </sql>
+    
+    <sql id="whereStatement">
+		<where>
+			1 = 1
+			<if test="condition.groupCode != null">
+				and group_code like CONCAT('%',#{condition.groupCode,
+				jdbcType=VARCHAR},'%')
+			</if>
+			<if test="condition.groupName != null">
+				or group_name like CONCAT('%',#{condition.groupName,
+				jdbcType=VARCHAR},'%')
+			</if>
+		</where>
+	</sql>
+	
+	<sql id="whereStatement2">
+		<where>
+			1 = 1
+			<if test="groupCode != null">
+				and group_code like CONCAT('%',#{groupCode,
+				jdbcType=VARCHAR},'%')
+			</if>
+			<if test="groupName != null">
+				or group_name like CONCAT('%',#{groupName,
+				jdbcType=VARCHAR},'%')
+			</if>
+		</where>
+	</sql>
+	
+    <insert id="save" parameterType="com.Vshop.core.entity.base.DictionaryGroup" useGeneratedKeys="true" keyProperty="groupId">
+        INSERT INTO shop_dictionary_group (group_code,group_name)
+        VALUES (#{groupCode},#{groupName})
+    </insert>
+    
+    <update id="update" parameterType="com.Vshop.core.entity.base.DictionaryGroup">
+        update shop_dictionary_group 
+		<set>
+			<if test="groupCode!=null">
+				group_code = #{groupCode},
+			</if>
+			<if test="groupName!=null">
+				group_name = #{groupName}
+			</if>
+		</set>
+		where group_id = #{groupId}
+    </update>
+    
+	<delete id="delete" parameterType="java.lang.Integer">
+        delete from shop_dictionary_group where group_id = #{groupId}
+    </delete>
+    
+    <select id="findByGroupId" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+    	select 
+    	<include refid="Base_Column_List" />
+    	from shop_dictionary_group
+    	where group_id = #{groupId}
+    </select>
+    
+    <select id="countGroupidList" resultType="int" parameterType="com.Vshop.core.entity.base.DictionaryGroup">
+    	select count(group_id) from shop_dictionary_group 
+    	<include refid="whereStatement2" />
+    </select>
+    
+    <select id="queryGroupidList" resultMap="BaseResultMap" parameterType="com.Vshop.service.utils.page.Pager">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM shop_dictionary_group
+        <include refid="whereStatement" />
+    </select>
+    
+	<select id="selectGroupByGroupCode" resultMap="BaseResultMap" parameterType="java.lang.String">
+    	select 
+    	<include refid="Base_Column_List" />
+    	from shop_dictionary_group
+    	where group_code = #{groupCode}
+    </select>
+
+</mapper>

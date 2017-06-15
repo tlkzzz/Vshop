@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.Vshop.service.module.feedback.dao.mapper.FeedbackMapper">
+    <resultMap id="BaseResultMap" type="com.Vshop.core.entity.base.Feedback" >
+        <id column="id" property="id" jdbcType="INTEGER" />
+        <result column="title" property="title" jdbcType="VARCHAR" />
+        <result column="content" property="content" jdbcType="VARCHAR" />
+        <result column="email" property="email" jdbcType="VARCHAR" />
+        <result column="phone" property="phone" jdbcType="VARCHAR" />
+        <result column="phone_Type" property="phoneType" jdbcType="INTEGER" />
+        <result column="create_time" property="createTime" jdbcType="BIGINT" />
+    </resultMap>
+
+    <sql id="Base_Column_List" >
+        id,title,content,email,phone,phone_type,create_time
+    </sql>
+    
+     <sql id="whereStatement">
+		<where>
+			1 = 1
+	    <if test="condition.title != null and condition.title!=''" >
+            AND title like CONCAT('%','${condition.title}','%' )
+        </if>
+        <if test="condition.email !=null and condition.email !='' ">
+            AND email like CONCAT('%','${condition.email}','%' )
+        </if>
+        <if test="condition.content != null and condition.content != ''">
+            AND content like CONCAT('%','${condition.content}','%' )
+        </if>
+        <if test="condition.phoneType != null and condeition.phoneType !=''">
+            AND phone_type = #{condition.phoneType},
+        </if>
+        <if test="condition.phone != null and condeition.phone !=''">
+            AND phone = #{condition.phone}
+        </if>
+		</where>
+	</sql>
+	
+	<sql id="whereStatement2">
+		<where>
+			1 = 1
+	    <if test="title != null and title!=''" >
+            AND title like CONCAT('%','${title}','%' )
+        </if>
+        <if test="email !=null and email !='' ">
+            AND email like CONCAT('%','${email}','%' )
+        </if>
+        <if test="content != null and content != ''">
+            AND content like CONCAT('%','${content}','%' )
+        </if>
+        <if test="phoneType != null and phoneType !=''">
+            AND phone_type = #{phoneType},
+        </if>
+        <if test="phone != null and phone !=''">
+            AND phone = #{phone}
+        </if>
+		</where>
+	</sql>
+	
+	<!-- 保存 -->
+    <insert id="save" parameterType="com.Vshop.core.entity.base.Feedback" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO shop_feedback (title,content,email,phone,phone_type,create_time)
+        VALUES(#{title},#{content},#{email},#{phone},#{phoneType},#{createTime});
+    </insert>
+    
+    <insert id="saveContact" parameterType="com.Vshop.core.entity.base.Feedback">
+    	INSERT INTO shop_feedback (title,content,email) VALUES(#{title},#{content},#{email});
+    </insert>
+    
+    <!-- 删除 -->
+    <delete id="delete" parameterType="java.lang.Integer">
+        delete from shop_feedback where id=#{id}
+    </delete>
+    
+    <!-- 更新 -->
+    <update id="update" parameterType="com.Vshop.core.entity.base.Feedback">
+        update shop_feedback
+        <set>
+            <if test="title != '' and title != null ">
+                title = #{title},
+            </if>
+            <if test="email != '' and email != null">
+                email = #{email},
+            </if>
+            <if test="phone != '' and phone != null">
+                phone = #{phone},
+            </if>
+            <if test="content != null">
+                content = #{content},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+    
+    <!--查询条数-->
+    <select id="findCount" parameterType="com.Vshop.core.entity.base.Feedback" resultType="int">
+        SELECT
+        count(1)
+        FROM shop_feedback
+        <include refid="whereStatement2" />
+    </select>
+
+    <!--查询分页列表-->
+    <select id="findPageList" parameterType="com.Vshop.service.utils.page.Pager" resultMap="BaseResultMap">
+        SELECT a.* FROM(SELECT
+        <include refid="Base_Column_List" />
+        FROM shop_feedback
+        <include refid="whereStatement" />
+        order by id desc) a 
+    </select>
+    
+    <!-- 获取全部数据 -->
+    <select id="findList" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM shop_feedback
+    </select>
+
+	<!-- 根据分类id获取 -->
+    <select id="findById" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List" />
+        from shop_feedback where id = #{id}
+    </select>
+    
+</mapper>

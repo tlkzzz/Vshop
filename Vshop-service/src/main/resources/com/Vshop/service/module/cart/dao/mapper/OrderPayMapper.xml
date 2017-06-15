@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.Vshop.service.module.cart.dao.mapper.OrderPayMapper">
+    <resultMap id="BaseResultMap" type="com.Vshop.core.entity.base.OrderPay">
+        <result column="pay_id" property="payId" jdbcType="INTEGER"/>
+        <result column="pay_sn" property="paySn" jdbcType="VARCHAR"/>
+        <result column="buyer_id" property="buyerId" jdbcType="INTEGER"/>
+        <result column="api_pay_state" property="apiPayState" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        pay_id, pay_sn, buyer_id, api_pay_state
+    </sql>
+
+    <!-- 根据用户的ID 获取到数据 -->
+    <select id="queryBuyerId" resultMap="BaseResultMap" parameterType="com.Vshop.core.entity.base.OrderPay">
+        select
+        <include refid="Base_Column_List"/>
+        from shop_order_pay where 1=1
+        <if test="buyerId != null">
+            and buyer_id = #{buyerId,jdbcType=INTEGER}
+        </if>
+    </select>
+	
+	<!-- 保存 -->
+    <insert id="saveOrderPay" parameterType="com.Vshop.core.entity.base.OrderPay" useGeneratedKeys="true" keyProperty="payId">
+        insert into shop_order_pay (pay_sn,buyer_id,api_pay_state)
+        values (#{paySn,jdbcType=VARCHAR}, #{buyerId,jdbcType=INTEGER},#{apiPayState,jdbcType=VARCHAR})
+    </insert>
+
+    <!-- 根据用户的ID 获取到数据 -->
+    <select id="findById" resultMap="BaseResultMap" parameterType="com.Vshop.core.entity.base.OrderPay">
+        select
+        <include refid="Base_Column_List"/>
+        from shop_order_pay where 1=1
+        <if test="paySn != null and paySn != '' ">
+            and pay_sn = #{paySn,jdbcType=VARCHAR}
+        </if>
+        <if test="buyerId != null">
+            and buyer_id = #{buyerId,jdbcType=INTEGER}
+        </if>
+    </select>
+	
+	<!-- 通过支付单号和买家id修改状态 -->
+    <update id="updateOrderPayState" parameterType="com.Vshop.core.entity.base.OrderPay">
+        update shop_order_pay set api_pay_state = '1' where pay_sn = #{paySn} and buyer_id = #{buyerId}
+    </update>
+
+</mapper>
