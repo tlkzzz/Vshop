@@ -205,11 +205,11 @@ public class wxsendRedPack {
 	        return map;
 	    }
 	
-	public static String MD5(String sourceStr) {
+public static String MD5(String sourceStr) {
         String result = "";
         try {
             MessageDigest md = MessageDigest.getInstance("MD5");
-            md.update(sourceStr.getBytes());
+            md.update(sourceStr.getBytes("UTF-8"));
             byte b[] = md.digest();
             int i;
             StringBuffer buf = new StringBuffer("");
@@ -224,7 +224,7 @@ public class wxsendRedPack {
             result = buf.toString();
           //  System.out.println("MD5(" + sourceStr + ",32) = " + result);
            // System.out.println("MD5(" + sourceStr + ",16) = " + buf.toString().substring(8, 24));
-        } catch (NoSuchAlgorithmException e) {
+        } catch (NoSuchAlgorithmException | UnsupportedEncodingException e) {
             System.out.println(e);
         }
         return result;
